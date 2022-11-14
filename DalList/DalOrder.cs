@@ -8,6 +8,5 @@ namespace Dal;
 
 internal class DalOrder
 {
-    string[] orderArray = new string[100];
 
 }

@@ -12,11 +12,21 @@ internal static class DataSource
         s_Initialize();
     }
     private static readonly Random s_rand = new();
-
-    internal static List<Product?> ProductList { get; } = new List<Product?>();
-    internal static List<Order?> OrderList { get; } = new List<Order?>();
-    internal static List<OrderItem?> OrderListList { get; } = new List<OrderItem?>();
-    
+    internal static class Config
+    {
+        internal static int indexProduct = 0;
+        internal static int indexOrder = 0;
+        internal static int indexOrderItem = 0;
+        internal const int s_startOrderNumber = 1000;
+        private static int s_nextOrderNumber = s_startOrderNumber;
+        internal static int nextOrderNumber { get => s_nextOrderNumber++; }
+        internal const int s_startOrderItemNumber = 1000;
+        private static int s_nextOrderItemNumber = s_startOrderItemNumber;
+        internal static int nextOrderItemNumber { get => s_nextOrderItemNumber++; }
+    }
+    internal static Product[] ProductArr { get; } = new Product[50];
+    internal static Order[] OrderArr { get; } = new Order[100];
+    internal static OrderItem[] OrderItemArr { get; } = new OrderItem[200];
 
     private static void s_Initialize()
     {
@@ -25,24 +35,65 @@ internal static class DataSource
         createAndInitOrderItems();
 
     }
+    private static string[,] productsNames = new string[5, 3] { { "chairs", "chair", "bed" }, { "table", "a", "b" }, { "accesorise/small stuff", "c", "d" }, {"closet and dresser","e","f"},{"shelfs","de","ge" } };
+
     private static void createAndInitProducts()
     {
-        string[] namesArray = { "table", "chair", "picture", "closet", "bed", "shelf", "dresser", "sink", "plant", "door" };
-
+        int[] priceFrom = { 200, 4000, 20, 1000, 100 };
+        int[] priceTo = { 500, 6000, 150, 5000, 400 };
         for (int i = 0; i < 10; i++)
         {
-            ProductList.Add(
-                new Product()
-                {
-                    Id = i,
-                    Name = namesArray[s_rand.Next(namesArray.Length)],
-                    Price = s_rand.Next(200),
-                    
-
-
-
-                }
-
+            int index_category = s_rand.Next(4);
+            int index_name = s_rand.Next(3);
+            ProductArr[i] = new Product()
+            {
+                Id = i + 100000,
+                Name = productsNames[index_category, index_name],
+                Price = s_rand.Next(priceFrom[index_category], priceTo[index_category]),
+                Category = (Category)index_category,
+                InStock = s_rand.Next(50),
+            };
+            Config.indexProduct++;
+        }
     }
+    private static void createAndInitOrders()
+    {
+        string[] firstName = { "Sara", "Rivka", "Rachel", "Leah", "Avraham", "Izzac", "Jakob" };
+        string[] lastName = { "Cohen", "Levi", "Goldstein", "Peretz", "Fridman", "Mizrachi", "Biton" };
+        string[] adresses = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" };
+        for (int i = 0; i < 20; i++)
+        {
+            string fstName = firstName[s_rand.Next(6)];
+            string lstName = lastName[s_rand.Next(6)];
+
+            OrderArr[i] = new Order()
+            {
+                Id = Config.nextOrderNumber,
+                CustomerName = fstName + " " + lstName,
+                CustomerAdress = adresses[s_rand.Next(9)],
+                CustomerEmail = fstName + lstName + "@gmail.com",
+                OrderDate = DateTime.MinValue,
+                //ShipDate = TimeSpan.FromDays
+                //DeliveryDate = 
+            };
+            Config.indexOrder++;
+        }
+    }
+    private static void createAndInitOrderItems()
+    {
+        
+        for (int i = 0; i < 50; i++)
+        {
+            OrderItemArr[i] = new OrderItem()
+            {
+                Id = Config.nextOrderItemNumber,
+                //ProductID = Config.
+                //OrderID
+                //Price
+                //Amount
+            };
+            Config.indexOrderItem++;
+        }
     }
 }
+
