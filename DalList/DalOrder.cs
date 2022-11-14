@@ -21,12 +21,12 @@ public class DalOrder
         for (int i = 0; i < DataSource.Config.indexOrder; i++)
         {
             
-            if (DataSource.orderArr[i].Id == order.Id)
+            if (DataSource.OrderArr[i].Id == order.Id)
             {
                 throw new Exception("The identifying number already exists");
             }
         }
-        DataSource.orderArr[DataSource.Config.indexOrder] = order;
+        DataSource.OrderArr[DataSource.Config.indexOrder] = order;
         return order.Id;
     }
     public Order GetById(int id) //Request
@@ -34,7 +34,7 @@ public class DalOrder
         Order p;
         for (int i = 0; i < DataSource.Config.indexOrder; i++)
         {
-            p = DataSource.orderArr[i];
+            p = DataSource.OrderArr[i];
             if (p.Id == id)
             {
                 return p;
@@ -50,9 +50,9 @@ public class DalOrder
     {
         for (int i = 0; i < DataSource.Config.indexOrder; i++)
         {
-            if (DataSource.orderArr[i].Id == order.Id)
+            if (DataSource.OrderArr[i].Id == order.Id)
             {
-                DataSource.orderArr[i] = order;
+                DataSource.OrderArr[i] = order;
             }
             else
                 throw new Exception("The identifying number doesn't exists");
@@ -67,7 +67,7 @@ public class DalOrder
         for (int i = 0; i < 100; i++)
         {
 
-            if (DataSource.orderArr[i].Id == id)
+            if (DataSource.OrderArr[i].Id == id)
             {
                 a = i;
             }
@@ -77,7 +77,7 @@ public class DalOrder
             int j = a;
             for (; j < DataSource.Config.indexProduct - 2; j++)
             {
-                DataSource.productArr[j] = DataSource.productArr[j + 1];
+                DataSource.ProductArr[j] = DataSource.ProductArr[j + 1];
 
             }
             DataSource.Config.indexProduct--;
@@ -91,7 +91,7 @@ public class DalOrder
         string[] onlyOrders = new string[DataSource.Config.indexOrder];
         for (int i = 0; i < onlyOrders.Length; i++)
         {
-            onlyOrders[i] = DataSource.orderArr[i];
+            onlyOrders[i] = DataSource.OrderArr[i];
         }
     }
 
