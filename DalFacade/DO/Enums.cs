@@ -1,3 +1,3 @@
 ﻿namespace DO;
 
-public enum Category {Chairs, Tables, Accessories, Cabinets, Shelfs };
+public enum Category {Chairs, Tables, BigStorage, SmallStorage, Beds };
