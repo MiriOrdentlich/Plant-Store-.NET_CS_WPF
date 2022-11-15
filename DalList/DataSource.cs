@@ -35,16 +35,18 @@ internal static class DataSource
         createAndInitOrderItems();
 
     }
-    private static string[,] productsNames = new string[5, 3] { { "chairs", "chair", "bed" }, { "table", "a", "b" }, { "accesorise/small stuff", "c", "d" }, {"closet and dresser","e","f"},{"shelfs","de","ge" } };
+
+    private static string[,] productsNames = new string[5, 3] { { "chair", "barstool", "armchair" }, { "dining table", "desk", "coffee table" }, { "library", "closet", "wardrobes" }, { "cabinet", "drawer", "nightstand" }, { "bed", "playpen", "sofa" } };
 
     private static void createAndInitProducts()
     {
-        int[] priceFrom = { 200, 4000, 20, 1000, 100 };
-        int[] priceTo = { 500, 6000, 150, 5000, 400 };
+        int[] priceFrom = { 500, 4000, 1500, 700, 900 };
+        int[] priceTo = { 1000, 8000, 6000, 2500, 7500 };
         for (int i = 0; i < 10; i++)
         {
             int index_category = s_rand.Next(4);
             int index_name = s_rand.Next(3);
+
             ProductArr[i] = new Product()
             {
                 Id = i + 100000,
@@ -69,12 +71,28 @@ internal static class DataSource
             int days = s_rand.Next(1000);
 
             DateTime orderDate = DateTime.Now.AddDays(-days);
-          
-            days = s_rand.Next(1,3);
-            TimeSpan timeSpan1 = new TimeSpan(days, 0, 0, 0);
-            days = s_rand.Next(3, 7);
-            TimeSpan timeSpan2 = new TimeSpan(days, 0, 0, 0);
+            DateTime? deliveryDate;
+            DateTime? shipDate;
+            if (i % 5 == 0)
+            {
+                deliveryDate = null;
+                shipDate = null;
+            }
+            else
+            {
+                days = s_rand.Next(1, 3);
+                TimeSpan timeSpan = new TimeSpan(days, 0, 0, 0);
+                deliveryDate = orderDate + timeSpan;
+                if ((i + 2) % 3 == 0)
+                    shipDate = null;
+                else
+                {
+                    days = s_rand.Next(3, 7);
+                    timeSpan = new TimeSpan(days, 0, 0, 0);
+                    shipDate = orderDate + timeSpan;
+                }
 
+            }
             OrderArr[i] = new Order()
             {
                 Id = Config.nextOrderNumber,
@@ -82,26 +100,38 @@ internal static class DataSource
                 CustomerAdress = adresses[s_rand.Next(9)],
                 CustomerEmail = fstName + lstName + "@gmail.com",
                 OrderDate = orderDate,
-                ShipDate = orderDate + timeSpan1,
-                DeliveryDate = orderDate + timeSpan2,                
+                ShipDate = shipDate,
+                DeliveryDate = deliveryDate,                
             };
             Config.indexOrder++;
         }
     }
     private static void createAndInitOrderItems()
     {
-        
-        for (int i = 0; i < 50; i++)
+        // for every order there's 1-4 items. so we run on the OrderArr and add to OrederItemArr
+        // the number of products from that order.
+        for (int i = 0; i < 20; i++)
         {
-            OrderItemArr[i] = new OrderItem()
+            int numOfOrders = s_rand.Next(1, 4);
+            for(int j = 0; j < numOfOrders; j++)
             {
-                Id = Config.nextOrderItemNumber,
-                //ProductID =
-                //OrderID =
-                //Price
-                //Amount
-            };
-            Config.indexOrderItem++;
+                int indexProduct = s_rand.Next(9);
+
+                // amount product per order is limited to the amount of the product in stock.
+                int amount = s_rand.Next(1, ProductArr[indexProduct].InStock);
+                // take off the amount from what left from the product in stock.
+                ProductArr[indexProduct].InStock = -amount;
+
+                OrderItemArr[Config.indexOrderItem] = new OrderItem()
+                {
+                    Id = Config.nextOrderItemNumber,
+                    ProductID = ProductArr[indexProduct].Id,
+                    OrderID = OrderArr[i].Id,
+                    Price = ProductArr[indexProduct].Price,
+                    Amount = amount,
+                };
+                Config.indexOrderItem++;
+            }            
         }
     }
 }
