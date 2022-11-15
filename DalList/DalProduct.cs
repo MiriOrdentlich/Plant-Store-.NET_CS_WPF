@@ -13,25 +13,27 @@ public class DalProduct
 
     {
         if (DataSource.Config.indexProduct > 49)
-        {
-            throw new Exception("There is no more space for new products");
+        throw new Exception("There is no more space for new products\n");
+            
         for (int i = 0; i < DataSource.Config.indexProduct; i++)
-        {
-
-            if (DataSource.productArr[i].Id == product.Id)
             {
-                throw new Exception("The identifying number already exists");
+
+                if (DataSource.ProductArr[i].Id == product.Id)
+                {
+                    throw new Exception("The identifying number already exists\n");
+                }
             }
-        }
-        DataSource.productArr[DataSource.Config.indexProduct] = product;
-        return product.Id;
+            DataSource.ProductArr[DataSource.Config.indexProduct] = product;
+            return product.Id;
+            
+        
     }
     public Product GetById(int id) //Request 
     {
         Product p;
         for (int i = 0; i < DataSource.Config.indexProduct; i++)
         {
-            p = DataSource.productArr[i];
+            p = DataSource.ProductArr[i];
             if (p.Id == id)
             {
                 return p;
@@ -44,9 +46,9 @@ public class DalProduct
     {
         for (int i = 0; i < DataSource.Config.indexProduct; i++)
         {
-            if (DataSource.productArr[i].Id == product.Id)
+            if (DataSource.ProductArr[i].Id == product.Id)
             {
-                DataSource.productArr[i] = product;
+                DataSource.ProductArr[i] = product;
             }
             else
                 throw new Exception("The identifying number doesn't exists");
@@ -61,36 +63,37 @@ public class DalProduct
         for (int i = 0; i < DataSource.Config.indexProduct; i++)
         {
 
-            if (DataSource.productArr[i].Id == id)
+            if (DataSource.ProductArr[i].Id == id)
             {
                 a = i;
             }
         }
         if (a != -1)
+        {
+            //DataSource.ProductArr[a] = null; //לא מדויק, צריך למחוק את מה שהוא באמת מכיל ולא רק להגיד שהוא לא מכיל כלום
+            int j = a;
+            for (; j < DataSource.Config.indexProduct - 2; j++)
             {
-                //DataSource.productArr[a] = null; //לא מדויק, צריך למחוק את מה שהוא באמת מכיל ולא רק להגיד שהוא לא מכיל כלום
-                int j = a;
-                for (; j < DataSource.Config.indexProduct - 2; j++)
-                {
-                    DataSource.productArr[j] = DataSource.productArr[j + 1];
+                DataSource.ProductArr[j] = DataSource.ProductArr[j + 1];
 
-                }
-                DataSource.Config.indexProduct--;
-                //DataSource.productArr[j+1] = null; //כנל
             }
-         else
+            DataSource.Config.indexProduct--;
+            //DataSource.ProductArr[j+1] = null; //כנל
+        }
+        else
             throw new Exception("The identifying number doesn't exists");
     }
 
-    public IEnumerable<Product?> [] GetAll()
+    public IEnumerable<Product?>[] GetAll()
     //מתודת בקשה\קריאה של רשימת כל האובייקטים של הישות (ללא פרמטרים)
     {
         Product[] onlyProducts = new string[DataSource.Config.indexProduct];
-            for (int i = 0; i < onlyProducts.Length; i++)
-            {
-                onlyProducts[i] = DataSource.productArr[i];
-            }
-            return onlyProducts;
+        for (int i = 0; i < onlyProducts.Length; i++)
+        {
+            onlyProducts[i] = DataSource.ProductArr[i];
         }
-
+        return onlyProducts;
     }
+
+    
+}
