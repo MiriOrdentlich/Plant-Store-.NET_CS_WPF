@@ -75,23 +75,34 @@ public class DalOrder
         if (a != -1)
         {
             int j = a;
-            for (; j < DataSource.Config.indexProduct - 2; j++)
+            for (; j < DataSource.Config.indexOrder - 2; j++)
             {
-                DataSource.ProductArr[j] = DataSource.ProductArr[j + 1];
+                DataSource.OrderArr[j] = DataSource.OrderArr[j + 1];
 
             }
-            DataSource.Config.indexProduct--;
+            DataSource.Config.indexOrder--;
         }
         else
             throw new Exception("The identifying number doesn't exists");
     }
 
-    public IEnumerable<Order?> GetAll() //מתודת בקשה\קריאה של רשימת כל האובייקטים של הישות (ללא פרמטרים)
+    //public IEnumerable<Order?> GetAll() //מתודת בקשה\קריאה של רשימת כל האובייקטים של הישות (ללא פרמטרים)
+    //{
+    //    string[] onlyOrders = new string[DataSource.Config.indexOrder];
+    //    for (int i = 0; i < onlyOrders.Length; i++)
+    //    {
+    //        onlyOrders[i] = DataSource.OrderArr[i];
+    //    }
+    //}
+
+    public Order[] getAll()
     {
-        string[] onlyOrders = new string[DataSource.Config.indexOrder];
+        Order[] onlyOrders = new Order[DataSource.Config.indexOrder];
         for (int i = 0; i < onlyOrders.Length; i++)
         {
             onlyOrders[i] = DataSource.OrderArr[i];
         }
+        return onlyOrders;
     }
+    
 
