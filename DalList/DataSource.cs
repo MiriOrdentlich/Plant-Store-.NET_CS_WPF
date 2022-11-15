@@ -66,15 +66,24 @@ internal static class DataSource
             string fstName = firstName[s_rand.Next(6)];
             string lstName = lastName[s_rand.Next(6)];
 
+            int days = s_rand.Next(1000);
+
+            DateTime orderDate = DateTime.Now.AddDays(-days);
+          
+            days = s_rand.Next(1,3);
+            TimeSpan timeSpan1 = new TimeSpan(days, 0, 0, 0);
+            days = s_rand.Next(3, 7);
+            TimeSpan timeSpan2 = new TimeSpan(days, 0, 0, 0);
+
             OrderArr[i] = new Order()
             {
                 Id = Config.nextOrderNumber,
                 CustomerName = fstName + " " + lstName,
                 CustomerAdress = adresses[s_rand.Next(9)],
                 CustomerEmail = fstName + lstName + "@gmail.com",
-                OrderDate = DateTime.MinValue,
-                //ShipDate = TimeSpan.FromDays
-                //DeliveryDate = 
+                OrderDate = orderDate,
+                ShipDate = orderDate + timeSpan1,
+                DeliveryDate = orderDate + timeSpan2,                
             };
             Config.indexOrder++;
         }
@@ -87,8 +96,8 @@ internal static class DataSource
             OrderItemArr[i] = new OrderItem()
             {
                 Id = Config.nextOrderItemNumber,
-                //ProductID = Config.
-                //OrderID
+                //ProductID =
+                //OrderID =
                 //Price
                 //Amount
             };

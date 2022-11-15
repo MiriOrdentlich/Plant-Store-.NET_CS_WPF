@@ -16,14 +16,14 @@ public class DalOrder
     {
         if (DataSource.Config.indexOrder > 99)
         {
-            throw new Exception("There is no more space for new orders");
+            throw new Exception("There is no more space for new orders\n");
         }
         for (int i = 0; i < DataSource.Config.indexOrder; i++)
         {
             
             if (DataSource.OrderArr[i].Id == order.Id)
             {
-                throw new Exception("The identifying number already exists");
+                throw new Exception("The identifying number already exists\n");
             }
         }
         DataSource.OrderArr[DataSource.Config.indexOrder] = order;
