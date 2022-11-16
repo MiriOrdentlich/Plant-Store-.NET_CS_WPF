@@ -1,4 +1,5 @@
 ﻿using DO;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 using System.Xml.Linq;
@@ -14,13 +15,14 @@ internal static class DataSource
     private static readonly Random s_rand = new();
     internal static class Config
     {
-        internal static int indexProduct = 0;
-        internal static int indexOrder = 0;
-        internal static int indexOrderItem = 0;
-        internal const int s_startOrderNumber = 1000;
+        internal static int indexProduct = 10;
+        internal static int indexOrder = 20;
+        internal static int indexOrderItem = 40;
+
+        internal const int s_startOrderNumber = 100000;
         private static int s_nextOrderNumber = s_startOrderNumber;
         internal static int nextOrderNumber { get => s_nextOrderNumber++; }
-        internal const int s_startOrderItemNumber = 1000;
+        internal const int s_startOrderItemNumber = 100000;
         private static int s_nextOrderItemNumber = s_startOrderItemNumber;
         internal static int nextOrderItemNumber { get => s_nextOrderItemNumber++; }
     }
@@ -45,7 +47,7 @@ internal static class DataSource
         for (int i = 0; i < 10; i++)
         {
             int index_category = s_rand.Next(4);
-            int index_name = s_rand.Next(3);
+            int index_name = s_rand.Next(2);
 
             ProductArr[i] = new Product()
             {
@@ -55,7 +57,6 @@ internal static class DataSource
                 Category = (Category)index_category,
                 InStock = s_rand.Next(50),
             };
-            Config.indexProduct++;
         }
     }
     private static void createAndInitOrders()
@@ -103,35 +104,33 @@ internal static class DataSource
                 ShipDate = shipDate,
                 DeliveryDate = deliveryDate,                
             };
-            Config.indexOrder++;
         }
     }
     private static void createAndInitOrderItems()
     {
         // for every order there's 1-4 items. so we run on the OrderArr and add to OrederItemArr
         // the number of products from that order.
-        for (int i = 0; i < 20; i++)
+        int count = 0;
+        for (int i = 0; i < 40; i++)
         {
+            if(count == 20)
+                count = 0;
             int numOfOrders = s_rand.Next(1, 4);
             for(int j = 0; j < numOfOrders; j++)
             {
                 int indexProduct = s_rand.Next(9);
+                int amount = s_rand.Next(10);
 
-                // amount product per order is limited to the amount of the product in stock.
-                int amount = s_rand.Next(1, ProductArr[indexProduct].InStock);
-                // take off the amount from what left from the product in stock.
-                ProductArr[indexProduct].InStock = -amount;
-
-                OrderItemArr[Config.indexOrderItem] = new OrderItem()
+                OrderItemArr[i] = new OrderItem()
                 {
                     Id = Config.nextOrderItemNumber,
                     ProductID = ProductArr[indexProduct].Id,
-                    OrderID = OrderArr[i].Id,
+                    OrderID = OrderArr[count].Id,
                     Price = ProductArr[indexProduct].Price,
                     Amount = amount,
                 };
-                Config.indexOrderItem++;
-            }            
+            }
+            count++;
         }
     }
 }

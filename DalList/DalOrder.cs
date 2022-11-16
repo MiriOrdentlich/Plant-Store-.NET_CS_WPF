@@ -11,22 +11,21 @@ namespace Dal;
 public class DalOrder
 {
 
-    //string[] orderArray = new string[100];
     public int Add(Order order) //create
     {
-        if (DataSource.Config.indexOrder > 99)
+        if (DataSource.Config.indexOrder == DataSource.OrderArr.Length)
         {
-            throw new Exception("There is no more space for new orders\n");
+            throw new Exception("There is no more space for new orders");
         }
         for (int i = 0; i < DataSource.Config.indexOrder; i++)
         {
-            
+
             if (DataSource.OrderArr[i].Id == order.Id)
             {
-                throw new Exception("The identifying number already exists\n");
+                throw new Exception("The identifying number already exists");
             }
         }
-        DataSource.OrderArr[DataSource.Config.indexOrder] = order;
+        DataSource.OrderArr[DataSource.Config.indexOrder++] = order;
         return order.Id;
     }
     public Order GetById(int id) //Request
@@ -40,12 +39,11 @@ public class DalOrder
                 return p;
             }
 
-            
+
         }
-            throw new Exception("Id Number doesn't exist");
+        throw new Exception("Id Number doesn't exist");
 
     }
-
     public void Update(Order order)
     {
         for (int i = 0; i < DataSource.Config.indexOrder; i++)
@@ -53,49 +51,49 @@ public class DalOrder
             if (DataSource.OrderArr[i].Id == order.Id)
             {
                 DataSource.OrderArr[i] = order;
+                return;
             }
-            else
-                throw new Exception("The identifying number doesn't exists");
-
         }
-
+        throw new Exception("The identifying number doesn't exist");
     }
-
     public void Delete(int id)
     {
-        int a = -1;
-        for (int i = 0; i < 100; i++)
+        for (int i = 0; i < DataSource.Config.indexOrder; i++)
         {
-
             if (DataSource.OrderArr[i].Id == id)
             {
-                a = i;
+                DataSource.OrderArr[i] = DataSource.OrderArr[--DataSource.Config.indexOrder];
+                return;
             }
         }
-        if (a != -1)
-        {
-            int j = a;
-            for (; j < DataSource.Config.indexOrder - 2; j++)
-            {
-                DataSource.OrderArr[j] = DataSource.OrderArr[j + 1];
+        throw new Exception("Order doesn't exist");
 
-            }
-            DataSource.Config.indexOrder--;
-        }
-        else
-            throw new Exception("The identifying number doesn't exists");
+
+        // NOTE: see my note at the product.delete func - same reason
+
+        //int a = -1;
+        //for (int i = 0; i < 100; i++)
+        //{
+
+        //    if (DataSource.OrderArr[i].Id == id)
+        //    {
+        //        a = i;
+        //    }
+        //}
+        //if (a != -1)
+        //{
+        //    int j = a;
+        //    for (; j < DataSource.Config.indexOrder - 2; j++)
+        //    {
+        //        DataSource.OrderArr[j] = DataSource.OrderArr[j + 1];
+
+        //    }
+        //    DataSource.Config.indexOrder--;
+        //}
+        //else
+        //    throw new Exception("The identifying number doesn't exists");
     }
-
-    //public IEnumerable<Order?> GetAll() //מתודת בקשה\קריאה של רשימת כל האובייקטים של הישות (ללא פרמטרים)
-    //{
-    //    string[] onlyOrders = new string[DataSource.Config.indexOrder];
-    //    for (int i = 0; i < onlyOrders.Length; i++)
-    //    {
-    //        onlyOrders[i] = DataSource.OrderArr[i];
-    //    }
-    //}
-
-    public Order[] getAll()
+    public Order[] GetAll()
     {
         Order[] onlyOrders = new Order[DataSource.Config.indexOrder];
         for (int i = 0; i < onlyOrders.Length; i++)
@@ -104,5 +102,6 @@ public class DalOrder
         }
         return onlyOrders;
     }
+}
     
 

@@ -6,14 +6,9 @@ public class DalOrderItem
 {
     public int Add(OrderItem orderItem)
     {
-        if (DataSource.Config.indexOrderItem == DataSource.OrderItemArr.Length - 1) 
-            throw new Exception("No place for new item\n");
-        for(int i = 0; i < DataSource.Config.indexOrderItem; i++)
-        {
-            if (DataSource.OrderItemArr[i].Id == orderItem.Id)
-                throw new Exception("Item already exists\n");
-        }
-        DataSource.OrderItemArr[DataSource.Config.indexOrderItem] = orderItem;
+        if (DataSource.Config.indexOrderItem == DataSource.OrderItemArr.Length) 
+            throw new Exception("No place for new item");
+        DataSource.OrderItemArr[DataSource.Config.indexOrderItem++] = orderItem;
         return orderItem.Id;
     }
     public OrderItem GetByID(int id)
@@ -23,25 +18,28 @@ public class DalOrderItem
             if (DataSource.OrderItemArr[i].Id == id)
                 return DataSource.OrderItemArr[i];
         }
-        throw new Exception("Item doesn't exist\n");
+        throw new Exception("Item doesn't exist");
     }
     public OrderItem GetByProductAndOrder(int product, int order)
     {
         for (int i = 0; i < DataSource.Config.indexOrderItem; i++)
         {
             if (DataSource.OrderItemArr[i].ProductID == product && DataSource.OrderItemArr[i].OrderID == order)
-                return DataSource.OrderItemArr[i];
+                 return DataSource.OrderItemArr[i];
         }
-        throw new Exception("Item doesn't exists\n");
+        throw new Exception("Item doesn't exist");
     }  
     public void Update(OrderItem orderItem)
     {
         for (int i = 0; i < DataSource.Config.indexOrderItem; i++)
         {
             if (DataSource.OrderItemArr[i].Id == orderItem.Id)
+            {
                 DataSource.OrderItemArr[i] = orderItem;
+                return;
+            }
         }
-        throw new Exception("Item doesn't exists\n");
+        throw new Exception("Item doesn't exist");
     }
     public void Delete(int id)
     {
@@ -49,14 +47,19 @@ public class DalOrderItem
         {
             if (DataSource.OrderItemArr[i].Id == id)
             {
-                DataSource.OrderItemArr[i] = DataSource.OrderItemArr[DataSource.Config.indexOrderItem];
-                DataSource.Config.indexOrderItem--;
+                DataSource.OrderItemArr[i] = DataSource.OrderItemArr[--DataSource.Config.indexOrderItem];
+                return;
             }
         }
-        throw new Exception("Item doesn't exists\n");
+        throw new Exception("Item doesn't exist");
     }
-    public IEnumerable<OrderItem?> GetAll()
+    public OrderItem[] GetAll()
     {
-
+        OrderItem[] onlyOrderItems = new OrderItem[DataSource.Config.indexOrderItem];
+        for (int i = 0; i < onlyOrderItems.Length; i++)
+        {
+            onlyOrderItems[i] = DataSource.OrderItemArr[i];
+        }
+        return onlyOrderItems;
     }
 }

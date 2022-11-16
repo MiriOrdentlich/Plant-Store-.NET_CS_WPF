@@ -11,32 +11,29 @@ public class DalProduct
 {
     public int Add(Product product) //create
     {
-        if (DataSource.Config.indexProduct == DataSource.ProductArr.Length - 1)
-            throw new Exception("There is no more space for new products\n");
+        if (DataSource.Config.indexProduct == DataSource.ProductArr.Length)
+            throw new Exception("There is no more space for new products");
         for (int i = 0; i < DataSource.Config.indexProduct; i++)
         {
             if (DataSource.ProductArr[i].Id == product.Id)
             {
-                throw new Exception("The identifying number already exists\n");
+                throw new Exception("The identifying number already exists");
             }
         }
-        DataSource.ProductArr[DataSource.Config.indexProduct] = product;
+        DataSource.ProductArr[DataSource.Config.indexProduct++] = product;
         return product.Id;
     }
     public Product GetById(int id) //Request 
     {
-        Product p;
         for (int i = 0; i < DataSource.Config.indexProduct; i++)
-        {
-            p = DataSource.ProductArr[i];
-            if (p.Id == id)
+        {            
+            if (DataSource.ProductArr[i].Id == id)
             {
-                return p;
+                return DataSource.ProductArr[i];
             }
         }
         throw new Exception("Id Number doesn't exist");
     }
-
     public void Update(Product product)
     {
         for (int i = 0; i < DataSource.Config.indexProduct; i++)
@@ -44,55 +41,52 @@ public class DalProduct
             if (DataSource.ProductArr[i].Id == product.Id)
             {
                 DataSource.ProductArr[i] = product;
+                return;
             }
-            else
-                throw new Exception("The identifying number doesn't exists");
-
         }
-
+        throw new Exception("The identifying number doesn't exist");
     }
-
     public void Delete(int id)
     {
-        int a = -1;
         for (int i = 0; i < DataSource.Config.indexProduct; i++)
         {
-
             if (DataSource.ProductArr[i].Id == id)
             {
-                a = i;
+                DataSource.ProductArr[i] = DataSource.ProductArr[--DataSource.Config.indexProduct];
+                return;
             }
         }
-        if (a != -1)
-        {
-            //DataSource.productArr[a] = null; //לא מדויק, צריך למחוק את מה שהוא באמת מכיל ולא רק להגיד שהוא לא מכיל כלום
-            int j = a;
-            for (; j < DataSource.Config.indexProduct - 2; j++)
-            {
-                DataSource.ProductArr[j] = DataSource.ProductArr[j + 1];
+        throw new Exception("Product doesn't exist");
 
-            }
-            DataSource.Config.indexProduct--;
-            //DataSource.productArr[j+1] = null; //כנל
-        }
-        else
-            throw new Exception("The identifying number doesn't exists");
+
+        // NOTE: your function doesnt work. i didnt feel like working up my head over this so i used the less precise function.
+        // anyway, if u want to figure out the problem be my guest..
+
+        //int a = -1;
+        //for (int i = 0; i < DataSource.Config.indexProduct; i++)
+        //{
+
+        //    if (DataSource.ProductArr[i].Id == id)
+        //    {
+        //        a = i;
+        //    }
+        //}
+        //if (a != -1)
+        //{
+        //    int j = a;
+        //    for (; j < DataSource.Config.indexProduct - 2; j++)
+        //    {
+        //        DataSource.ProductArr[j] = DataSource.ProductArr[j + 1];
+
+        //    }
+        //    DataSource.Config.indexProduct--;
+        //}
+        //throw new Exception("The identifying number doesn't exists");
     }
-
-    //public IEnumerable<Product[]?>[] GetAll()
-    ////מתודת בקשה\קריאה של רשימת כל האובייקטים של הישות (ללא פרמטרים)
-    //{
-    //    Product[] onlyProducts = new Product[DataSource.Config.indexProduct];
-    //    for (int i = 0; i < onlyProducts.Length; i++)
-    //    {
-    //        onlyProducts[i] = DataSource.ProductArr[i];
-    //    }
-    //    return onlyProducts;
-    //}
-    public Product[] getAll()
+    public Product[] GetAll()
     {
         Product[] onlyProducts = new Product[DataSource.Config.indexProduct];
-        for (int i = 0; i < onlyProducts.Length; i++)
+        for (int i = 0; i < DataSource.Config.indexProduct; i++)
         {
             onlyProducts[i] = DataSource.ProductArr[i];
         }
