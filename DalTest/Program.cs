@@ -1,9 +1,11 @@
-﻿using DO;
-using Dal;
-//Naama Schweitzer 325447654 , Miri Ordentlich 213687346
+﻿//Naama Schweitzer 325447654 , Miri Ordentlich 213687346
 //We did the bonus
+
+using DO;
+using Dal;
+
 public enum FirstChoice { Exit, Product, Order, OrderItem};
-public enum SecondChoice { add = 1, delete, update, getById, GetAll, GetByProductAndOrder };
+public enum SecondChoice { add = 1, delete, update, getById, GetAll, GetByProductAndOrder, GetAllOrderProducts };
 
 internal class Program
 {
@@ -90,13 +92,13 @@ enter your choice:"); // print
                 break;
 
             case SecondChoice.GetAll:
-                Product[] pArr = dalProduct.GetAll(); //create an arr with the valid prodects and use the func GetAll
+                Product[] pArr = dalProduct.GetAll(); //create an arr with the current products and use the func GetAll
                 foreach(Product temp in pArr)
                     Console.WriteLine(temp);
                 break;
 
             default:
-                throw new Exception("Invalid input"); // for unknown choice
+                throw new Exception("Invalid input"); // for invalid choice
         }
          
     }
@@ -182,6 +184,7 @@ enter your choice:");
 4 - get order item by ID
 5 - get all order items
 6 - get by product ID and order ID
+7 - get all products from certain order
 enter your choice:");
         // print
         if (SecondChoice.TryParse(Console.ReadLine(), out SecondChoice c2) == false) throw new Exception("Invalid input");
@@ -213,7 +216,7 @@ enter your choice:");
                 dalOrderItem.Delete(id); //delete
                 break;
             
-            case SecondChoice.update: //NOTE: to check. smth didnt work with the id of the item itself. i dont realy remember
+            case SecondChoice.update: 
                 OrderItem oi2 = new OrderItem();
                 Console.WriteLine("Enter order item ID");
                 if (int.TryParse(Console.ReadLine(), out id) == false) throw new Exception("Invalid input");
@@ -233,7 +236,7 @@ enter your choice:");
                 dalOrderItem.Update(oi2); //updating the changes the user gave
                 break;
 
-            case SecondChoice.getById: //NOTE: to check.
+            case SecondChoice.getById: 
                 Console.WriteLine("Enter order ID");
                 if (int.TryParse(Console.ReadLine(), out id) == false) throw new Exception("Invalid input");
                 Console.WriteLine(dalOrderItem.GetByID(id).ToString());
@@ -245,13 +248,25 @@ enter your choice:");
                     Console.WriteLine(temp.ToString());
                 break;
 
-            case SecondChoice.GetByProductAndOrder: //NOTE: to check
+            case SecondChoice.GetByProductAndOrder: 
                 Console.WriteLine("Enter order ID"); // print
-                if (int.TryParse(Console.ReadLine(), out int p_id) == false)//check if the input is valid
+                if (int.TryParse(Console.ReadLine(), out int o_id) == false)//check if the input is valid
                     throw new Exception("Invalid input");
                 Console.WriteLine("Enter product ID");
-                if (int.TryParse(Console.ReadLine(), out int o_id) == false) throw new Exception("Invalid input");
+                if (int.TryParse(Console.ReadLine(), out int p_id) == false) throw new Exception("Invalid input");
                 Console.WriteLine(dalOrderItem.GetByProductAndOrder(p_id,o_id).ToString());
+                break;
+
+            case SecondChoice.GetAllOrderProducts:
+                Console.WriteLine("Enter order ID"); // print
+                if (int.TryParse(Console.ReadLine(), out o_id) == false)//check if the input is valid
+                    throw new Exception("Invalid input");
+                OrderItem[] oArr = dalOrderItem.GetAllOrderProducts(o_id);
+                foreach (OrderItem temp in oArr)
+                {
+                    if(temp.Id != 0)
+                        Console.WriteLine(temp.ToString());
+                }
                 break;
 
             default:

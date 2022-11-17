@@ -13,22 +13,26 @@ internal static class DataSource
         s_Initialize();
     }
     private static readonly Random s_rand = new();
-    internal static class Config
-    {
-        internal static int indexProduct = 10;
-        internal static int indexOrder = 20;
-        internal static int indexOrderItem = 40;
 
-        internal const int s_startOrderNumber = 100000;
-        private static int s_nextOrderNumber = s_startOrderNumber;
-        internal static int nextOrderNumber { get => s_nextOrderNumber++; }
-        internal const int s_startOrderItemNumber = 100000;
-        private static int s_nextOrderItemNumber = s_startOrderItemNumber;
-        internal static int nextOrderItemNumber { get => s_nextOrderItemNumber++; }
-    }
+
+    //internal static class Config
+
+    internal static int indexProduct = 0;
+    internal static int indexOrder = 0;
+    internal static int indexOrderItem = 0;
+
+    internal const int s_startOrderNumber = 100000;
+    private static int s_nextOrderNumber = s_startOrderNumber;
+    internal static int nextOrderNumber { get => s_nextOrderNumber++; }
+    internal const int s_startOrderItemNumber = 100000;
+    private static int s_nextOrderItemNumber = s_startOrderItemNumber;
+    internal static int nextOrderItemNumber { get => s_nextOrderItemNumber++; }
+
     internal static Product[] ProductArr { get; } = new Product[50];
     internal static Order[] OrderArr { get; } = new Order[100];
     internal static OrderItem[] OrderItemArr { get; } = new OrderItem[200];
+
+
 
     private static void s_Initialize()
     {
@@ -57,6 +61,7 @@ internal static class DataSource
                 Category = (Category)index_category,
                 InStock = s_rand.Next(50),
             };
+            indexProduct++;
         }
     }
     private static void createAndInitOrders()
@@ -96,7 +101,7 @@ internal static class DataSource
             }
             OrderArr[i] = new Order()
             {
-                Id = Config.nextOrderNumber,
+                Id = nextOrderNumber,
                 CustomerName = fstName + " " + lstName,
                 CustomerAdress = adresses[s_rand.Next(9)],
                 CustomerEmail = fstName + lstName + "@gmail.com",
@@ -104,6 +109,7 @@ internal static class DataSource
                 ShipDate = shipDate,
                 DeliveryDate = deliveryDate,                
             };
+            indexOrder++;
         }
     }
     private static void createAndInitOrderItems()
@@ -123,13 +129,14 @@ internal static class DataSource
 
                 OrderItemArr[i] = new OrderItem()
                 {
-                    Id = Config.nextOrderItemNumber,
+                    Id = nextOrderItemNumber,
                     ProductID = ProductArr[indexProduct].Id,
                     OrderID = OrderArr[count].Id,
                     Price = ProductArr[indexProduct].Price,
                     Amount = amount,
                 };
             }
+            indexOrderItem++;
             count++;
         }
     }
