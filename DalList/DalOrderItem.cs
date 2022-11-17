@@ -7,7 +7,7 @@ public class DalOrderItem
     public int Add(OrderItem orderItem)
     {
         if (DataSource.indexOrderItem == DataSource.OrderItemArr.Length) 
-            throw new Exception("No place for new item");
+            throw new Exception("No place for new item");//the array is full
         DataSource.OrderItemArr[DataSource.indexOrderItem++] = orderItem;
         return orderItem.Id;
     }
@@ -16,7 +16,7 @@ public class DalOrderItem
         OrderItem temp;
         for (int i = 0; i < DataSource.indexOrderItem; i++)
         {
-            if (DataSource.OrderItemArr[i].Id == id)
+            if (DataSource.OrderItemArr[i].Id == id) //search the wanted order item
             {
                 temp = DataSource.OrderItemArr[i];
                 return temp;
