@@ -41,7 +41,8 @@ internal static class DataSource
         createAndInitOrderItems();
 
     }
-
+    //the 5 arrays match to the 5 categories in Category by index. i did it in a way that we can later on choose
+    //a price (also suited by index) that make sense to the product value
     private static string[,] productsNames = new string[5, 3] { { "chair", "barstool", "armchair" }, { "dining table", "desk", "coffee table" }, { "library", "closet", "wardrobes" }, { "cabinet", "drawer", "nightstand" }, { "bed", "playpen", "sofa" } };
 
     private static void createAndInitProducts()
@@ -55,7 +56,7 @@ internal static class DataSource
 
             ProductArr[i] = new Product()
             {
-                Id = i + 100000,
+                Id = i + 100000,// id is 6 digits
                 Name = productsNames[index_category, index_name],
                 Price = s_rand.Next(priceFrom[index_category], priceTo[index_category]),
                 Category = (Category)index_category,
@@ -75,11 +76,11 @@ internal static class DataSource
             string lstName = lastName[s_rand.Next(6)];
 
             int days = s_rand.Next(1000);
-
-            DateTime orderDate = DateTime.Now.AddDays(-days);
+            
+            DateTime orderDate = DateTime.Now.AddDays(-days); // order date is berfore current date
             DateTime? deliveryDate;
             DateTime? shipDate;
-            if (i % 5 == 0)
+            if (i % 5 == 0) // 5% doesnt get delivery and ship date
             {
                 deliveryDate = null;
                 shipDate = null;
