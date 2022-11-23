@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using DalApi;
+
 
 namespace Dal;
 
@@ -11,18 +14,13 @@ public class DalProduct
 {
     public int Add(Product product) //create
     {
-        if (DataSource.indexProduct == DataSource.ProductsList.Length)
-            throw new Exception("There is no more space for new products");
-        for (int i = 0; i < DataSource.indexProduct; i++)
-        {
-            if (DataSource.ProductsList[i].Id == product.Id)
-            {
-                throw new Exception("The identifying number already exists");
-            }
-        }
-        DataSource.ProductsList[DataSource.indexProduct++] = product;
+        // search for product in list:
+        if (DataSource.ProductsList.Contains(product)) // if found product -> throw exception
+            throw new Exception("Product already exists");
+        DataSource.ProductsList.Add(product); // if product isn't in list, add product to list
         return product.Id;
     }
+
     public Product GetById(int id) //Request 
     {
         for (int i = 0; i < DataSource.indexProduct; i++)

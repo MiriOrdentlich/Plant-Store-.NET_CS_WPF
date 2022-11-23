@@ -1,4 +1,6 @@
-﻿using DO;
+﻿using DalApi;
+using DO;
+using System.Linq;
 
 namespace Dal;
 
@@ -6,24 +8,21 @@ public class DalOrderItem
 {
     public int Add(OrderItem orderItem)
     {
-        if (DataSource.indexOrderItem == DataSource.OrderItemsList.Length) 
-            throw new Exception("No place for new item");//the array is full
-        DataSource.OrderItemsList[DataSource.indexOrderItem++] = orderItem;
+        // search for orderItem in list:
+        if (DataSource.OrderItemsList.Contains(orderItem)) // if found orderItem -> throw exception
+            throw new Exception("Order item already exists");
+        DataSource.OrderItemsList.Add(orderItem); // if orderItem isn't in list, add orderItem to list
         return orderItem.Id;
     }
+
     public OrderItem GetByID(int id)
     {
-        OrderItem temp;
-        for (int i = 0; i < DataSource.indexOrderItem; i++)
-        {
-            if (DataSource.OrderItemsList[i].Id == id) //search the wanted order item
-            {
-                temp = DataSource.OrderItemsList[i];
-                return temp;
-            }
-        }
-        throw new Exception("Item doesn't exist");
+        //search orderItemList for order item that match the given id
+        //if order item not found throw exception
+        OrderItem p = DataSource.OrderItemsList.Find(x => x?.Id == id) ?? throw new Exception("Id Number doesn't exist");
+        return p;
     }
+
     public OrderItem GetByProductAndOrder(int product, int order)
     {
         OrderItem temp = new OrderItem();

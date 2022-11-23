@@ -5,75 +5,45 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Xml.Linq;
 
 namespace Dal;
-
 public class DalOrder
 {
 
     public int Add(Order order) //create
     {
-        if (DataSource.indexOrder == DataSource.OrdersList.Length) //check if the array is full
-        {
-            throw new Exception("There is no more space for new orders");
-        }
-        for (int i = 0; i < DataSource.indexOrder; i++)
-        {
-
-            if (DataSource.OrdersList[i].Id == order.Id)
-            {
-                throw new Exception("The identifying number already exists");
-            }
-        }
-        DataSource.OrdersList[DataSource.indexOrder++] = order;
+        // search for order in list:
+        if(DataSource.OrdersList.Contains(order)) // if found order -> throw exception
+            throw new Exception("Order already exists");
+        DataSource.OrdersList.Add(order); // if order isn't in list, add order to list
         return order.Id;
     }
     public Order GetById(int id) //Request
     {
-        Order p;
-        for (int i = 0; i < DataSource.indexOrder; i++)
-        {
-            p = DataSource.OrdersList[i];
-            if (p.Id == id) //search the id
-            {
-                return p;
-            }
-
-
-        }
-        throw new Exception("Id Number doesn't exist");
-
+        //search orderList for order that match the given id
+        //if order not found throw exception
+        Order p = DataSource.OrdersList.Find(x => x?.Id == id) ?? throw new Exception("Id Number doesn't exist");
+        return p;
     }
     public void Update(Order order)
     {
-        for (int i = 0; i < DataSource.indexOrder; i++)
-        {
-            if (DataSource.OrdersList[i].Id == order.Id)
-            {
-                DataSource.OrdersList[i] = order; //updating the order
-                return;
-            }
-        }
-        throw new Exception("The identifying number doesn't exist");
+        // search for order in list. if didn't find order -> throw exception
+        Order p = DataSource.OrdersList.Find(x => x?.Id == order.Id) ?? throw new Exception("Order doesn't exist");
+        p = order;
     }
     public void Delete(int id)
     {
-        for (int i = 0; i < DataSource.indexOrder; i++)
-        {
-            if (DataSource.OrdersList[i].Id == id)
-            {
-                DataSource.OrdersList[i] = DataSource.OrdersList[--DataSource.indexOrder];
-                return;
-            }
-        }
-        throw new Exception("Order doesn't exist");
+        if( DataSource.OrdersList.RemoveAll(x => x?.Id == id) == 0)
+            throw new Exception("Order doesn't exist");
     }
-    public Order[] GetAll()
+    public IEnumerable<Order?> GetAll()
     {
-        Order[] onlyOrders = new Order[DataSource.indexOrder];
-        for (int i = 0; i < onlyOrders.Length; i++)
+        List<Order?> onlyOrders = new List<Order?>();
+        foreach (var item in DataSource.OrdersList)
         {
-            onlyOrders[i] = DataSource.OrdersList[i]; //copy all the orders
+            onlyOrders.Add(item);
         }
         return onlyOrders;
     }

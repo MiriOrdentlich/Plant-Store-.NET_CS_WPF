@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
 using System.Xml.Linq;
+using System.Collections.Generic;
 
 namespace Dal;
 
@@ -16,10 +17,6 @@ internal static class DataSource
 
 
     //internal static class Config
-
-    internal static int indexProduct = 0;
-    internal static int indexOrder = 0;
-    internal static int indexOrderItem = 0;
 
     internal const int s_startOrderNumber = 100000;
     private static int s_nextOrderNumber = s_startOrderNumber;
@@ -55,14 +52,15 @@ internal static class DataSource
             int index_category = s_rand.Next(4);
             int index_name = s_rand.Next(2);
 
-            ProductsList[i] = new Product()
-            {
-                Id = i + 100000,// id is 6 digits
-                Name = productsNames[index_category, index_name],
-                Price = s_rand.Next(priceFrom[index_category], priceTo[index_category]),
-                Category = (Category)index_category,
-                InStock = s_rand.Next(50),
-            };
+            ProductsList.Add(
+               new Product()
+               {
+                   Id = i + 100000,// id is 6 digits
+                   Name = productsNames[index_category, index_name],
+                   Price = s_rand.Next(priceFrom[index_category], priceTo[index_category]),
+                   Category = (Category)index_category,
+                   InStock = s_rand.Next(50),
+               });
             indexProduct++;
         }
     }
@@ -101,16 +99,18 @@ internal static class DataSource
                 }
 
             }
-            OrdersList[i] = new Order()
-            {
-                Id = nextOrderNumber,
-                CustomerName = fstName + " " + lstName,
-                CustomerAdress = adresses[s_rand.Next(9)],
-                CustomerEmail = fstName + lstName + "@gmail.com",
-                OrderDate = orderDate,
-                ShipDate = shipDate,
-                DeliveryDate = deliveryDate,                
-            };
+            //create and add order to OrdersList
+            OrdersList.Add(
+                new Order()
+                {
+                    Id = nextOrderNumber,
+                    CustomerName = fstName + " " + lstName,
+                    CustomerAdress = adresses[s_rand.Next(9)],
+                    CustomerEmail = fstName + lstName + "@gmail.com",
+                    OrderDate = orderDate,
+                    ShipDate = shipDate,
+                    DeliveryDate = deliveryDate,                
+                });
             indexOrder++;
         }
     }
@@ -129,14 +129,15 @@ internal static class DataSource
                 int indexProduct = s_rand.Next(9);
                 int amount = s_rand.Next(10);
 
-                OrderItemsList[i] = new OrderItem()
-                {
-                    Id = nextOrderItemNumber,
-                    ProductID = ProductsList[indexProduct].Id,
-                    OrderID = OrdersList[count].Id,
-                    Price = ProductsList[indexProduct].Price,
-                    Amount = amount,
-                };
+                OrderItemsList.Add( 
+                    new OrderItem()
+                    {
+                        Id = nextOrderItemNumber,
+                        ProductID = ProductsList[indexProduct].Id,
+                        OrderID = OrdersList[count].Id,
+                        Price = ProductsList[indexProduct].Price,
+                        Amount = amount,
+                    });
             }
             indexOrderItem++;
             count++;
