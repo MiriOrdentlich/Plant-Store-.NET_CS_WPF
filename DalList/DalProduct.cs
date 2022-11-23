@@ -12,7 +12,7 @@ using System.Xml.Linq;
 
 namespace Dal;
 
-public class DalProduct
+internal class DalProduct : IProduct
 {
     public int Add(Product product) //create
     {

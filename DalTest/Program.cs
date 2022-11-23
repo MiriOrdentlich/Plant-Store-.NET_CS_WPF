@@ -1,8 +1,10 @@
 ﻿//Naama Schweitzer 325447654 , Miri Ordentlich 213687346
 //We did the bonus
 
+namespace Dal;
 using DO;
 using Dal;
+using DalApi;
 
 public enum FirstChoice { Exit, Product, Order, OrderItem};
 public enum SecondChoice { add = 1, delete, update, getById, GetAll, GetByProductAndOrder, GetAllOrderProducts };
@@ -10,9 +12,7 @@ public enum SecondChoice { add = 1, delete, update, getById, GetAll, GetByProduc
 internal class Program
 {
     // define a pass to the entities
-    private static DalProduct dalProduct = new DalProduct();
-    private static DalOrder dalOrder = new DalOrder();
-    private static DalOrderItem dalOrderItem = new DalOrderItem();
+    private static IDal dal = new DalList();
 
     private static void ProductFunc()
     {
@@ -51,14 +51,14 @@ enter your choice:"); // print
                 if (int.TryParse(Console.ReadLine(), out int a) == false) //checks if the choice is valid
                     throw new Exception("Your input is not valid");
                 p.InStock = a;
-                dalProduct.Add(p);
+                dal.Product.Add(p);
                 break;
 
             case SecondChoice.delete:
                 Console.WriteLine("Enter product ID");
                 if (int.TryParse(Console.ReadLine(), out id) == false) //if not valid
                     throw new Exception("Your input is not valid");
-                dalProduct.Delete(id); //make a delete
+                dal.Product.Delete(id); //make a delete
                 break;
 
             case SecondChoice.update:
@@ -81,19 +81,19 @@ enter your choice:"); // print
                 if (int.TryParse(Console.ReadLine(), out a) == false) //checks if the input is valid
                     throw new Exception("Your input is not valid");
                 p2.InStock = a;
-                dalProduct.Update(p2); //updating the changes the user gave
+                dal.Product.Update(p2); //updating the changes the user gave
                 break;
 
             case SecondChoice.getById: 
                 Console.WriteLine("Enter product ID");
                 if (int.TryParse(Console.ReadLine(), out id) == false) //checks if the input is valid
                     throw new Exception("Your input is not valid");
-                Console.WriteLine(dalProduct.GetById(id).ToString()); // find the wanted product
+                Console.WriteLine(dal.Product.GetById(id).ToString()); // find the wanted product
                 break;
 
             case SecondChoice.GetAll:
-                Product[] pArr = dalProduct.GetAll(); //create an arr with the current products and use the func GetAll
-                foreach(Product temp in pArr)
+                IEnumerable<Product?> pArr = dal.Product.GetAll(); //create an arr with the current products and use the func GetAll
+                foreach(var temp in pArr)
                     Console.WriteLine(temp);
                 break;
 
@@ -130,14 +130,14 @@ enter your choice:");
                 ord.CustomerEmail = Console.ReadLine();
                 Console.WriteLine("Enter customer adress");// print
                 ord.CustomerAdress = Console.ReadLine();
-                dalOrder.Add(ord);
+                dal.Order.Add(ord);
                 break;
 
             case SecondChoice.delete:
                 Console.WriteLine("Enter order ID");
                 if (int.TryParse(Console.ReadLine(), out id) == false) //checks if the input is valid
                     throw new Exception("Invalid input");
-                dalOrder.Delete(id); //deleting
+                dal.Order.Delete(id); //deleting
                 break;
 
             case SecondChoice.update:
@@ -156,19 +156,19 @@ enter your choice:");
                 ord2.CustomerEmail = Console.ReadLine();
                 Console.WriteLine("Enter customer adress");
                 ord2.CustomerAdress = Console.ReadLine();
-                dalOrder.Update(ord2); //upating
+                dal.Order.Update(ord2); //upating
                 break;
 
             case SecondChoice.getById:
                 Console.WriteLine("Enter order ID");
                 if (int.TryParse(Console.ReadLine(), out id) == false) //checks if the input is valid
                     throw new Exception("Invalid input");
-                Console.WriteLine(dalOrder.GetById(id).ToString());//find the order we want to update
+                Console.WriteLine(dal.Order.GetById(id).ToString());//find the order we want to update
                 break;
 
             case SecondChoice.GetAll:
-                Order[] pArr = dalOrder.GetAll();
-                foreach (Order temp in pArr)
+                IEnumerable<Order?> pArr = dal.Order.GetAll();
+                foreach (var temp in pArr)
                     Console.WriteLine(temp);
                 break;
 
@@ -206,14 +206,14 @@ enter your choice:");
                 if (double.TryParse(Console.ReadLine(), out double price) == false)//check if the input is valid
                     throw new Exception("Invalid input");
                 oi.Price = price;
-                dalOrderItem.Add(oi); //Adding
+                dal.OrderItem.Add(oi); //Adding
                 break;
             
             case SecondChoice.delete:
                 Console.WriteLine("Enter order ID");
                 if (int.TryParse(Console.ReadLine(), out id) == false) //check if the input is valid
                     throw new Exception("Invalid input");
-                dalOrderItem.Delete(id); //delete
+                dal.OrderItem.Delete(id); //delete
                 break;
             
             case SecondChoice.update: 
@@ -233,18 +233,18 @@ enter your choice:");
                 Console.WriteLine("Enter product price");
                 if (double.TryParse(Console.ReadLine(), out price) == false) throw new Exception("Invalid input");
                 oi2.Price = price;
-                dalOrderItem.Update(oi2); //updating the changes the user gave
+                dal.OrderItem.Update(oi2); //updating the changes the user gave
                 break;
 
             case SecondChoice.getById: 
                 Console.WriteLine("Enter order ID");
                 if (int.TryParse(Console.ReadLine(), out id) == false) throw new Exception("Invalid input");
-                Console.WriteLine(dalOrderItem.GetByID(id).ToString());
+                Console.WriteLine(dal.OrderItem.GetById(id).ToString());
                 break;
 
             case SecondChoice.GetAll:  
-                OrderItem[] pArr = dalOrderItem.GetAll();
-                foreach (OrderItem temp in pArr)
+                IEnumerable<OrderItem?> pArr = dal.OrderItem.GetAll();
+                foreach (var temp in pArr)
                     Console.WriteLine(temp.ToString());
                 break;
 
@@ -254,15 +254,15 @@ enter your choice:");
                     throw new Exception("Invalid input");
                 Console.WriteLine("Enter product ID");
                 if (int.TryParse(Console.ReadLine(), out int p_id) == false) throw new Exception("Invalid input");
-                Console.WriteLine(dalOrderItem.GetByProductAndOrder(p_id,o_id).ToString());
+                Console.WriteLine(dal.OrderItem.GetByProductAndOrder(p_id,o_id).ToString());
                 break;
 
             case SecondChoice.GetAllOrderProducts:
                 Console.WriteLine("Enter order ID"); // print
                 if (int.TryParse(Console.ReadLine(), out o_id) == false)//check if the input is valid
                     throw new Exception("Invalid input");
-                OrderItem[] oArr = dalOrderItem.GetAllOrderProducts(o_id);
-                foreach (OrderItem temp in oArr)
+                IEnumerable<OrderItem?> oArr = dal.OrderItem.GetAllOrderProducts(o_id);
+                foreach (var temp in oArr)
                 {
                     if(temp.Id != 0)
                         Console.WriteLine(temp.ToString());

@@ -3,7 +3,7 @@ using DO;
 using System.Linq;
 namespace Dal;
 
-internal class DalOrderItem : IOrder
+internal class DalOrderItem : IOrderItem
 {
     public int Add(OrderItem orderItem)
     {
@@ -15,7 +15,7 @@ internal class DalOrderItem : IOrder
         return orderItem.Id;
     }
 
-    public OrderItem GetByID(int id)
+    public OrderItem GetById(int id)
     {
         //search orderItemList for order item that match the given id
         //if order item not found throw exception
