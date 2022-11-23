@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using DalApi;
+using System.Diagnostics;
+using System.Xml.Linq;
 
 
 namespace Dal;
@@ -23,48 +25,31 @@ public class DalProduct
 
     public Product GetById(int id) //Request 
     {
-        for (int i = 0; i < DataSource.indexProduct; i++)
-        {            
-            if (DataSource.ProductsList[i].Id == id)
-            {
-                return DataSource.ProductsList[i];
-            }
-        }
-        throw new Exception("Id Number doesn't exist");
+        //search for the wanted product
+        Product p = DataSource.ProductsList.Find(x => x?.Id == id) ?? throw new Exception("Id Number doesn't exist"); //throw if doesn't exist
+        return p;
     }
     public void Update(Product product)
     {
-        for (int i = 0; i < DataSource.indexProduct; i++)
-        {
-            if (DataSource.ProductsList[i].Id == product.Id)
-            {
-                DataSource.ProductsList[i] = product;
-                return;
-            }
-        }
-        throw new Exception("The identifying number doesn't exist");
+        //search for the wanted product on ProductsList that match the wanted id
+        Product p = DataSource.ProductsList.Find(x => x?.Id == product.Id) ?? throw new Exception("The identifying number doesn't exist"); //throw if doesn't exist
+        p = product;
     }
     public void Delete(int id)
     {
-        for (int i = 0; i < DataSource.indexProduct; i++)
-        {
-            if (DataSource.ProductsList[i].Id == id)
-            {
-                DataSource.ProductsList[i] = DataSource.ProductsList[--DataSource.indexProduct];
-                return;
-            }
-        }
-        throw new Exception("Product doesn't exist");
+        //search for the wanted product on ProductsList that match the wanted id and delete it
+        if (DataSource.ProductsList.RemoveAll(x => x?.Id == id) == 0)
+            throw new Exception("Product doesn't exist"); //throw if doesn't exist
 
 
     }
-    public Product[] GetAll()
+    public IEnumerable<Product?> GetAll()
     {
-        Product[] onlyProducts = new Product[DataSource.indexProduct];
-        for (int i = 0; i < DataSource.indexProduct; i++)
+        List<Product?> onlyProducts = new List<Product?>(); //create a new list
+        foreach (var item in DataSource.ProductsList)
         {
-            onlyProducts[i] = DataSource.ProductsList[i];
+            onlyProducts.Add(item);  //copy the existing list to the new one
         }
-        return onlyProducts;
+        return onlyProducts; //return the new list
     }
 }
