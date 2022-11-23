@@ -1,16 +1,16 @@
 ﻿using DalApi;
 using DO;
 using System.Linq;
-
 namespace Dal;
 
-public class DalOrderItem
+internal class DalOrderItem : IOrder
 {
     public int Add(OrderItem orderItem)
     {
         // search for orderItem in list:
         if (DataSource.OrderItemsList.Contains(orderItem)) // if found orderItem -> throw exception
             throw new Exception("Order item already exists");
+        orderItem.Id = DataSource.nextOrderItemNumber;
         DataSource.OrderItemsList.Add(orderItem); // if orderItem isn't in list, add orderItem to list
         return orderItem.Id;
     }

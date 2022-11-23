@@ -61,7 +61,6 @@ internal static class DataSource
                    Category = (Category)index_category,
                    InStock = s_rand.Next(50),
                });
-            indexProduct++;
         }
     }
     private static void createAndInitOrders()
@@ -111,7 +110,6 @@ internal static class DataSource
                     ShipDate = shipDate,
                     DeliveryDate = deliveryDate,                
                 });
-            indexOrder++;
         }
     }
     private static void createAndInitOrderItems()
@@ -139,7 +137,6 @@ internal static class DataSource
                         Amount = amount,
                     });
             }
-            indexOrderItem++;
             count++;
         }
     }

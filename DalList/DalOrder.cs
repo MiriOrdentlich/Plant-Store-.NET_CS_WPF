@@ -1,5 +1,4 @@
-﻿using DO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -8,8 +7,10 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Xml.Linq;
 
+using DO;
+using DalApi;
 namespace Dal;
-public class DalOrder
+internal class DalOrder : IOrder
 {
 
     public int Add(Order order) //create
@@ -17,6 +18,7 @@ public class DalOrder
         // search for order in list:
         if(DataSource.OrdersList.Contains(order)) // if found order -> throw exception
             throw new Exception("Order already exists");
+        order.Id = DataSource.nextOrderNumber;
         DataSource.OrdersList.Add(order); // if order isn't in list, add order to list
         return order.Id;
     }
