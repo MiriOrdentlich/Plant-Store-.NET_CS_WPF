@@ -6,9 +6,9 @@ public class DalOrderItem
 {
     public int Add(OrderItem orderItem)
     {
-        if (DataSource.indexOrderItem == DataSource.OrderItemArr.Length) 
+        if (DataSource.indexOrderItem == DataSource.OrderItemsList.Length) 
             throw new Exception("No place for new item");//the array is full
-        DataSource.OrderItemArr[DataSource.indexOrderItem++] = orderItem;
+        DataSource.OrderItemsList[DataSource.indexOrderItem++] = orderItem;
         return orderItem.Id;
     }
     public OrderItem GetByID(int id)
@@ -16,9 +16,9 @@ public class DalOrderItem
         OrderItem temp;
         for (int i = 0; i < DataSource.indexOrderItem; i++)
         {
-            if (DataSource.OrderItemArr[i].Id == id) //search the wanted order item
+            if (DataSource.OrderItemsList[i].Id == id) //search the wanted order item
             {
-                temp = DataSource.OrderItemArr[i];
+                temp = DataSource.OrderItemsList[i];
                 return temp;
             }
         }
@@ -29,9 +29,9 @@ public class DalOrderItem
         OrderItem temp = new OrderItem();
         for (int i = 0; i < DataSource.indexOrderItem; i++)
         {
-            if (DataSource.OrderItemArr[i].ProductID == product && DataSource.OrderItemArr[i].OrderID == order)
+            if (DataSource.OrderItemsList[i].ProductID == product && DataSource.OrderItemsList[i].OrderID == order)
             {
-                temp = DataSource.OrderItemArr[i];
+                temp = DataSource.OrderItemsList[i];
                 return temp;
             }
         }
@@ -41,9 +41,9 @@ public class DalOrderItem
     {
         for (int i = 0; i < DataSource.indexOrderItem; i++)
         {
-            if (DataSource.OrderItemArr[i].Id == orderItem.Id)
+            if (DataSource.OrderItemsList[i].Id == orderItem.Id)
             {
-                DataSource.OrderItemArr[i] = orderItem;
+                DataSource.OrderItemsList[i] = orderItem;
                 return;
             }
         }
@@ -53,9 +53,9 @@ public class DalOrderItem
     {
         for (int i = 0; i < DataSource.indexOrderItem; i++)
         {
-            if (DataSource.OrderItemArr[i].Id == id)
+            if (DataSource.OrderItemsList[i].Id == id)
             {
-                DataSource.OrderItemArr[i] = DataSource.OrderItemArr[DataSource.indexOrderItem--];
+                DataSource.OrderItemsList[i] = DataSource.OrderItemsList[DataSource.indexOrderItem--];
                 return;
             }
         }
@@ -66,7 +66,7 @@ public class DalOrderItem
         OrderItem[] onlyOrderItems = new OrderItem[DataSource.indexOrderItem];
         for (int i = 0; i < onlyOrderItems.Length; i++)
         {
-            onlyOrderItems[i] = DataSource.OrderItemArr[i];
+            onlyOrderItems[i] = DataSource.OrderItemsList[i];
         }
         return onlyOrderItems;
     }
@@ -77,9 +77,9 @@ public class DalOrderItem
         int j = 0; // index for tempArr 
         for (int i = 0; i < DataSource.indexOrderItem; i++)
         {
-            if (DataSource.OrderItemArr[i].OrderID == id)
+            if (DataSource.OrderItemsList[i].OrderID == id)
             {
-                helpOI = DataSource.OrderItemArr[i];
+                helpOI = DataSource.OrderItemsList[i];
                 tempArr[j++] = helpOI;
             }
         }

@@ -13,19 +13,19 @@ public class DalOrder
 
     public int Add(Order order) //create
     {
-        if (DataSource.indexOrder == DataSource.OrderArr.Length) //check if the array is full
+        if (DataSource.indexOrder == DataSource.OrdersList.Length) //check if the array is full
         {
             throw new Exception("There is no more space for new orders");
         }
         for (int i = 0; i < DataSource.indexOrder; i++)
         {
 
-            if (DataSource.OrderArr[i].Id == order.Id)
+            if (DataSource.OrdersList[i].Id == order.Id)
             {
                 throw new Exception("The identifying number already exists");
             }
         }
-        DataSource.OrderArr[DataSource.indexOrder++] = order;
+        DataSource.OrdersList[DataSource.indexOrder++] = order;
         return order.Id;
     }
     public Order GetById(int id) //Request
@@ -33,7 +33,7 @@ public class DalOrder
         Order p;
         for (int i = 0; i < DataSource.indexOrder; i++)
         {
-            p = DataSource.OrderArr[i];
+            p = DataSource.OrdersList[i];
             if (p.Id == id) //search the id
             {
                 return p;
@@ -48,9 +48,9 @@ public class DalOrder
     {
         for (int i = 0; i < DataSource.indexOrder; i++)
         {
-            if (DataSource.OrderArr[i].Id == order.Id)
+            if (DataSource.OrdersList[i].Id == order.Id)
             {
-                DataSource.OrderArr[i] = order; //updating the order
+                DataSource.OrdersList[i] = order; //updating the order
                 return;
             }
         }
@@ -60,9 +60,9 @@ public class DalOrder
     {
         for (int i = 0; i < DataSource.indexOrder; i++)
         {
-            if (DataSource.OrderArr[i].Id == id)
+            if (DataSource.OrdersList[i].Id == id)
             {
-                DataSource.OrderArr[i] = DataSource.OrderArr[--DataSource.indexOrder];
+                DataSource.OrdersList[i] = DataSource.OrdersList[--DataSource.indexOrder];
                 return;
             }
         }
@@ -73,7 +73,7 @@ public class DalOrder
         Order[] onlyOrders = new Order[DataSource.indexOrder];
         for (int i = 0; i < onlyOrders.Length; i++)
         {
-            onlyOrders[i] = DataSource.OrderArr[i]; //copy all the orders
+            onlyOrders[i] = DataSource.OrdersList[i]; //copy all the orders
         }
         return onlyOrders;
     }

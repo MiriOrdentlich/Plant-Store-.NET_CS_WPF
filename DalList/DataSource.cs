@@ -28,9 +28,10 @@ internal static class DataSource
     private static int s_nextOrderItemNumber = s_startOrderItemNumber;
     internal static int nextOrderItemNumber { get => s_nextOrderItemNumber++; }
 
-    internal static Product[] ProductArr { get; } = new Product[50];
-    internal static Order[] OrderArr { get; } = new Order[100];
-    internal static OrderItem[] OrderItemArr { get; } = new OrderItem[200];
+
+    internal static List<Product?> ProductsList { get; } = new List<Product?>(); //empty list for products
+    internal static List<Order?> OrdersList { get; } = new List<Order?>(); //empty list for orders
+    internal static List<OrderItem?> OrderItemsList { get; } = new List<OrderItem?>(); //empty list for orders items
 
 
 
@@ -54,7 +55,7 @@ internal static class DataSource
             int index_category = s_rand.Next(4);
             int index_name = s_rand.Next(2);
 
-            ProductArr[i] = new Product()
+            ProductsList[i] = new Product()
             {
                 Id = i + 100000,// id is 6 digits
                 Name = productsNames[index_category, index_name],
@@ -100,7 +101,7 @@ internal static class DataSource
                 }
 
             }
-            OrderArr[i] = new Order()
+            OrdersList[i] = new Order()
             {
                 Id = nextOrderNumber,
                 CustomerName = fstName + " " + lstName,
@@ -115,7 +116,7 @@ internal static class DataSource
     }
     private static void createAndInitOrderItems()
     {
-        // for every order there's 1-4 items. so we run on the OrderArr and add to OrederItemArr
+        // for every order there's 1-4 items. so we run on the OrdersList and add to OrederItemArr
         // the number of products from that order.
         int count = 0;
         for (int i = 0; i < 40; i++)
@@ -128,12 +129,12 @@ internal static class DataSource
                 int indexProduct = s_rand.Next(9);
                 int amount = s_rand.Next(10);
 
-                OrderItemArr[i] = new OrderItem()
+                OrderItemsList[i] = new OrderItem()
                 {
                     Id = nextOrderItemNumber,
-                    ProductID = ProductArr[indexProduct].Id,
-                    OrderID = OrderArr[count].Id,
-                    Price = ProductArr[indexProduct].Price,
+                    ProductID = ProductsList[indexProduct].Id,
+                    OrderID = OrdersList[count].Id,
+                    Price = ProductsList[indexProduct].Price,
                     Amount = amount,
                 };
             }

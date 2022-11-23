@@ -11,25 +11,25 @@ public class DalProduct
 {
     public int Add(Product product) //create
     {
-        if (DataSource.indexProduct == DataSource.ProductArr.Length)
+        if (DataSource.indexProduct == DataSource.ProductsList.Length)
             throw new Exception("There is no more space for new products");
         for (int i = 0; i < DataSource.indexProduct; i++)
         {
-            if (DataSource.ProductArr[i].Id == product.Id)
+            if (DataSource.ProductsList[i].Id == product.Id)
             {
                 throw new Exception("The identifying number already exists");
             }
         }
-        DataSource.ProductArr[DataSource.indexProduct++] = product;
+        DataSource.ProductsList[DataSource.indexProduct++] = product;
         return product.Id;
     }
     public Product GetById(int id) //Request 
     {
         for (int i = 0; i < DataSource.indexProduct; i++)
         {            
-            if (DataSource.ProductArr[i].Id == id)
+            if (DataSource.ProductsList[i].Id == id)
             {
-                return DataSource.ProductArr[i];
+                return DataSource.ProductsList[i];
             }
         }
         throw new Exception("Id Number doesn't exist");
@@ -38,9 +38,9 @@ public class DalProduct
     {
         for (int i = 0; i < DataSource.indexProduct; i++)
         {
-            if (DataSource.ProductArr[i].Id == product.Id)
+            if (DataSource.ProductsList[i].Id == product.Id)
             {
-                DataSource.ProductArr[i] = product;
+                DataSource.ProductsList[i] = product;
                 return;
             }
         }
@@ -50,9 +50,9 @@ public class DalProduct
     {
         for (int i = 0; i < DataSource.indexProduct; i++)
         {
-            if (DataSource.ProductArr[i].Id == id)
+            if (DataSource.ProductsList[i].Id == id)
             {
-                DataSource.ProductArr[i] = DataSource.ProductArr[--DataSource.indexProduct];
+                DataSource.ProductsList[i] = DataSource.ProductsList[--DataSource.indexProduct];
                 return;
             }
         }
@@ -65,7 +65,7 @@ public class DalProduct
         Product[] onlyProducts = new Product[DataSource.indexProduct];
         for (int i = 0; i < DataSource.indexProduct; i++)
         {
-            onlyProducts[i] = DataSource.ProductArr[i];
+            onlyProducts[i] = DataSource.ProductsList[i];
         }
         return onlyProducts;
     }
