@@ -31,11 +31,12 @@ public class DalOrder
     {
         // search for order in list. if didn't find order -> throw exception
         Order p = DataSource.OrdersList.Find(x => x?.Id == order.Id) ?? throw new Exception("Order doesn't exist");
-        p = order;
+        p = order;//update p 
     }
     public void Delete(int id)
     {
-        if( DataSource.OrdersList.RemoveAll(x => x?.Id == id) == 0)
+        // search for order in list. if didn't find order -> throw exception
+        if ( DataSource.OrdersList.RemoveAll(x => x?.Id == id) == 0)
             throw new Exception("Order doesn't exist");
     }
     public IEnumerable<Order?> GetAll()

@@ -23,64 +23,42 @@ public class DalOrderItem
         return p;
     }
 
-    public OrderItem GetByProductAndOrder(int product, int order)
+    public OrderItem GetByProductAndOrder(int productID, int orderID)
     {
-        OrderItem temp = new OrderItem();
-        for (int i = 0; i < DataSource.indexOrderItem; i++)
-        {
-            if (DataSource.OrderItemsList[i].ProductID == product && DataSource.OrderItemsList[i].OrderID == order)
-            {
-                temp = DataSource.OrderItemsList[i];
-                return temp;
-            }
-        }
-        throw new Exception("Item doesn't exist");
+        //search orderItemList for order item that match the given product and order ids
+        //if order item not found throw exception
+        OrderItem p = DataSource.OrderItemsList.Find(x => x?.ProductID == productID && x?.ProductID == orderID) ?? throw new Exception("Item doesn't exist");
+        return p;
     }  
     public void Update(OrderItem orderItem)
     {
-        for (int i = 0; i < DataSource.indexOrderItem; i++)
-        {
-            if (DataSource.OrderItemsList[i].Id == orderItem.Id)
-            {
-                DataSource.OrderItemsList[i] = orderItem;
-                return;
-            }
-        }
-        throw new Exception("Item doesn't exist");
+        // search for order item in list. if didn't find order item -> throw exception
+        OrderItem p = DataSource.OrderItemsList.Find(x => x?.Id == orderItem.Id) ?? throw new Exception("Item doesn't exist");
+        p = orderItem; //update p 
     }
     public void Delete(int id)
     {
-        for (int i = 0; i < DataSource.indexOrderItem; i++)
-        {
-            if (DataSource.OrderItemsList[i].Id == id)
-            {
-                DataSource.OrderItemsList[i] = DataSource.OrderItemsList[DataSource.indexOrderItem--];
-                return;
-            }
-        }
-        throw new Exception("Item doesn't exist");
+        // search for order item in list and remove it from list. if didn't find order item -> throw exception
+        if (DataSource.OrderItemsList.RemoveAll(x => x?.Id == id) == 0)
+            throw new Exception("Order item doesn't exist");
     }
-    public OrderItem[] GetAll()
+    public IEnumerable<OrderItem?> GetAll()
     {
-        OrderItem[] onlyOrderItems = new OrderItem[DataSource.indexOrderItem];
-        for (int i = 0; i < onlyOrderItems.Length; i++)
+        List<OrderItem?> onlyOrderItems = new List<OrderItem?>();
+        foreach (var item in DataSource.OrderItemsList)
         {
-            onlyOrderItems[i] = DataSource.OrderItemsList[i];
+            onlyOrderItems.Add(item);
         }
         return onlyOrderItems;
     }
-    public OrderItem[] GetAllOrderProducts(int id)
+   
+    public IEnumerable<OrderItem?> GetAllOrderProducts(int orderID)
     {
-        OrderItem[] tempArr = new OrderItem[4]; // max product per order is 4 
-        OrderItem helpOI;
-        int j = 0; // index for tempArr 
-        for (int i = 0; i < DataSource.indexOrderItem; i++)
+        List<OrderItem?> tempArr = new List<OrderItem?>();
+        foreach (var item in DataSource.OrderItemsList)
         {
-            if (DataSource.OrderItemsList[i].OrderID == id)
-            {
-                helpOI = DataSource.OrderItemsList[i];
-                tempArr[j++] = helpOI;
-            }
+            if(item?.OrderID == orderID)
+                tempArr.Add(item);
         }
         return tempArr;
     }
