@@ -22,7 +22,7 @@ public interface IProduct
     /// that match the needed product type
     /// </summary>
     /// <param name="productId"></param>
-    product GetById(int productId); //return product that is BO or DO??
+    BO.Product GetById(int productId);
     /// <summary>
     /// get product item details, create a product
     /// and add the product to the list
@@ -31,17 +31,17 @@ public interface IProduct
     /// <param name="productName"></param>
     /// <param name="price"></param>
     /// <param name="amount"></param>
-    void AddProduct(int productId, string productName, double price, int amount); //or Product?
-    void DeleteProduct(int productId);
-    void UpdateProduct(Product product);
+    void AddProduct(int productId, string productName, double price, int amount); //add a new DO product
+    void DeleteProduct(int productId); //Delete a product
+    void UpdateProduct(BO.Product product); //update a DO product
+
 
 
     // CLIENT METHODS:
 
 
     IEnumerable<ProductItem?> GetProducts();
-    void AddProductItem(int productItemId);
-    product GetById(int productId, Cart cart); //return product that is BO or DO??
+    BO.ProductItem GetById(int productId, Cart cart); //get product item details, create a product and add the product to the list
 
 }
 
