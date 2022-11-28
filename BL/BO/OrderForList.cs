@@ -10,7 +10,7 @@ public class OrderForList
 {
     public int Id { get; set; }
     public string? CustomerName { get; set; }
-    public double TotalPrice { get; set; } //string??
+    public double TotalPrice { get; set; }
     public int AmountOfItems { get; set; }
     public OrderStatus Status { get; set; } 
 
@@ -18,4 +18,5 @@ public class OrderForList
     {
         return this.ToStringProperty();
     }
+    
 }
