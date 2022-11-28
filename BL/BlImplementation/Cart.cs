@@ -9,17 +9,20 @@ namespace BlImplementation;
 
 internal class Cart : ICart
 {
-    void AddItem(Cart cart, int productId)
-    {
-        
-    }
-    void UpdateItemAmount(Cart cart, int productId, int amount)
-    {
 
-    }
-    void ConfirmCart(Cart cart, string name, string email, string adress)
+    public void AddItem(BO.Cart cart, int productId)
     {
-
+        throw new NotImplementedException();
     }
 
+    public void UpdateItemAmount(BO.Cart cart, int productId, int amount)
+    {
+
+        throw new NotImplementedException();
+    }
+
+    public void ConfirmCart(BO.Cart cart, string name, string email, string adress)
+    {
+        throw new NotImplementedException();
+    }
 }
