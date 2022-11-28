@@ -5,7 +5,7 @@ namespace DalApi;
 public interface IOrderItem : ICrud<OrderItem> //define empty CRUD interface for OrderItem entity
 {
     //define methods that special to OrderItem
-    IEnumerable<OrderItem?> GetByProductAndOrder(int orderId ,int productId);
-    IEnumerable<OrderItem?> GetAllOrderProducts(int orderId);
+    public OrderItem GetByProductAndOrder(int orderId ,int productId);
+    public IEnumerable<OrderItem?> GetAllOrderProducts(int orderId);
 
 }
