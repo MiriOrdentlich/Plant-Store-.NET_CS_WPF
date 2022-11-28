@@ -1,6 +1,5 @@
 ﻿using DalApi;
 using DO;
-using System.Linq;
 namespace Dal;
 
 internal class DalOrderItem : IOrderItem
@@ -14,7 +13,6 @@ internal class DalOrderItem : IOrderItem
         DataSource.OrderItemsList.Add(orderItem); // if orderItem isn't in list, add orderItem to list
         return orderItem.Id;
     }
-
     public OrderItem GetById(int id)
     {
         //search orderItemList for order item that match the given id
@@ -22,7 +20,6 @@ internal class DalOrderItem : IOrderItem
         OrderItem p = DataSource.OrderItemsList.Find(x => x?.Id == id) ?? throw new Exception("Id Number doesn't exist");
         return p;
     }
-
     public OrderItem GetByProductAndOrder(int productID, int orderID)
     {
         //search orderItemList for order item that match the given product and order ids
@@ -44,14 +41,8 @@ internal class DalOrderItem : IOrderItem
     }
     public IEnumerable<OrderItem?> GetAll()
     {
-        List<OrderItem?> onlyOrderItems = new List<OrderItem?>();
-        foreach (var item in DataSource.OrderItemsList)
-        {
-            onlyOrderItems.Add(item);
-        }
-        return onlyOrderItems;
-    }
-   
+        return new List<OrderItem?>(DataSource.OrderItemsList);
+    }   
     public IEnumerable<OrderItem?> GetAllOrderProducts(int orderID)
     {
         List<OrderItem?> tempArr = new List<OrderItem?>();

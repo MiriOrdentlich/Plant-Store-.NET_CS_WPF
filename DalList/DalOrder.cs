@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using System.Xml.Linq;
-
-using DO;
+﻿using DO;
 using DalApi;
 namespace Dal;
+
 internal class DalOrder : IOrder
 {
 
@@ -26,12 +18,11 @@ internal class DalOrder : IOrder
     {
         //search orderList for order that match the given id
         //if order not found throw exception
-        Order p = DataSource.OrdersList.Find(x => x?.Id == id) ?? throw new Exception("Id Number doesn't exist");
-        return p;
+        return DataSource.OrdersList.Find(x => x?.Id == id) ?? throw new Exception("Id Number doesn't exist");
     }
     public void Update(Order order)
     {
-        // search for order in list. if didn't find order -> throw exception
+        // search for order in list. if didn't find order -> throw exception else 
         Order p = DataSource.OrdersList.Find(x => x?.Id == order.Id) ?? throw new Exception("Order doesn't exist");
         p = order;//update p 
     }
@@ -43,12 +34,7 @@ internal class DalOrder : IOrder
     }
     public IEnumerable<Order?> GetAll()
     {
-        List<Order?> onlyOrders = new List<Order?>();
-        foreach (var item in DataSource.OrdersList)
-        {
-            onlyOrders.Add(item);
-        }
-        return onlyOrders;
+        return new List<Order?>(DataSource.OrdersList);
     }
 }
     

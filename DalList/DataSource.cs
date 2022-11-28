@@ -1,9 +1,4 @@
 ﻿using DO;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics;
-using System.Xml.Linq;
-using System.Collections.Generic;
 
 namespace Dal;
 

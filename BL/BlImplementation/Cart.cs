@@ -1,21 +1,31 @@
 ﻿using BlApi;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace BlImplementation;
 
 internal class Cart : ICart
 {
-
-    public void AddItem(BO.Cart cart, int productId)
+    /// <summary>
+    /// add new item to cart
+    /// </summary>
+    /// <param name="cart"></param>
+    /// <param name="productId"></param>
+    /// <returns></returns>
+    /// <exception cref="Exception"></exception>
+    /// <exception cref="NotImplementedException"></exception>
+    public Cart AddItem(BO.Cart cart, int productId)
     {
+        // search for product in OrderItems list:
+
+        //if (DataSource.ProductsList.Contains(product)) // if found product -> throw exception
+        //    throw new Exception("Product already exists");
+        //DataSource.ProductsList.Add(product); // if product isn't in list, add product to list
+        //return product.Id;
+
         throw new NotImplementedException();
     }
 
-    public void UpdateItemAmount(BO.Cart cart, int productId, int amount)
+    public Cart UpdateItemAmount(BO.Cart cart, int productId, int amount)
     {
 
         throw new NotImplementedException();
