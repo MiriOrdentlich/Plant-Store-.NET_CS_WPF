@@ -16,7 +16,6 @@ public interface IProduct
     IEnumerable<ProductForList?> GetListedProducts(); //MANAGER
     //need to get a list of products!!
 
-
     /// <summary>
     /// MANAGER
     /// base on the given Product code, build a Product object
@@ -36,7 +35,10 @@ public interface IProduct
     void DeleteProduct(int productId);
     void UpdateProduct(Product product);
 
+
     // CLIENT METHODS:
+
+
     IEnumerable<ProductItem?> GetProducts();
     void AddProductItem(int productItemId);
     product GetById(int productId, Cart cart); //return product that is BO or DO??
