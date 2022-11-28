@@ -10,8 +10,8 @@ public class OrderForList
 {
     public int Id { get; set; }
     public string? CustomerName { get; set; }
-    public string? PriceToPay { get; set; }
-    public int NumOfItems { get; set; }
+    public double TotalPrice { get; set; } //string??
+    public int AmountOfItems { get; set; }
     public OrderStatus Status { get; set; } 
 
     public override string ToString()

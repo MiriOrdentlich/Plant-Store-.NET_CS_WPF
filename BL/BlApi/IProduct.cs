@@ -19,7 +19,7 @@ public interface IProduct
     /// that match the needed product type
     /// </summary>
     /// <param name="productId"></param>
-    void GetProductInfo(int productId);
+    void GetById(int productId);
 
     /// <summary>
     /// get product item details, create a product
@@ -35,7 +35,7 @@ public interface IProduct
 
     // CLIENT METHODS:
     IEnumerable<ProductItem?> GetProducts();
-    void AddProductITEM(int productItemId);
+    void AddProductItem(int productItemId);
 
 }
 
