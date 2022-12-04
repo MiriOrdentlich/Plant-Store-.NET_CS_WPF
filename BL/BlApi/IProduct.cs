@@ -6,8 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BlApi;
-
-public interface IProduct
+public interface IProduct 
 {
 
     //MANAGER METHODS:
@@ -22,7 +21,7 @@ public interface IProduct
     /// that match the needed product type
     /// </summary>
     /// <param name="productId"></param>
-    BO.Product GetById(int productId);
+    BO.Product GetByIdM(int productId);
     /// <summary>
     /// get product item details, create a product
     /// and add the product to the list
@@ -36,12 +35,11 @@ public interface IProduct
     void UpdateProduct(BO.Product product); //update a DO product
 
 
-
     // CLIENT METHODS:
 
 
     IEnumerable<ProductItem?> GetProducts();
-    BO.ProductItem GetById(int productId, Cart cart); //get product item details, create a product and add the product to the list
+    BO.ProductItem GetByIdC(int productId, Cart cart); //get product item details, create a product and add the product to the list
 
 }
 
