@@ -11,9 +11,9 @@ internal class Cart : BlApi.ICart
     /// <summary>
     /// add new item to cart
     /// </summary>
-    /// <param name="cart"></param>
-    /// <param name="productId"></param>
-    /// <returns></returns>
+    /// <param name="cart">the cart in which we want to add/update the product</param>
+    /// <param name="productId">the product ID</param>
+    /// <returns>updated cart</returns>
     /// <exception cref="Exception"></exception>
     /// <exception cref="NotImplementedException"></exception>
     public BO.Cart AddItem(BO.Cart cart, int productId)
@@ -58,10 +58,10 @@ internal class Cart : BlApi.ICart
     /// <summary>
     /// update a cart item amount. return the new updated cart
     /// </summary>
-    /// <param name="cart">the cart to update tha</param>
+    /// <param name="cart">the cart that the item to update in it</param>
     /// <param name="productId"></param>
     /// <param name="amount"></param>
-    /// <returns>return updated cart</returns>
+    /// <returns>updated cart</returns>
     /// <exception cref="NotImplementedException"></exception>
     public BO.Cart UpdateItemAmount(BO.Cart cart, int productId, int amount)
     {
@@ -102,11 +102,12 @@ internal class Cart : BlApi.ICart
     /// <param name="cart">the cart to confirm and make order from</param>
     /// <param name="name">the client name</param>
     /// <param name="email">the client email</param>
-    /// <param name="adress">the client adress</param>
-    /// <exception cref="NotImplementedException"></exception>
-    public BO.Order ConfirmCart(BO.Cart cart, string name, string email, string adress) //WHAT THE USE OF THE PARAMETERS
+    /// <param name="address">the client address</param>
+    /// <returns>the confirmed order with detail according to given cart</returns>
+    /// <exception cref="Exception"></exception>
+    public BO.Order ConfirmCart(BO.Cart cart, string name, string email, string address) //WHAT THE USE OF THE PARAMETERS
     {
-        //check every order item in Items: products exist, there are enough from each in stock, amounts positive
+        //check for every order item in Items: products exist, there are enough from each in stock, amounts positive
         foreach(var orderItem in cart.Items)
         {
             var product = dal.Product.GetById(orderItem.ProductID);
@@ -130,12 +131,13 @@ internal class Cart : BlApi.ICart
         //create a new DO.Order, try to add the order and get an order id in return
         int DOorderId = dal.Order.Add(new DO.Order()
         {
+            //Id =
             CustomerName = cart.CustomerName,
-            CustomerAdress = cart.CustomerAddress,
+            CustomerAddress = cart.CustomerAddress,
             CustomerEmail = cart.CustomerEmail,
             OrderDate = DateTime.Now,
             ShipDate = null,
-            DeliveryDate = null,
+            DeliveryDate = null
         });
 
         foreach (var BOorderItem in cart.Items)
@@ -156,14 +158,14 @@ internal class Cart : BlApi.ICart
         BO.Order newOrder = new BO.Order()
         {
             Id = DOorderId,
-            CustomerAdress = cart.CustomerAddress,
+            CustomerAddress = cart.CustomerAddress,
             CustomerEmail = cart.CustomerEmail,
             CustomerName = cart.CustomerName,
             OrderDate = DateTime.Now,
             DeliveryDate = null,
             ShipDate = null,
             TotalPrice = cart.TotalPrice,
-            Status = BO.OrderStatus.Ordered, //?????
+            Status = BO.OrderStatus.Confirmed, //?????
             Items = cart.Items
         };
         return newOrder;

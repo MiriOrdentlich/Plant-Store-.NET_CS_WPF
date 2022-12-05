@@ -129,7 +129,7 @@ enter your choice:");
                 Console.WriteLine("Enter customer email"); // print
                 ord.CustomerEmail = Console.ReadLine();
                 Console.WriteLine("Enter customer adress");// print
-                ord.CustomerAdress = Console.ReadLine();
+                ord.CustomerAddress = Console.ReadLine();
                 dal.Order.Add(ord);
                 break;
 
@@ -155,7 +155,7 @@ enter your choice:");
                 Console.WriteLine("Enter customer email");// print
                 ord2.CustomerEmail = Console.ReadLine();
                 Console.WriteLine("Enter customer adress");
-                ord2.CustomerAdress = Console.ReadLine();
+                ord2.CustomerAddress = Console.ReadLine();
                 dal.Order.Update(ord2); //upating
                 break;
 

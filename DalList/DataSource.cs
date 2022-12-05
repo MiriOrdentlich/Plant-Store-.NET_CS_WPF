@@ -99,7 +99,7 @@ internal static class DataSource
                 {
                     Id = nextOrderNumber,
                     CustomerName = fstName + " " + lstName,
-                    CustomerAdress = adresses[s_rand.Next(9)],
+                    CustomerAddress = adresses[s_rand.Next(9)],
                     CustomerEmail = fstName + lstName + "@gmail.com",
                     OrderDate = orderDate,
                     ShipDate = shipDate,
