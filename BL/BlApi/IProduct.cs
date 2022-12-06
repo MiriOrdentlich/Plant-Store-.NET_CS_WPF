@@ -9,11 +9,12 @@ namespace BlApi;
 public interface IProduct 
 {
 
+
+
+    IEnumerable<ProductForList?> GetListedProducts(); //MANAGER and CLIENT
+   
+    
     //MANAGER METHODS:
-
-
-    IEnumerable<ProductForList?> GetListedProducts(); //MANAGER
-    //need to get a list of products!!
 
     /// <summary>
     /// MANAGER
