@@ -1,4 +1,5 @@
 ﻿using DO;
+using System.Collections.Generic;
 
 namespace Dal;
 
@@ -62,7 +63,7 @@ internal static class DataSource
     {
         string[] firstName = { "Sara", "Rivka", "Rachel", "Leah", "Avraham", "Izzac", "Jakob" };
         string[] lastName = { "Cohen", "Levi", "Goldstein", "Peretz", "Fridman", "Mizrachi", "Biton" };
-        string[] adresses = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" };
+        string[] addresses = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" };
         for (int i = 0; i < 20; i++)
         {
             string fstName = firstName[s_rand.Next(6)];
@@ -99,7 +100,7 @@ internal static class DataSource
                 {
                     Id = nextOrderNumber,
                     CustomerName = fstName + " " + lstName,
-                    CustomerAddress = adresses[s_rand.Next(9)],
+                    CustomerAddress = addresses[s_rand.Next(9)],
                     CustomerEmail = fstName + lstName + "@gmail.com",
                     OrderDate = orderDate,
                     ShipDate = shipDate,
@@ -126,13 +127,15 @@ internal static class DataSource
                     new OrderItem()
                     {
                         Id = nextOrderItemNumber,
-                        ProductID = ProductsList[indexProduct].Id,
-                        OrderID = OrdersList[count].Id,
-                        Price = ProductsList[indexProduct].Price,
+                        ProductID = ProductsList.ElementAt(indexProduct).Value.Id,
+                        OrderID = OrdersList.ElementAt(count).Value.Id,
+                        Price = ProductsList.ElementAt(indexProduct).Value.Price,
                         Amount = amount,
                     });
             }
             count++;
+
+            
         }
     }
 }
