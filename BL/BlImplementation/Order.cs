@@ -67,24 +67,16 @@ internal class Order : BlApi.IOrder
     {
         var doOrderList = dal.Order.GetAll(); //get orders list from data layer
         return from doOrder in doOrderList
-               let 
+               let orderItems = dal.OrderItem.GetAll().Select(x => x?.OrderID == doOrder?.Id)
                select new BO.OrderForList()
                {
                    Id = doOrder.Value.Id,
                    CustomerName = doOrder.Value.CustomerName,
-                   TotalPrice = doOrder,
-                   AmountOfItems = sbyte,
-                   Status =                   
+                   AmountOfItems = orderItems.Count(),
+                   TotalPrice = orderItems.Sum(x => x?.Price * x?.amount),
+                   Status = GetOrderStatus(doOrder)             
                };
-        //IEnumerable<BO.OrderForList?> BOorderList = new List<BO.OrderForList>();
-        //foreach (var DOorder in DOorderList) 
-        //{
-        //    BOorderList
-        //}
-        ////BO.OrderForList
-        //return l;
     }
-
 
     /// <summary>
     /// 
@@ -99,7 +91,7 @@ internal class Order : BlApi.IOrder
         {
 
         }
-        if ()
+        return new BO.Order();
     }
 
     /// <summary>
