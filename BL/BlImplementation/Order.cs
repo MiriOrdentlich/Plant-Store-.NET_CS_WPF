@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BO;
+using DalApi;
 using DO;
 
 namespace BlImplementation;
@@ -68,14 +69,14 @@ internal class Order : BlApi.IOrder
     {
         var doOrderList = dal.Order.GetAll(); //get orders list from data layer
         return from doOrder in doOrderList
-               let orderItems = dal.OrderItem.GetAll().Select(x => x?.OrderID == doOrder?.Id)
+               let orderItems = dal.OrderItem.GetAllOrderProducts(doOrder?.Id ?? 0)
                select new BO.OrderForList()
                {
-                   Id = doOrder.Value.Id,
-                   CustomerName = doOrder.Value.CustomerName,
+                   Id = doOrder?.Id ?? 0,
+                   CustomerName = doOrder?.CustomerName,
                    AmountOfItems = orderItems.Count(),
-                   TotalPrice = orderItems.Sum(x => x * x?.amount),
-                   Status = GetOrderStatus(doOrder)             
+                   TotalPrice = orderItems.Sum(x => x?.Price ?? 0 * x?.Amount ?? 0),
+                   Status = GetOrderStatus((DO.Order)doOrder)  //NEED TO CHECK                 
                };
     }
 
@@ -87,12 +88,18 @@ internal class Order : BlApi.IOrder
     /// <exception cref="NotImplementedException"></exception>
     public BO.Order UpdateOrderDelivery(int orderId)
     {
-        var order = dal.Order.GetById(orderId);
-        if(GetOrderStatus(order) == OrderStatus.Confirmed) //order stage is confirmed => order hasn't shipped yet
+        var doOrder = dal.Order.GetById(orderId);
+        if (GetOrderStatus(doOrder) == OrderStatus.Shipped) //order stage is shipped => order haven't been delivered yet
         {
-
+            var boOrder = GetBoOrder(doOrder);
+            doOrder.DeliveryDate = DateTime.Now;
+            boOrder.DeliveryDate = DateTime.Now;
+            boOrder.Status = OrderStatus.Delivered;
+            dal.Order.Update(doOrder);
+            return boOrder;
         }
-        return new BO.Order();
+        else
+            throw new Exception();
     }
 
     /// <summary>
@@ -103,31 +110,18 @@ internal class Order : BlApi.IOrder
     /// <exception cref="NotImplementedException"></exception>
     public BO.Order UpdateOrderShipping(int orderId)
     {
-        var order = dal.Order.GetById(orderId);
-
-        var orderItems = dal.OrderItem.GetAllOrderProducts(order.Id);
-        return new BO.Order()
+        var doOrder = dal.Order.GetById(orderId);
+        if (GetOrderStatus(doOrder) == OrderStatus.Confirmed) //order stage is confirmed => order hasn't shipped yet
         {
-            Id = order.Id,
-            OrderDate = order.DeliveryDate,
-            ShipDate = order.ShipDate,
-            DeliveryDate = order.DeliveryDate,
-            CustomerAddress = order.CustomerAddress,
-            CustomerName = order.CustomerName,
-            CustomerEmail = order.CustomerEmail,
-            Status = GetOrderStatus(order),
-            Items = (from doOrderItem in orderItems
-                     let productId = doOrderItem?.ProductID ?? 0
-                     select new BO.OrderItem() //convert orderItems items from DO to BO
-                     {
-                         Id = doOrderItem?.Id ?? 0,
-                         ProductID = doOrderItem?.ProductID ?? 0,
-                         Name = dal.Product.GetById(productId).Name,
-                         Price = doOrderItem?.Price ?? 0,
-                         Amount = doOrderItem?.Amount ?? 0,
-                         TotalPrice = doOrderItem?.Price ?? 0 * doOrderItem?.Amount ?? 0 //logical considerations 
-                     }).ToList()
-        };
+            var boOrder = GetBoOrder(doOrder);
+            doOrder.ShipDate = DateTime.Now;
+            boOrder.ShipDate = DateTime.Now;
+            boOrder.Status = OrderStatus.Shipped;
+            dal.Order.Update(doOrder);
+            return boOrder;
+        }
+        else
+            throw new Exception();
     }
 
     /// <summary>

@@ -14,7 +14,7 @@ namespace BlImplementation;
 
 internal class Product : BlApi.IProduct
 {
-    private DalApi.IDal dal = new Dal.DalList();//צריך לעדכן חריגות כנדרש בשתיהן
+    private DalApi.IDal dal = new Dal.DalList();
 
 
     /// <summary>
@@ -24,24 +24,15 @@ internal class Product : BlApi.IProduct
     /// <exception cref="NullReferenceException"></exception>
     public IEnumerable<BO.ProductForList?> GetListedProducts()
     {
-
-        return from DO.Product? doProduct in dal.Product.GetAll() // get a list of products
+        return from doProduct in dal.Product.GetAll() // get a list of products and scan it
                select new BO.ProductForList //build a new List products (type ProductForList) 
                {
-                   Id = doProduct?.Id ?? throw new NullReferenceException("Missing Id"), //חריגות..
-                   Name = doProduct?.Name ?? throw new NullReferenceException("Missing Name"),
-                   Category = (BO.Category?)doProduct?.Category ?? throw new NullReferenceException("No Matching Category"),
+                   Id = doProduct?.Id ?? 0,
+                   Name = doProduct?.Name ?? "",
+                   Category = (BO.Category)doProduct?.Category!,
                    Price = doProduct?.Price ?? 0
                };
     }
-
-    public IEnumerable<ProductItem?> GetProducts()
-    {
-        return
-    }
-
-    //MANAGER:
-
 
     /// <summary>
     /// Get products by their id for the manager
@@ -181,17 +172,17 @@ internal class Product : BlApi.IProduct
             Name = product.Name,
             Price = product.Price,
             InStock = product.InStock,
-            Category = (DO.Category)product.Category //take the newDoProduct Category, turn it into DO.Category
+            Category = (DO.Category)product.Category! //take the newDoProduct Category, turn it into DO.Category
         };
-        dal.Product.Update(newDoProduct);
+        dal.Product.Update(newDoProduct); //update product in 
     }
 
     public void DeleteProduct(int productId) //delete a product by its id
     {
-        foreach (DO.Order order in dal.Order.GetAll())
+        foreach (var order in dal.Order.GetAll())
         {
             var list = from item in dal.OrderItem.GetAll()// get a list of orders in order to check if the wanted product is there
-                       where dal.Product.GetById(item.Value.Id).Id == productId //search which product.id is equal to the given product id
+                       where dal.Product.GetById(item?.Id ?? 0).Id == productId //search which product.id is equal to the given product id
                        select item;
             if (list != null) //if there is a product.id that match the wanted one
             {
@@ -200,9 +191,6 @@ internal class Product : BlApi.IProduct
         }
         
     }
-
-
-    //CLIENT:
 
     public BO.ProductItem GetByIdC(int productId, BO.Cart cart)
     {
@@ -216,7 +204,7 @@ internal class Product : BlApi.IProduct
             return new BO.ProductItem() //create a new Product (type BO) and return it withthe wanted values
             {
                 Id = doProduct.Id,
-                Category = (BO.Category)doProduct.Category, //take the doProduct Category, turn it into BO.Category
+                Category = (BO.Category)doProduct.Category!, //take the doProduct Category, turn it into BO.Category
                 Price = doProduct.Price,
                 Name = doProduct.Name,
                 InStock = doProduct.InStock > 0,
