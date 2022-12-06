@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BO;
+using DO;
 
 namespace BlImplementation;
 
@@ -73,7 +74,7 @@ internal class Order : BlApi.IOrder
                    Id = doOrder.Value.Id,
                    CustomerName = doOrder.Value.CustomerName,
                    AmountOfItems = orderItems.Count(),
-                   TotalPrice = orderItems.Sum(x => x?.Price * x?.amount),
+                   TotalPrice = orderItems.Sum(x => x * x?.amount),
                    Status = GetOrderStatus(doOrder)             
                };
     }
@@ -102,7 +103,31 @@ internal class Order : BlApi.IOrder
     /// <exception cref="NotImplementedException"></exception>
     public BO.Order UpdateOrderShipping(int orderId)
     {
-        throw new NotImplementedException();
+        var order = dal.Order.GetById(orderId);
+
+        var orderItems = dal.OrderItem.GetAllOrderProducts(order.Id);
+        return new BO.Order()
+        {
+            Id = order.Id,
+            OrderDate = order.DeliveryDate,
+            ShipDate = order.ShipDate,
+            DeliveryDate = order.DeliveryDate,
+            CustomerAddress = order.CustomerAddress,
+            CustomerName = order.CustomerName,
+            CustomerEmail = order.CustomerEmail,
+            Status = GetOrderStatus(order),
+            Items = (from doOrderItem in orderItems
+                     let productId = doOrderItem?.ProductID ?? 0
+                     select new BO.OrderItem() //convert orderItems items from DO to BO
+                     {
+                         Id = doOrderItem?.Id ?? 0,
+                         ProductID = doOrderItem?.ProductID ?? 0,
+                         Name = dal.Product.GetById(productId).Name,
+                         Price = doOrderItem?.Price ?? 0,
+                         Amount = doOrderItem?.Amount ?? 0,
+                         TotalPrice = doOrderItem?.Price ?? 0 * doOrderItem?.Amount ?? 0 //logical considerations 
+                     }).ToList()
+        };
     }
 
     /// <summary>
@@ -129,7 +154,19 @@ internal class Order : BlApi.IOrder
     /// <returns>order from logical layer</returns>
     private BO.Order GetBoOrder(DO.Order order)
     {
-        var orderItems = dal.OrderItem.GetAllOrderProducts(order.Id);
+        var doOrderItems = dal.OrderItem.GetAllOrderProducts(order.Id);
+        var boOrderItems = (from doOrderItem in doOrderItems
+                            let productId = doOrderItem?.ProductID ?? 0
+                            select new BO.OrderItem() //convert orderItems items from DO to BO
+                            {
+                                Id = doOrderItem?.Id ?? 0,
+                                ProductID = doOrderItem?.ProductID ?? 0,
+                                Name = dal.Product.GetById(productId).Name,
+                                Price = doOrderItem?.Price ?? 0,
+                                Amount = doOrderItem?.Amount ?? 0,
+                                TotalPrice = doOrderItem?.Price ?? 0 * doOrderItem?.Amount ?? 0 //logical considerations 
+                            }).ToList();
+
         return new BO.Order()
         {
             Id = order.Id,
@@ -140,16 +177,8 @@ internal class Order : BlApi.IOrder
             CustomerName = order.CustomerName,
             CustomerEmail = order.CustomerEmail,
             Status = GetOrderStatus(order),
-            Items = (from doOrderItem in orderItems
-                    select new BO.OrderItem() //convert orderItems items from DO to BO
-                    {
-                        Id = doOrderItem.Value.Id,
-                        ProductID = doOrderItem.Value.ProductID,
-                        Name = dal.Product.GetById(doOrderItem.Value.ProductID).Name,
-                        Price = doOrderItem.Value.Price,
-                        Amount = doOrderItem.Value.Amount,
-                        TotalPrice = doOrderItem.Value.Price * doOrderItem.Value.Amount //logical considerations 
-                    }).ToList()
+            Items = boOrderItems,
+            TotalPrice = boOrderItems.Sum(x => x.TotalPrice)
         };
     }
 }

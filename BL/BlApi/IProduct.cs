@@ -8,12 +8,8 @@ using System.Threading.Tasks;
 namespace BlApi;
 public interface IProduct 
 {
+    public IEnumerable<ProductForList?> GetListedProducts(); //MANAGER and CLIENT   
 
-
-
-    IEnumerable<ProductForList?> GetListedProducts(); //MANAGER and CLIENT
-   
-    
     //MANAGER METHODS:
 
     /// <summary>
@@ -22,7 +18,7 @@ public interface IProduct
     /// that match the needed product type
     /// </summary>
     /// <param name="productId"></param>
-    BO.Product GetByIdM(int productId);
+    public BO.Product GetByIdM(int productId);
     /// <summary>
     /// get product item details, create a product
     /// and add the product to the list
@@ -31,16 +27,13 @@ public interface IProduct
     /// <param name="productName"></param>
     /// <param name="price"></param>
     /// <param name="amount"></param>
-    void AddProduct(int productId, string productName, double price, int amount); //add a new DO product
-    void DeleteProduct(int productId); //Delete a product
-    void UpdateProduct(BO.Product product); //update a DO product
-
+    public void AddProduct(int productId, string productName, double price, int amount); //add a new DO product
+    public void DeleteProduct(int productId); //Delete a product
+    public void UpdateProduct(BO.Product product); //update a DO product
 
     // CLIENT METHODS:
-
-
-    IEnumerable<ProductItem?> GetProducts();
-    BO.ProductItem GetByIdC(int productId, Cart cart); //get product item details, create a product and add the product to the list
+    public IEnumerable<ProductItem?> GetProducts();
+    public BO.ProductItem GetByIdC(int productId, BO.Cart cart); //get product item details, create a product and add the product to the list
 
 }
 
