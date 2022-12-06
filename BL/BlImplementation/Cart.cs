@@ -18,41 +18,52 @@ internal class Cart : BlApi.ICart
     /// <exception cref="NotImplementedException"></exception>
     public BO.Cart AddItem(BO.Cart cart, int productId)
     {
-        var orderItem = cart.Items.Where(x => x.ProductID == productId).FirstOrDefault();
-        var product = dal.Product.GetById(productId);
-        if (orderItem is null)
+        try
         {
-            if (product.InStock > 0) 
+            var orderItem = cart.Items.Where(x => x.ProductID == productId).FirstOrDefault();
+            var product = dal.Product.GetById(productId);
+            if (orderItem is null)
             {
-                cart.Items.Append(new BO.OrderItem
-                { /*Id =??*/
-                    Name = product.Name,
-                    Price = product.Price,
-                    ProductID = product.Id,
-                    Amount = 1,
-                    TotalPrice = product.Price
-                });
-                cart.TotalPrice += product.Price;
+                //בדיקה אם המוצר קיים?
+                if (product.InStock > 0)
+                {
+                    cart.Items.Append(new BO.OrderItem
+                    { /*Id =??*/
+                        Name = product.Name,
+                        Price = product.Price,
+                        ProductID = product.Id,
+                        Amount = 1,
+                        TotalPrice = product.Price
+                    });
+                    cart.TotalPrice += product.Price;
+                }
+                else
+                {
+                    //exception product not in stock
+                    throw new BO.BlNotInStockException(0, product.Name);
+                }
             }
-            else
+            else //if there is an order item for the product in cart
             {
-                //exception product not in stock
+                if (product.InStock < orderItem.Amount + 1)
+                {
+                    //exception not enough of product in stock
+                    throw new BO.BlNotInStockException(-1, product.Name);
+                }
+                else
+                {
+                    orderItem.Amount++;
+                    orderItem.TotalPrice += product.Price;
+                    cart.TotalPrice += product.Price;
+                }
             }
+            return cart;
         }
-        else //if there is an order item for the product in cart
+
+        catch (DO.DalDoesNotExistIdException ex) //לא בטוח
         {
-            if (product.InStock < orderItem.Amount + 1)
-            {
-                //exception not enough of product in stock
-            }
-            else
-            {
-                orderItem.Amount++;
-                orderItem.TotalPrice += product.Price;
-                cart.TotalPrice += product.Price;
-            }
+            throw new BO.BlMissingEntityException("Data exception:", ex);
         }
-        return cart;
     }
 
     /// <summary>
@@ -65,35 +76,45 @@ internal class Cart : BlApi.ICart
     /// <exception cref="NotImplementedException"></exception>
     public BO.Cart UpdateItemAmount(BO.Cart cart, int productId, int amount)
     {
-        var orderItem = cart.Items.Where(x => x.ProductID == productId).FirstOrDefault() ?? throw new Exception();//product doesnt exist in cart
-        var product = dal.Product.GetById(productId);
-        if (amount == 0)
+        try
         {
-            cart.TotalPrice -= orderItem.TotalPrice; //remove the total of the order item from cart total
-            cart.Items.ToList().Remove(orderItem); //remove order item from cart
-        }
-        else if (orderItem.Amount < amount) //the amount of the item got bigger
-        {
-            if (product.InStock < amount) //amount would be the updated number of products we need for orderItem
+            //בדיקה האם המוצר לא קיים בהזמנה?
+            var orderItem = cart.Items.Where(x => x.ProductID == productId).FirstOrDefault() ?? throw new Exception();//product doesnt exist in cart
+            var product = dal.Product.GetById(productId);
+            if (amount == 0)
             {
-                //exception not enough of product in stock
+                cart.TotalPrice -= orderItem.TotalPrice; //remove the total of the order item from cart total
+                cart.Items.ToList().Remove(orderItem); //remove order item from cart
             }
-            else
+            else if (orderItem.Amount < amount) //the amount of the item got bigger
             {
-                //we add to the total the difference between the old and new amount multified by the product's price
-                orderItem.TotalPrice += product.Price * (amount - orderItem.Amount);
-                cart.TotalPrice += product.Price * (amount - orderItem.Amount);
+                if (product.InStock < amount) //amount would be the updated number of products we need for orderItem
+                {
+                    //exception not enough of product in stock
+                    throw new BO.BlNotInStockException(-1, product.Name);
+                }
+                else
+                {
+                    //we add to the total the difference between the old and new amount multified by the product's price
+                    orderItem.TotalPrice += product.Price * (amount - orderItem.Amount);
+                    cart.TotalPrice += product.Price * (amount - orderItem.Amount);
+                    orderItem.Amount = amount; //update the new amount
+                }
+            }
+            else if (orderItem.Amount > amount) // new amount is smaller than the old one
+            {
+                //we subtract from the total the difference between the old and new amount multified by the product's price
+                orderItem.TotalPrice -= product.Price * (orderItem.Amount - amount);
+                cart.TotalPrice -= product.Price * (orderItem.Amount - amount);
                 orderItem.Amount = amount; //update the new amount
             }
+            return cart;
         }
-        else if (orderItem.Amount > amount) // new amount is smaller than the old one
+
+        catch (DO.DalDoesNotExistIdException ex) //לא בטוח
         {
-            //we subtract from the total the difference between the old and new amount multified by the product's price
-            orderItem.TotalPrice -= product.Price * (orderItem.Amount - amount);
-            cart.TotalPrice -= product.Price * (orderItem.Amount - amount); 
-            orderItem.Amount = amount; //update the new amount
+            throw new BO.BlMissingEntityException("Data exception:", ex);
         }
-        return cart;
     }
 
     /// <summary>
@@ -112,15 +133,15 @@ internal class Cart : BlApi.ICart
         {
             var product = dal.Product.GetById(orderItem.ProductID);
             if (orderItem.Amount > product.InStock)
-                throw new Exception(); //there isn't enough from product in stock  INCORRET EXCEPTION
+                 throw new BO.BlNotInStockException(); //there isn't enough from product in stock
             if (orderItem.Amount <= 0)
-                throw new Exception(); //amount isn't positive INCORRET EXCEPTION
+                throw new BO.BlInvalidEntityException(); //amount isn't positive
         }
 
         //**********************INCORRECT EXCEPTIONS !!!!***************
         //check if address, name aren't empty and if email is empty or according to format (<string>@gmail.com)
         if (cart.CustomerAddress is null)
-            throw new Exception();
+            throw new BO.BlInvalidEntityException(name, 3);
         if (cart.CustomerEmail is not null) //NEED TO CHECK IF ACCORDING TO FORMAT 
             throw new Exception();
         if (cart.CustomerName is null)
