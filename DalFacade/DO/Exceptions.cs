@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,8 +22,31 @@ public class DalDoesNotExistException : Exception
 /// </summary>
 public class DalAlreadyExistsException : Exception
 {
-    public DalAlreadyExistsException(string? message) : base(message) { }
+    public DalAlreadyExistsException() : base() { }
+    public DalAlreadyExistsException(string message) : base(message) { }
+    public DalAlreadyExistsException(string message, Exception inner) : base(message, inner) { }
+    protected DalAlreadyExistsException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+    //public OverloadCapacityException(int capacity, string message) : base(message) => this.capacity = capacity;
+    //override public string ToString() =>
+   //"DalAlreadyExistsException: DAL capacity of " + capacity + " overloaded\n" + Message;
 }
+
+public class OverloadCapacityException : Exception
+{
+    public int capacity { get; private set; }
+    public OverloadCapacityException() : base() { }
+    public OverloadCapacityException(string message) : base(message) { }
+    public OverloadCapacityException(string message, Exception inner) : base(message, inner) { }
+    protected OverloadCapacityException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+    // special constructor for our custom exception
+    public OverloadCapacityException(int capacity, string message) : base(message) =>
+    this.capacity = capacity;
+    override public string ToString() =>
+    "OverloadCapacityException: DAL capacity of " + capacity + " overloaded\n" + Message;
+}
+
+
+
 
 /*
 public class DalDataCorruptionException : Exception

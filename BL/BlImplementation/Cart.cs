@@ -14,7 +14,7 @@ internal class Cart : BlApi.ICart
     /// <param name="cart">the cart in which we want to add/update the product</param>
     /// <param name="productId">the product ID</param>
     /// <returns>updated cart</returns>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="Exceptions"></exception>
     /// <exception cref="NotImplementedException"></exception>
     public BO.Cart AddItem(BO.Cart cart, int productId)
     {
@@ -104,7 +104,7 @@ internal class Cart : BlApi.ICart
     /// <param name="email">the client email</param>
     /// <param name="address">the client address</param>
     /// <returns>the confirmed order with detail according to given cart</returns>
-    /// <exception cref="Exception"></exception>
+    /// <exception cref="Exceptions"></exception>
     public BO.Order ConfirmCart(BO.Cart cart, string name, string email, string address) //WHAT THE USE OF THE PARAMETERS
     {
         //check for every order item in Items: products exist, there are enough from each in stock, amounts positive

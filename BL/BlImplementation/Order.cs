@@ -38,16 +38,24 @@ internal class Order : BlApi.IOrder
     }
 
     /// <summary>
-    /// 
+    /// get a
     /// </summary>
     /// <param name="orderId"></param>
-    /// <returns></returns>
+    /// <returns>logical layer order</returns>
     /// <exception cref="NotImplementedException"></exception>
     public BO.Order GetOrderInfo(int orderId)
     {
-        var order = dal.Order.GetById(orderId); //EXCEPTION??? //get order from data by the given ID
-        var orderItems = dal.OrderItem.GetAllOrderProducts(orderId);
-        throw new NotImplementedException();
+        try
+        {
+            //EXCEPTION??? 
+            var order = dal.Order.GetById(orderId);//get order from data by the given ID
+            return GetBoOrder(order);
+        }
+        catch(Exception ex)
+        {
+            throw new Exception();
+        }
+       
     }
 
     /// <summary>
@@ -57,14 +65,14 @@ internal class Order : BlApi.IOrder
    /// <exception cref="NotImplementedException"></exception>
     public IEnumerable<BO.OrderForList?> getOrdersList()
     {
-        var DOorderList = dal.Order.GetAll(); //get orders list from data layer
-        return from DOorder in DOorderList
+        var doOrderList = dal.Order.GetAll(); //get orders list from data layer
+        return from doOrder in doOrderList
                let 
                select new BO.OrderForList()
                {
-                   Id = DOorder.Value.Id,
-                   CustomerName = DOorder.Value.CustomerName,
-                   TotalPrice = DOorder,
+                   Id = doOrder.Value.Id,
+                   CustomerName = doOrder.Value.CustomerName,
+                   TotalPrice = doOrder,
                    AmountOfItems = sbyte,
                    Status =                   
                };
@@ -86,7 +94,12 @@ internal class Order : BlApi.IOrder
     /// <exception cref="NotImplementedException"></exception>
     public BO.Order UpdateOrderDelivery(int orderId)
     {
-        throw new NotImplementedException();
+        var order = dal.Order.GetById(orderId);
+        if(GetOrderStatus(order) == OrderStatus.Confirmed) //order stage is confirmed => order hasn't shipped yet
+        {
+
+        }
+        if ()
     }
 
     /// <summary>
@@ -104,24 +117,27 @@ internal class Order : BlApi.IOrder
     /// help method. use dates of order (in data layer) in order to get status of order
     /// </summary>
     /// <param name="order">order from data layer</param>
-    /// <returns>status of order from logic layer</returns>
+    /// <returns>status of order from logical layer</returns>
     private BO.OrderStatus GetOrderStatus(DO.Order order)
     {
         if (order.DeliveryDate != null)
             return BO.OrderStatus.Delivered;
         if (order.ShipDate != null)
             return BO.OrderStatus.Shipped;
-        else //(order.OrderDate != null)
+        if (order.OrderDate != null)
             return BO.OrderStatus.Confirmed;
+        else
+            throw new Exception();
     }
 
     /// <summary>
-    /// help method. convert order from data layer to a new order in logic layer
+    /// help method. convert order from data layer to a new order in logical layer
     /// </summary>
     /// <param name="order">order from data layer</param>
-    /// <returns>order from logic layer</returns>
+    /// <returns>order from logical layer</returns>
     private BO.Order GetBoOrder(DO.Order order)
     {
+        var orderItems = dal.OrderItem.GetAllOrderProducts(order.Id);
         return new BO.Order()
         {
             Id = order.Id,
@@ -132,6 +148,16 @@ internal class Order : BlApi.IOrder
             CustomerName = order.CustomerName,
             CustomerEmail = order.CustomerEmail,
             Status = GetOrderStatus(order),
+            Items = (from doOrderItem in orderItems
+                    select new BO.OrderItem() //convert orderItems items from DO to BO
+                    {
+                        Id = doOrderItem.Value.Id,
+                        ProductID = doOrderItem.Value.ProductID,
+                        Name = dal.Product.GetById(doOrderItem.Value.ProductID).Name,
+                        Price = doOrderItem.Value.Price,
+                        Amount = doOrderItem.Value.Amount,
+                        TotalPrice = doOrderItem.Value.Price * doOrderItem.Value.Amount //logical considerations 
+                    }).ToList()
         };
     }
 }
