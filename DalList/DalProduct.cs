@@ -1,6 +1,8 @@
 ﻿using DO;
 
 using DalApi;
+using System.Diagnostics;
+using System.Xml.Linq;
 
 
 namespace Dal;
@@ -25,8 +27,9 @@ internal class DalProduct : IProduct
     public void Update(Product product)
     {
         //search for the wanted product on ProductsList that match the wanted id
-        Product p = DataSource.ProductsList.Find(x => x?.Id == product.Id) ?? throw new DO.DalDoesNotExistIdException(product.Id, "Product"); //throw if doesn't exist
-        p = product;
+        if (DataSource.ProductsList.RemoveAll(x => x?.Id == product.Id) == 0)
+            throw new DO.DalDoesNotExistIdException(product.Id, "Product");
+        DataSource.ProductsList.Add(product);
     }
     public void Delete(int id)
     {

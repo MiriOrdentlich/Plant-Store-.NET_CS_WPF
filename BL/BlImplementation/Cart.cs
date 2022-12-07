@@ -20,27 +20,28 @@ internal class Cart : BlApi.ICart
     {
         try
         {
-            var orderItem = cart.Items.Where(x => x.ProductID == productId).FirstOrDefault();
+            var orderItem = (from item in cart.Items
+                             where item.ProductID == productId
+                             select item).FirstOrDefault();
             var product = dal.Product.GetById(productId);
             if (orderItem is null)
             {
-                //בדיקה אם המוצר קיים?
                 if (product.InStock > 0)
                 {
-                    cart.Items.Append(new BO.OrderItem
+                    cart.Items = (cart.Items?.Append(new BO.OrderItem
                     { /*Id =??*/
                         Name = product.Name,
                         Price = product.Price,
                         ProductID = product.Id,
                         Amount = 1,
                         TotalPrice = product.Price
-                    });
+                    }))?.ToList();
                     cart.TotalPrice += product.Price;
                 }
                 else
                 {
                     //exception product not in stock
-                    throw new BO.BlNotInStockException(0, product.Name);
+                    throw new BO.BlNotInStockException(0, product.Name ?? "");
                 }
             }
             else //if there is an order item for the product in cart
@@ -48,7 +49,7 @@ internal class Cart : BlApi.ICart
                 if (product.InStock < orderItem.Amount + 1)
                 {
                     //exception not enough of product in stock
-                    throw new BO.BlNotInStockException(-1, product.Name);
+                    throw new BO.BlNotInStockException(-1, product.Name!);
                 }
                 else
                 {

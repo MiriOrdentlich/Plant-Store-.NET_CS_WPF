@@ -51,7 +51,7 @@ namespace BO
 
         public BlInvalidEntityException(string name, int entityChoice) :base()
         {
-            EntityId = entityChoice;
+            EntityChoice = entityChoice;
             EntityName = name;
         }
         public BlInvalidEntityException(int id, string name, int entityChoice)

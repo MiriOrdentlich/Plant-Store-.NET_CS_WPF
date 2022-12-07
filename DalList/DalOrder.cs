@@ -24,9 +24,9 @@ internal class DalOrder : IOrder
     public void Update(Order order)
     {
         // search for order in list. if didn't find order -> throw exception else 
-        Order p = DataSource.OrdersList.Find(x => x?.Id == order.Id) ??
+        if (DataSource.OrdersList.RemoveAll(x => x?.Id == order.Id) == 0)
             throw new DO.DalDoesNotExistIdException(order.Id, "Order");
-        p = order;//update p 
+        DataSource.OrdersList.Add(order);
     }
     public void Delete(int id)
     {

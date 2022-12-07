@@ -3,6 +3,7 @@
 using BlImplementation;
 using BlApi;
 using BO;
+using DO;
 
 namespace BlTest;
 
@@ -16,21 +17,21 @@ internal class Program
     // define a pass to the entities
     private static IBl bl = new Bl();
 
-    private static BO.Cart myCart = intializeCart(); //intialize a cart (just so we'll have what to work on..)
+    //private static BO.Cart myCart = intializeCart(); //intialize a cart (just so we'll have what to work on..)
 
-    private static BO.Cart intializeCart()
-    {
-        Cart cart = new Cart();
-        for (int i = 0; i < 5; i++)
-        {
-            cart = bl.Cart.AddItem(cart, 100000 + i);
-        }
-        cart.CustomerAddress = "Petach Tikva";
-        cart.CustomerEmail = "bla@gmail.com";
-        cart.CustomerName = "bla";
-        return cart;
-    }
-    private static void ProductFunc()
+    //private static BO.Cart intializeCart()
+    //{
+    //    Cart cart = new Cart();
+    //    for (int i = 0; i < 5; i++)
+    //    {
+    //        cart = bl.Cart.AddItem(cart, 100000 + i);
+    //    }
+    //    cart.CustomerAddress = "Petach Tikva";
+    //    cart.CustomerEmail = "bla@gmail.com";
+    //    cart.CustomerName = "bla";
+    //    return cart;
+    //}
+    private static void ProductFunc(Cart myCart)
     {
         Console.WriteLine(@"1 - get all products (for manager)
 2 - get all products (for client) -> not valid
@@ -46,6 +47,7 @@ enter your choice:"); // print
         int id, amount;
         double price;
         string? name;
+        BO.Category category;
         switch (c2)
         {
 
@@ -81,7 +83,8 @@ enter your choice:"); // print
                 //if (double.TryParse(Console.ReadLine(), out price) == false)
                 //    throw new Exception("Invalid input");
                 //cart.TotalPrice = price;
-                ////ITEMS????
+                //ITEMS????
+               
                 Console.WriteLine("Enter ID of the product to get");
                 if (int.TryParse(Console.ReadLine(), out id) == false)
                     throw new Exception("Your input is not valid");
@@ -101,7 +104,10 @@ enter your choice:"); // print
                 Console.WriteLine("Enter amount"); 
                 if (int.TryParse(Console.ReadLine(), out amount) == false) 
                     throw new Exception("Your input is not valid");
-                bl.Product.AddProduct(id, name!, price, amount);
+                Console.WriteLine("Enter catgory");
+                if (BO.Category.TryParse(Console.ReadLine(), out category) == false)
+                    throw new Exception("Your input is not valid");
+                bl.Product.AddProduct(id, name!, category, price, amount);
                 break;
 
             case ProductOptions.deleteProduct:
@@ -127,6 +133,10 @@ enter your choice:"); // print
                 if (int.TryParse(Console.ReadLine(), out amount) == false)
                     throw new Exception("Your input is not valid");
                 product.InStock = amount;
+                Console.WriteLine("Enter catgory");
+                if (BO.Category.TryParse(Console.ReadLine(), out category) == false)
+                    throw new Exception("Your input is not valid");
+                product.Category = category;
                 bl.Product.UpdateProduct(product);
                 break;    
                 
@@ -134,7 +144,7 @@ enter your choice:"); // print
                 throw new Exception("Invalid input"); // for invalid choice
         }
     }
-    private static void OrderFunc()
+    private static void OrderFunc(Cart myCart)
     {
         Console.WriteLine(@"1 - get all orders
 2 - get order details
@@ -184,7 +194,7 @@ enter your choice:");
                 throw new Exception("Invalid input"); //throw if the input isnt valid
         }
     }
-    private static void CartFunc()
+    private static void CartFunc(Cart myCart)
     {
         Console.WriteLine(@"1 - add order item to cart
 2 - update an order in cart
@@ -258,6 +268,17 @@ enter your choice:");// print instructions
 
     private static void Main(string[] args)
     {
+        Cart myCart = new Cart()
+        {
+            CustomerAddress = "Petach Tikva",
+            CustomerEmail = "bla@gmail.com",
+            CustomerName = "bla",
+            Items = new List<BO.OrderItem>(),
+            TotalPrice = 0       
+        };
+        myCart = bl.Cart.AddItem(myCart, 100000);
+
+
         bool stop = false;
         while (!stop)
         {
@@ -278,15 +299,15 @@ enter your choice:"); // print
                         break;
 
                     case FirstChoice.Product:
-                        ProductFunc();
+                        ProductFunc(myCart);
                         break;
 
                     case FirstChoice.Order:
-                        OrderFunc();
+                        OrderFunc(myCart);
                         break;
 
                     case FirstChoice.Cart:
-                        CartFunc();
+                        CartFunc(myCart);
                         break;
 
                     default:

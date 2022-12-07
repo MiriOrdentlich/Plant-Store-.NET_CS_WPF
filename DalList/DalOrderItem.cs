@@ -33,8 +33,9 @@ internal class DalOrderItem : IOrderItem
     public void Update(OrderItem orderItem)
     {
         // search for order item in list. if didn't find order item -> throw exception
-        OrderItem p = DataSource.OrderItemsList.Find(x => x?.Id == orderItem.Id) ?? throw new DO.DalDoesNotExistIdException(orderItem.Id, "Order Item");
-        p = orderItem; //update p 
+        if (DataSource.OrderItemsList.RemoveAll(x => x?.Id == orderItem.Id) == 0)
+            throw new DO.DalDoesNotExistIdException(orderItem.Id, "OrderItem");
+        DataSource.OrderItemsList.Add(orderItem);
     }
     public void Delete(int id)
     {
@@ -46,7 +47,7 @@ internal class DalOrderItem : IOrderItem
     {
         return new List<OrderItem?>(DataSource.OrderItemsList);
     }   
-    public IEnumerable<OrderItem?> GetAllOrderProducts(int orderID)
+    public IEnumerable<DO.OrderItem?> GetAllOrderProducts(int orderID)
     {
         List<OrderItem?> tempArr = new List<OrderItem?>();
         foreach (var item in DataSource.OrderItemsList)

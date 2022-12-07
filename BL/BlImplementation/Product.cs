@@ -70,38 +70,32 @@ internal class Product : BlApi.IProduct
     /// <exception cref="BO.BlInvalidEntityException"></exception>
     /// <exception cref="BlMissingEntityException"></exception>
     /// <exception cref="BO.BlAlreadyExistEntityException"></exception>
-    public void AddProduct(int productId, string productName, double price, int amount)
+    public void AddProduct(int productId, string productName, BO.Category category, double price, int amount)
     {
         try
         {
             //product.InStock.AmountIsNegative();
-            if (productId > 0)
-            {
-                if (productName is null)
-                    throw new BO.BlInvalidEntityException("product Name",1); //will put EntityChoice = 4 and print - Name is null ;
-                if (price < 0)
-                    throw new BO.BlInvalidEntityException("product Name", 0);
-                if (amount < 0)
-                    throw new BO.BlInvalidEntityException("product Name", 0);
+            if (productId < 0)
+                throw new BO.BlInvalidEntityException("product Id", 0);
+            if (productName is null)
+                throw new BO.BlInvalidEntityException("product Name", 1); //will put EntityChoice = 4 and print - Name is null ;
+            if (price < 0)
+                throw new BO.BlInvalidEntityException("product price", 0);
+            if (amount < 0)
+                throw new BO.BlInvalidEntityException("product amount", 0);
 
-                DO.Product newDoProduct = new DO.Product() //create a new data layer product
-                {
-                    //copy the fields
-                    Id = productId,
-                    Name = productName,
-                    Category = dal.Product.GetById(productId).Category,  //take the newDoProduct Category, turn it into DO.Category
-                    Price = price,
-                    InStock = amount
-                };
-                int check = dal.Product.Add(newDoProduct); //add the product (DO type), and dal.Product.Add(newDoProduct) returns int type
-            }
-            else
+            DO.Product newDoProduct = new DO.Product() //create a new data layer product
             {
-                throw new BlMissingEntityException("Missing Id");
-            }
+                //copy the fields
+                Id = productId,
+                Name = productName,
+                Category = (DO.Category)category,  //take the newDoProduct Category, turn it into DO.Category
+                Price = price,
+                InStock = amount
+            };
+            int newId = dal.Product.Add(newDoProduct); //add the product (DO type), and dal.Product.Add(newDoProduct) returns int type
 
         }
-
         catch (DO.DalAlreadyExistsIdException ex)
         {
             throw new BO.BlAlreadyExistEntityException("Data exception:", ex);
@@ -120,30 +114,24 @@ internal class Product : BlApi.IProduct
         try
         {
             //product.InStock.AmountIsNegative();
-            if (product.Id > 0)
+            if (product.Id < 0)
+                throw new BO.BlInvalidEntityException("product Id", 0);
+            if (product.Name is null)
+                throw new BO.BlInvalidEntityException("product Name", 1); //will put EntityChoice = 4 and print - Name is null ;
+            if (product.Price < 0)
+                throw new BO.BlInvalidEntityException("product price", 0);
+            if (product.InStock < 0)
+                throw new BO.BlInvalidEntityException("product amount", 0);
+            DO.Product newDoProduct = new DO.Product() //create a new data layer product
             {
-                if (product.Name is null)
-                    throw new BO.BlInvalidEntityException("product name", 1); //will put EntityChoice = 4 and print - Name is null ;
-                if (product.Price < 0)
-                    throw new BO.BlInvalidEntityException("price", 0);
-                if (product.InStock < 0)
-                    throw new BO.BlInvalidEntityException("amount", 0);
-                DO.Product newDoProduct = new DO.Product() //create a new data layer product
-                {
-                    //copy the fields
-                    Id = product.Id,
-                    Name = product.Name,
-                    Price = product.Price,
-                    InStock = product.InStock,
-                    Category = (DO.Category)product.Category! //take the newDoProduct Category, turn it into DO.Category
-                };
-                dal.Product.Update(newDoProduct); //update product in 
-            }
-            else
-            {
-                throw new BlMissingEntityException("Missing Id");
-            }
-
+                //copy the fields
+                Id = product.Id,
+                Name = product.Name,
+                Price = product.Price,
+                InStock = product.InStock,
+                Category = (DO.Category)product.Category! //take the newDoProduct Category, turn it into DO.Category
+            };
+            dal.Product.Update(newDoProduct); //update product in data layer
         }
 
         catch (DO.DalDoesNotExistIdException ex)
@@ -152,15 +140,22 @@ internal class Product : BlApi.IProduct
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="productId"></param>
+    /// <exception cref="BO.BlAlreadyExistEntityException"></exception>
+    /// <exception cref="BO.BlMissingEntityException"></exception>
     public void DeleteProduct(int productId) //delete a product by its id
     {
         try
         {
             var tmp = dal.Product.GetById(productId); //if product doesn't exist get exception from data layer 
             var list = from item in dal.OrderItem.GetAll()// get a list of orders in order to check if the wanted product is there
-                       select item?.ProductID == productId; //search which product.id is equal to the given product id
+                       where item?.ProductID == productId //search which product.id is equal to the given product id
+                       select item;
 
-            if (list != null) //if there is a product.id that match the wanted one
+            if (list.Any()) //if there is a product.id that match the wanted one
                 throw new BO.BlAlreadyExistEntityException("Product exists in an order"); //Exception: Product exists in an order
             dal.Product.Delete(productId); //delete this product
         }
