@@ -2,6 +2,8 @@
 using BO;
 using DalApi;
 using DO;
+using System.Linq.Expressions;
+using System.Xml.Linq;
 
 namespace BlImplementation;
 
@@ -17,26 +19,35 @@ internal class Order : BlApi.IOrder
     /// <exception cref="NotImplementedException"></exception>
     public BO.OrderTracking TrackOrder(int orderId)
     {
-        var order = dal.Order.GetById(orderId); //EXCEPTION??? //get order from data by the given ID
-        BO.OrderTracking trackOrder = new BO.OrderTracking()
+        try
         {
-            Id = orderId,
-            Status = GetOrderStatus(order), //current status 
-            Tracking = new List<Tuple<DateTime?, string>>() //create empty tuple list
-        };
-
-        //add values to tuple list Tracking:
-        if(order.OrderDate != null) //else => order isn't confirmed => order isn't shipped (no status to add)
-        {
-            trackOrder.Tracking.Add(new(order.OrderDate, "The order has been confirmed"));
-            if (order.ShipDate != null) //else => order isn't shipped => order isn't delivered 
+            if (orderId < 0)
+                throw new BlInvalidEntityException(orderId, "order Id", 0);
+            var order = dal.Order.GetById(orderId); //get order from data by the given ID
+            BO.OrderTracking trackOrder = new BO.OrderTracking()
             {
-                trackOrder.Tracking.Add(new(order.ShipDate, "The order has been shipped"));
-                if (order.DeliveryDate != null)
-                    trackOrder.Tracking.Add(new(order.DeliveryDate, "The order has been delivered"));
+                Id = orderId,
+                Status = GetOrderStatus(order), //current status 
+                Tracking = new List<Tuple<DateTime?, string>>() //create empty tuple list
+            };
+
+            //add values to tuple list Tracking:
+            if (order.OrderDate != null) //else => order isn't confirmed => order isn't shipped (no status to add)
+            {
+                trackOrder.Tracking.Add(new(order.OrderDate, "The order has been confirmed"));
+                if (order.ShipDate != null) //else => order isn't shipped => order isn't delivered 
+                {
+                    trackOrder.Tracking.Add(new(order.ShipDate, "The order has been shipped"));
+                    if (order.DeliveryDate != null)
+                        trackOrder.Tracking.Add(new(order.DeliveryDate, "The order has been delivered"));
+                }
             }
-        }  
-        return trackOrder;
+            return trackOrder;
+        }
+        catch (DO.DalDoesNotExistIdException ex)
+        {
+            throw new BO.BlMissingEntityException("Data exception:", ex);
+        }
     }
 
     /// <summary>
@@ -49,15 +60,16 @@ internal class Order : BlApi.IOrder
     {
         try
         {
-            //EXCEPTION??? 
+            if (orderId < 0)
+                throw new BlInvalidEntityException(orderId, "order Id", 0);
             var order = dal.Order.GetById(orderId);//get order from data by the given ID
             return GetBoOrder(order);
         }
-        catch(Exception)
+        catch (DO.DalDoesNotExistIdException ex)
         {
-            throw new Exception();
+            throw new BO.BlMissingEntityException("Data exception:", ex);
         }
-       
+
     }
 
     /// <summary>
@@ -88,18 +100,28 @@ internal class Order : BlApi.IOrder
     /// <exception cref="NotImplementedException"></exception>
     public BO.Order UpdateOrderDelivery(int orderId)
     {
-        var doOrder = dal.Order.GetById(orderId);
-        if (GetOrderStatus(doOrder) == OrderStatus.Shipped) //order stage is shipped => order haven't been delivered yet
+        try
         {
-            var boOrder = GetBoOrder(doOrder);
-            doOrder.DeliveryDate = DateTime.Now;
-            boOrder.DeliveryDate = DateTime.Now;
-            boOrder.Status = OrderStatus.Delivered;
-            dal.Order.Update(doOrder);
-            return boOrder;
+            if (orderId < 0)
+                throw new BlInvalidEntityException(orderId, "order Id", 0);
+            var doOrder = dal.Order.GetById(orderId);
+            if (GetOrderStatus(doOrder) == OrderStatus.Shipped) //order stage is shipped => order haven't been delivered yet
+            {
+                var boOrder = GetBoOrder(doOrder);
+                doOrder.DeliveryDate = DateTime.Now;
+                boOrder.DeliveryDate = DateTime.Now;
+                boOrder.Status = OrderStatus.Delivered;
+                dal.Order.Update(doOrder);
+                return boOrder;
+            }
+            else
+                throw new BO.BlInvalidEntityException(orderId, "order Id", 0);
+
         }
-        else
-            throw new Exception();
+        catch (DO.DalDoesNotExistIdException ex)
+        {
+            throw new BO.BlMissingEntityException("Data exception:", ex);
+        }
     }
 
     /// <summary>
@@ -110,18 +132,27 @@ internal class Order : BlApi.IOrder
     /// <exception cref="NotImplementedException"></exception>
     public BO.Order UpdateOrderShipping(int orderId)
     {
-        var doOrder = dal.Order.GetById(orderId);
-        if (GetOrderStatus(doOrder) == OrderStatus.Confirmed) //order stage is confirmed => order hasn't shipped yet
+        try
         {
-            var boOrder = GetBoOrder(doOrder);
-            doOrder.ShipDate = DateTime.Now;
-            boOrder.ShipDate = DateTime.Now;
-            boOrder.Status = OrderStatus.Shipped;
-            dal.Order.Update(doOrder);
-            return boOrder;
+            if (orderId < 0)
+                throw new BlInvalidEntityException(orderId, "order Id", 0);
+            var doOrder = dal.Order.GetById(orderId);
+            if (GetOrderStatus(doOrder) == OrderStatus.Confirmed) //order stage is confirmed => order hasn't shipped yet
+            {
+                var boOrder = GetBoOrder(doOrder);
+                doOrder.ShipDate = DateTime.Now;
+                boOrder.ShipDate = DateTime.Now;
+                boOrder.Status = OrderStatus.Shipped;
+                dal.Order.Update(doOrder);
+                return boOrder;
+            }
+            else
+                throw new BO.BlInvalidEntityException(orderId, "order Id", 0);
         }
-        else
-            throw new Exception();
+        catch (DO.DalDoesNotExistIdException ex)
+        {
+            throw new BO.BlMissingEntityException("Data exception:", ex);
+        }
     }
 
     /// <summary>
@@ -138,7 +169,7 @@ internal class Order : BlApi.IOrder
         if (order.OrderDate != null)
             return BO.OrderStatus.Confirmed;
         else
-            throw BO.();
+            throw new BO.BlInvalidEntityException("Status", 1);
     }
 
     /// <summary>
@@ -150,6 +181,16 @@ internal class Order : BlApi.IOrder
     {
         try
         {
+            if (order.OrderDate == null)
+                throw new BO.BlInvalidEntityException("Order Date", 1);
+            if (order.DeliveryDate== null)
+                throw new BO.BlInvalidEntityException("Delivery Date", 1);
+            if (order.ShipDate== null)
+                throw new BO.BlInvalidEntityException("Ship Date", 1);
+            if (order.Id < 0)
+                throw new BlInvalidEntityException(order.Id, "Order", 0);
+
+
             var doOrderItems = dal.OrderItem.GetAllOrderProducts(order.Id);
             var boOrderItems = (from doOrderItem in doOrderItems
                                 let productId = doOrderItem?.ProductID ?? 0
@@ -177,6 +218,9 @@ internal class Order : BlApi.IOrder
                 TotalPrice = boOrderItems.Sum(x => x.TotalPrice)
             };
         }
-        catch()
+        catch (DO.DalDoesNotExistIdException ex)
+        {
+            throw new BO.BlMissingEntityException("Data exception:", ex);
+        }
     }
 }

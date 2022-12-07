@@ -28,10 +28,10 @@ internal class Product : BlApi.IProduct
         return from doProduct in dal.Product.GetAll() // get a list of products and scan it
                select new BO.ProductForList //build a new List products (type ProductForList) 
                {
-                   Id = doProduct?.Id ?? throw new BlMissingEntityException("Missing Id"),
-                   Name = doProduct?.Name ?? throw new BlMissingEntityException("Missing Name"),
-                   Category = (BO.Category?)doProduct?.Category ?? throw new BlMissingEntityException("Missing Category"),
-                   Price = doProduct?.Price ?? throw new BlInvalidEntityException(1)
+                   Id = doProduct?.Id ?? 0,
+                   Name = doProduct?.Name ?? "",
+                   Category = (BO.Category)doProduct?.Category!,
+                   Price = doProduct?.Price ?? 0
                };
     }
 
@@ -55,14 +55,14 @@ internal class Product : BlApi.IProduct
                     //copy the details
 
                     Id = doProduct.Id,
-                    Category = (BO.Category)doProduct.Category, //take the doProduct Category, turn it into BO.Category
+                    Category = (BO.Category)doProduct.Category!, //take the doProduct Category, turn it into BO.Category
                     Price = doProduct.Price,
                     Name = doProduct.Name,
                     InStock = doProduct.InStock
                 };
             }
             else
-                throw new BlInvalidEntityException(doProduct.Id, doProduct.Name, 3);
+                throw new BlInvalidEntityException(doProduct.Id, doProduct.Name! , 0);
         }
 
         catch (DO.DalDoesNotExistIdException ex) //לא בטוח
@@ -79,11 +79,11 @@ internal class Product : BlApi.IProduct
             if (productId > 0)
             {
                 if (productName is null)
-                    throw new BO.BlInvalidEntityException(4); //will put EntityChoice = 4 and print - Name is null ;
+                    throw new BO.BlInvalidEntityException("product Name",1); //will put EntityChoice = 4 and print - Name is null ;
                 if (price < 0)
-                    throw new BlInvalidEntityException(1);
+                    throw new BO.BlInvalidEntityException("product Name", 0);
                 if (amount < 0)
-                    throw new BlInvalidEntityException(0);
+                    throw new BO.BlInvalidEntityException("product Name", 0);
 
                 DO.Product newDoProduct = new DO.Product() //create a new data layer product
                 {
@@ -117,11 +117,11 @@ internal class Product : BlApi.IProduct
             if (product.Id > 0)
             {
                 if (product.Name is null)
-                    throw new BO.BlInvalidEntityException(4); //will put EntityChoice = 4 and print - Name is null ;
+                    throw new BO.BlInvalidEntityException("product name", 1); //will put EntityChoice = 4 and print - Name is null ;
                 if (product.Price < 0)
-                    throw new BlInvalidEntityException(1);
+                    throw new BO.BlInvalidEntityException("price", 0);
                 if (product.InStock < 0)
-                    throw new BlInvalidEntityException(0);
+                    throw new BO.BlInvalidEntityException("amount", 0);
                 DO.Product newDoProduct = new DO.Product() //create a new data layer product
                 {
                     //copy the fields
@@ -149,7 +149,7 @@ internal class Product : BlApi.IProduct
     public void DeleteProduct(int productId) //delete a product by its id
     {
         if (productId < 0)
-            return ************;
+            throw new BlInvalidEntityException("Id",0);
         foreach (var order in dal.Order.GetAll())
         {
             var list = from item in dal.OrderItem.GetAll()// get a list of orders in order to check if the wanted product is there
@@ -179,12 +179,14 @@ internal class Product : BlApi.IProduct
                     Price = doProduct.Price,
                     Name = doProduct.Name,
                     InStock = doProduct.InStock > 0,
-                    Amount = from item in cart.Items //need a fix
+                    Amount = (from OrderItem in cart.Items
+                              where OrderItem.ProductID == productId
+                              select OrderItem.Amount).FirstOrDefault(0)
                 };
 
             }
             else
-                throw new BlInvalidEntityException(doProduct.Id, doProduct.Name, 3);
+                throw new BlInvalidEntityException("Id", 0);
         }
         catch (DO.DalDoesNotExistIdException ex) //לא בטוח
         {
