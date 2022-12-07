@@ -194,10 +194,10 @@ internal class Product : BlApi.IProduct
                     Price = doProduct.Price,
                     Name = doProduct.Name,
                     InStock = doProduct.InStock > 0,
-                    Amount = cart.Items!.Sum(x => x.Amount)
-
+                    Amount = (from item in cart.Items
+                             where item.ProductID == doProduct.Id
+                             select item.Amount).Sum()
                 };
-
             }
             else
                 throw new BlInvalidEntityException("Id", 0);

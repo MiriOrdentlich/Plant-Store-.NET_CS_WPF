@@ -25,19 +25,21 @@ internal class Program
         {
             cart = bl.Cart.AddItem(cart, 100000 + i);
         }
+        cart.CustomerAddress = "Petach Tikva";
+        cart.CustomerEmail = "bla@gmail.com";
+        cart.CustomerName = "bla";
         return cart;
     }
     private static void ProductFunc()
     {
         Console.WriteLine(@"1 - get all products (for manager)
-2 - get all products (for client)
-3 - get product by ID (for manager)
+2 - get all products (for client) -> not valid
+3 - get product by ID
 4 - get product by ID (for client)
 5 - add product
 6 - delete product
 7 - update product
 enter your choice:"); // print
-
         if (ProductOptions.TryParse(Console.ReadLine(), out ProductOptions c2) == false) //checks if the choice is valid
             throw new Exception("Your choice is not valid");
         //define vriables to use later for inputs:
@@ -48,16 +50,16 @@ enter your choice:"); // print
         {
 
             case ProductOptions.getProductsManager:
-                IEnumerable<BO.ProductForList?> productsList = bl.Product.GetListedProducts(); ;
+                IEnumerable<BO.ProductForList?> productsList = bl.Product.GetListedProducts();
                 foreach (var temp in productsList)
                     Console.WriteLine(temp);                
                 break;
 
-            case ProductOptions.getProductsClient:
-                IEnumerable<BO.ProductItem?> productItems = bl.Product.GetProducts(); ;
-                foreach (var temp in productItems)
-                    Console.WriteLine(temp);
-                break;
+            //case ProductOptions.getProductsClient:
+            //    IEnumerable<BO.ProductItem?> productItems = bl.Product.GetProducts(); ;
+            //    foreach (var temp in productItems)
+            //        Console.WriteLine(temp);
+            //    break;
 
             case ProductOptions.getProductManager:
                 Console.WriteLine("Enter ID of the product to get"); 
@@ -67,24 +69,24 @@ enter your choice:"); // print
                 break;
 
             case ProductOptions.getProductClient:
+
+                //Cart cart = new Cart();
+                //Console.WriteLine("Enter customer name");
+                //cart.CustomerName = Console.ReadLine();
+                //Console.WriteLine("Enter customer address");
+                //cart.CustomerAddress = Console.ReadLine();
+                //Console.WriteLine("Enter customer email");
+                //cart.CustomerEmail = Console.ReadLine();
+                //Console.WriteLine("Enter the total price of cart");
+                //if (double.TryParse(Console.ReadLine(), out price) == false)
+                //    throw new Exception("Invalid input");
+                //cart.TotalPrice = price;
+                ////ITEMS????
                 Console.WriteLine("Enter ID of the product to get");
                 if (int.TryParse(Console.ReadLine(), out id) == false)
                     throw new Exception("Your input is not valid");
-                Cart cart = new Cart();
-                Console.WriteLine("Enter customer name");
-                cart.CustomerName = Console.ReadLine();
-                Console.WriteLine("Enter customer address");
-                cart.CustomerAddress = Console.ReadLine();
-                Console.WriteLine("Enter customer email");
-                cart.CustomerEmail = Console.ReadLine();
-                Console.WriteLine("Enter the total price of cart");
-                if (double.TryParse(Console.ReadLine(), out price) == false)
-                    throw new Exception("Invalid input");
-                cart.TotalPrice = price;
-                //ITEMS????
-                if (int.TryParse(Console.ReadLine(), out id) == false) throw new Exception("Invalid input");
-                cart = bl.Cart.AddItem(cart, id);
-                Console.WriteLine(bl.Product.GetByIdC(id, cart).ToString());
+                myCart = bl.Cart.AddItem(myCart, id);
+                Console.WriteLine(bl.Product.GetByIdC(id, myCart)); //print productItem
                 break;
 
             case ProductOptions.addProduct:
@@ -191,49 +193,62 @@ enter your choice:");// print instructions
 
         if (CartOptions.TryParse(Console.ReadLine(), out CartOptions c2) == false) throw new Exception("Invalid input");
         //define vriables to use later for inputs:
-        Cart cart;
-        double price;
+        //Cart cart;
+        //double price;
         int id, amount;
+        string name, email, address;
         switch(c2)
         {
             case CartOptions.add:
-                cart = new Cart();
-                Console.WriteLine("Enter customer name");
-                cart.CustomerName = Console.ReadLine();
-                Console.WriteLine("Enter customer address");
-                cart.CustomerAddress = Console.ReadLine();
-                Console.WriteLine("Enter customer email");
-                cart.CustomerEmail = Console.ReadLine();
-                Console.WriteLine("Enter the total price of cart");
-                if (double.TryParse(Console.ReadLine(), out price) == false) throw new Exception("Invalid input");
-                    cart.TotalPrice = price;
-                //ITEMS????
+
+                //cart = new Cart();
+                //Console.WriteLine("Enter customer name");
+                //cart.CustomerName = Console.ReadLine();
+                //Console.WriteLine("Enter customer address");
+                //cart.CustomerAddress = Console.ReadLine();
+                //Console.WriteLine("Enter customer email");
+                //cart.CustomerEmail = Console.ReadLine();
+                //Console.WriteLine("Enter the total price of cart");
+                //if (double.TryParse(Console.ReadLine(), out price) == false) throw new Exception("Invalid input");
+                //    cart.TotalPrice = price;
+                ////ITEMS????
+                
                 Console.WriteLine("Enter ID of product to add");
                 if (int.TryParse(Console.ReadLine(), out id) == false) throw new Exception("Invalid input");
-                cart = bl.Cart.AddItem(cart, id);
-                Console.WriteLine(cart.ToString());
+                myCart = bl.Cart.AddItem(myCart, id);
+                Console.WriteLine(myCart);
                 break;
 
             case CartOptions.update:
-                cart = new Cart();
-                Console.WriteLine("Enter customer name");
-                cart.CustomerName = Console.ReadLine();
-                Console.WriteLine("Enter customer address");
-                cart.CustomerAddress = Console.ReadLine();
-                Console.WriteLine("Enter customer email");
-                cart.CustomerEmail = Console.ReadLine();
-                Console.WriteLine("Enter the total price of cart");
-                if (double.TryParse(Console.ReadLine(), out price) == false) throw new Exception("Invalid input");
-                cart.TotalPrice = price;
-                //ITEMS????
+                //cart = new Cart();
+                //Console.WriteLine("Enter customer name");
+                //cart.CustomerName = Console.ReadLine();
+                //Console.WriteLine("Enter customer address");
+                //cart.CustomerAddress = Console.ReadLine();
+                //Console.WriteLine("Enter customer email");
+                //cart.CustomerEmail = Console.ReadLine();
+                //Console.WriteLine("Enter the total price of cart");
+                //if (double.TryParse(Console.ReadLine(), out price) == false) throw new Exception("Invalid input");
+                //cart.TotalPrice = price;
+                ////ITEMS????
                 Console.WriteLine("Enter ID of product to update its amount");
                 if (int.TryParse(Console.ReadLine(), out id) == false) throw new Exception("Invalid input");
                 Console.WriteLine("Enter the new amount");
                 if (int.TryParse(Console.ReadLine(), out amount) == false) throw new Exception("Invalid input");
-                cart = bl.Cart.UpdateItemAmount(cart, id, amount);
-                Console.WriteLine(cart.ToString());
+                myCart = bl.Cart.UpdateItemAmount(myCart, id, amount);
+                Console.WriteLine(myCart);
                 break;
+
             case CartOptions.confirm:
+                Console.WriteLine("Enter customer name");
+                name = Console.ReadLine() ?? throw new Exception("Invalid input");
+                Console.WriteLine("Enter customer address");
+                address = Console.ReadLine() ?? throw new Exception("Invalid input");
+                Console.WriteLine("Enter customer email");
+                email = Console.ReadLine() ?? throw new Exception("Invalid input");
+                Console.WriteLine("Enter the total price of cart");
+                var order = bl.Cart.ConfirmCart(myCart, name, email, address);
+                Console.WriteLine(order);
                 break;
 
             default:

@@ -264,7 +264,7 @@ enter your choice:");
                 IEnumerable<OrderItem?> oArr = dal.OrderItem.GetAllOrderProducts(o_id);
                 foreach (var temp in oArr)
                 {
-                    if(temp.Id != 0)
+                    if(temp?.Id != 0)
                         Console.WriteLine(temp.ToString());
                 }
                 break;
