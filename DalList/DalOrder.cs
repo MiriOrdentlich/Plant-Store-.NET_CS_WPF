@@ -8,8 +8,8 @@ internal class DalOrder : IOrder
     public int Add(Order order) //create
     {
         // search for order in list:
-        if(DataSource.OrdersList.Contains(order)) // if found order -> throw exception
-            throw new Exception("Order already exists");
+        if(DataSource.OrdersList.Find(x => x?.Id == order.Id) != null) // if found order -> throw exception
+            throw new DO.DalAlreadyExistsIdException(order.Id, "Order");
         order.Id = DataSource.nextOrderNumber;
         DataSource.OrdersList.Add(order); // if order isn't in list, add order to list
         return order.Id;
@@ -18,19 +18,21 @@ internal class DalOrder : IOrder
     {
         //search orderList for order that match the given id
         //if order not found throw exception
-        return DataSource.OrdersList.Find(x => x?.Id == id) ?? throw new Exception("Id Number doesn't exist");
+        return DataSource.OrdersList.Find(x => x?.Id == id) ??
+            throw new DO.DalDoesNotExistIdException(id, "Order");
     }
     public void Update(Order order)
     {
         // search for order in list. if didn't find order -> throw exception else 
-        Order p = DataSource.OrdersList.Find(x => x?.Id == order.Id) ?? throw new Exception("Order doesn't exist");
+        Order p = DataSource.OrdersList.Find(x => x?.Id == order.Id) ??
+            throw new DO.DalDoesNotExistIdException(order.Id, "Order");
         p = order;//update p 
     }
     public void Delete(int id)
     {
         // search for order in list. if didn't find order -> throw exception
         if ( DataSource.OrdersList.RemoveAll(x => x?.Id == id) == 0)
-            throw new Exception("Order doesn't exist");
+            throw new DO.DalDoesNotExistIdException(id, "Order");
     }
     public IEnumerable<Order?> GetAll()
     {

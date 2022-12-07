@@ -8,7 +8,7 @@ internal class DalOrderItem : IOrderItem
     {
         // search for orderItem in list:
         if (DataSource.OrderItemsList.Contains(orderItem)) // if found orderItem -> throw exception
-            throw new Exception("Order item already exists");
+            throw new DO.DalAlreadyExistsIdException(orderItem.Id, "Order Item");
         orderItem.Id = DataSource.nextOrderItemNumber;
         DataSource.OrderItemsList.Add(orderItem); // if orderItem isn't in list, add orderItem to list
         return orderItem.Id;
@@ -17,27 +17,30 @@ internal class DalOrderItem : IOrderItem
     {
         //search orderItemList for order item that match the given id
         //if order item not found throw exception
-        OrderItem p = DataSource.OrderItemsList.Find(x => x?.Id == id) ?? throw new Exception("Id Number doesn't exist");
+        OrderItem p = DataSource.OrderItemsList.Find(x => x?.Id == id) ??
+            throw new DO.DalDoesNotExistIdException(id, "Order Item");
+        ;
         return p;
     }
     public OrderItem GetByProductAndOrder(int productID, int orderID)
     {
         //search orderItemList for order item that match the given product and order ids
         //if order item not found throw exception
-        OrderItem p = DataSource.OrderItemsList.Find(x => x?.ProductID == productID && x?.ProductID == orderID) ?? throw new Exception("Item doesn't exist");
+        OrderItem p = DataSource.OrderItemsList.Find(x => x?.ProductID == productID && x?.ProductID == orderID) ?? 
+            throw new DO.DalDoesNotExistIdException(0, "Order Item"); //??????
         return p;
     }  
     public void Update(OrderItem orderItem)
     {
         // search for order item in list. if didn't find order item -> throw exception
-        OrderItem p = DataSource.OrderItemsList.Find(x => x?.Id == orderItem.Id) ?? throw new Exception("Item doesn't exist");
+        OrderItem p = DataSource.OrderItemsList.Find(x => x?.Id == orderItem.Id) ?? throw new DO.DalDoesNotExistIdException(orderItem.Id, "Order Item");
         p = orderItem; //update p 
     }
     public void Delete(int id)
     {
         // search for order item in list and remove it from list. if didn't find order item -> throw exception
         if (DataSource.OrderItemsList.RemoveAll(x => x?.Id == id) == 0)
-            throw new Exception("Order item doesn't exist");
+            throw new DO.DalDoesNotExistIdException(id, "Order Item");
     }
     public IEnumerable<OrderItem?> GetAll()
     {
