@@ -16,6 +16,17 @@ internal class Program
     // define a pass to the entities
     private static IBl bl = new Bl();
 
+    private static BO.Cart myCart = intializeCart(); //intialize a cart (just so we'll have what to work on..)
+
+    private static BO.Cart intializeCart()
+    {
+        Cart cart = new Cart();
+        for (int i = 0; i < 5; i++)
+        {
+            cart = bl.Cart.AddItem(cart, 100000 + i);
+        }
+        return cart;
+    }
     private static void ProductFunc()
     {
         Console.WriteLine(@"1 - get all products (for manager)
@@ -232,7 +243,6 @@ enter your choice:");// print instructions
 
     private static void Main(string[] args)
     {
-
         bool stop = false;
         while (!stop)
         {

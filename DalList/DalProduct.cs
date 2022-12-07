@@ -33,8 +33,6 @@ internal class DalProduct : IProduct
         //search for the wanted product on ProductsList that match the wanted id and delete it
         if (DataSource.ProductsList.RemoveAll(x => x?.Id == id) == 0)
             throw new DO.DalDoesNotExistIdException(id, "Product"); //throw if doesn't exist
-
-
     }
     public IEnumerable<Product?> GetAll()
     {
