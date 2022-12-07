@@ -74,7 +74,6 @@ internal class Product : BlApi.IProduct
     {
         try
         {
-            //product.InStock.AmountIsNegative();
             if (productId < 0)
                 throw new BO.BlInvalidEntityException("product Id", 0);
             if (productName is null)
@@ -156,7 +155,7 @@ internal class Product : BlApi.IProduct
                        select item;
 
             if (list.Any()) //if there is a product.id that match the wanted one
-                throw new BO.BlAlreadyExistEntityException("Product", productId); //Exception: Product exists in an order
+                throw new BO.BlAlreadyExistEntityException("Product", productId, -1); //Exception: Product exists in an order
             dal.Product.Delete(productId); //delete this product
         }
         catch (DO.DalDoesNotExistIdException ex)

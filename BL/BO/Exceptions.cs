@@ -18,16 +18,19 @@ public class BlAlreadyExistEntityException: Exception //If Already Exists
 {
     public string EntityName;
     public int EntityID;
-
-    public BlAlreadyExistEntityException(string name, int id)
-    : base() { EntityName = name; EntityID = id; }
-    public BlAlreadyExistEntityException(string name, int id, string message)
-    : base(message) { EntityName = name; EntityID = id; }
-    public BlAlreadyExistEntityException(int id , string name, string message, Exception exception)
-    : base(message, exception) { EntityName = name; EntityID = id; }
-
+    public int Choice;
+    public BlAlreadyExistEntityException(string name, int id, int choice = 0)
+    : base() { EntityName = name; EntityID = id; Choice = choice; }
+    public BlAlreadyExistEntityException(string name, int id, string message, int choice = 0)
+    : base(message) { EntityName = name; EntityID = id; Choice = choice; }
+    public BlAlreadyExistEntityException(int id, string name, string message, Exception exception, int choice = 0)
+    : base(message, exception) { EntityName = name; EntityID = id; Choice = choice; }
+    public BlAlreadyExistEntityException(string message, Exception exception, int choice = 1)
+    : base(message, exception) { Choice = choice; }
     override public string ToString()
     {
+        if (Choice == -1)
+            return $"Product: {EntityID} of type {EntityName}, already exists in an Order";
         if (Choice == 0)
             return $"Product: {EntityID} of type {EntityName}, already exists";
         else // => (choice == 1)
@@ -56,12 +59,16 @@ public class BlMissingEntityException : Exception //If doesn't Exists
             return $"Product: {EntityID} of type {EntityName}, doesn't exist";
         else // => (choice == 1)
             return "";
-
-
     }
 }
 
 [Serializable]
+public class BlInvalidEmailException : Exception //If Invalid
+{
+
+}
+
+    [Serializable]
 public class BlInvalidEntityException : Exception //If Invalid
 {
     public int EntityId;

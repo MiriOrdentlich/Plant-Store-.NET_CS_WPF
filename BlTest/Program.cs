@@ -209,20 +209,7 @@ enter your choice:");// print instructions
         string name, email, address;
         switch(c2)
         {
-            case CartOptions.add:
-
-                //cart = new Cart();
-                //Console.WriteLine("Enter customer name");
-                //cart.CustomerName = Console.ReadLine();
-                //Console.WriteLine("Enter customer address");
-                //cart.CustomerAddress = Console.ReadLine();
-                //Console.WriteLine("Enter customer email");
-                //cart.CustomerEmail = Console.ReadLine();
-                //Console.WriteLine("Enter the total price of cart");
-                //if (double.TryParse(Console.ReadLine(), out price) == false) throw new Exception("Invalid input");
-                //    cart.TotalPrice = price;
-                ////ITEMS????
-                
+            case CartOptions.add:                
                 Console.WriteLine("Enter ID of product to add");
                 if (int.TryParse(Console.ReadLine(), out id) == false) throw new Exception("Invalid input");
                 myCart = bl.Cart.AddItem(myCart, id);
@@ -230,17 +217,6 @@ enter your choice:");// print instructions
                 break;
 
             case CartOptions.update:
-                //cart = new Cart();
-                //Console.WriteLine("Enter customer name");
-                //cart.CustomerName = Console.ReadLine();
-                //Console.WriteLine("Enter customer address");
-                //cart.CustomerAddress = Console.ReadLine();
-                //Console.WriteLine("Enter customer email");
-                //cart.CustomerEmail = Console.ReadLine();
-                //Console.WriteLine("Enter the total price of cart");
-                //if (double.TryParse(Console.ReadLine(), out price) == false) throw new Exception("Invalid input");
-                //cart.TotalPrice = price;
-                ////ITEMS????
                 Console.WriteLine("Enter ID of product to update its amount");
                 if (int.TryParse(Console.ReadLine(), out id) == false) throw new Exception("Invalid input");
                 Console.WriteLine("Enter the new amount");
@@ -256,7 +232,6 @@ enter your choice:");// print instructions
                 address = Console.ReadLine() ?? throw new Exception("Invalid input");
                 Console.WriteLine("Enter customer email");
                 email = Console.ReadLine() ?? throw new Exception("Invalid input");
-                Console.WriteLine("Enter the total price of cart");
                 var order = bl.Cart.ConfirmCart(myCart, name, email, address);
                 Console.WriteLine(order);
                 break;
