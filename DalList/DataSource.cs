@@ -1,5 +1,4 @@
 ﻿using DO;
-using System.Collections.Generic;
 
 namespace Dal;
 
@@ -127,9 +126,9 @@ internal static class DataSource
                     new OrderItem()
                     {
                         Id = nextOrderItemNumber,
-                        ProductID = ProductsList.ElementAt(indexProduct).Value.Id,
-                        OrderID = OrdersList.ElementAt(count).Value.Id,
-                        Price = ProductsList.ElementAt(indexProduct).Value.Price,
+                        ProductID = ProductsList.ElementAt(indexProduct)?.Id ?? 0,
+                        OrderID = OrdersList.ElementAt(count)?.Id ?? 0,
+                        Price = ProductsList.ElementAt(indexProduct)?.Price ?? 0,
                         Amount = amount,
                     });
             }
