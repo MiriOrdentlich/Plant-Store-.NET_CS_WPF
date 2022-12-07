@@ -15,6 +15,9 @@ namespace BO
     [Serializable]
     public class BlAlreadyExistEntityException: Exception //If Already Exists
     {
+
+        public BlAlreadyExistEntityException(string message)
+        : base(message) { }
         public BlAlreadyExistEntityException(string message, Exception exception)
         : base(message, exception){ }
 

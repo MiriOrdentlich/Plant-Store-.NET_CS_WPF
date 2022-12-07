@@ -148,20 +148,22 @@ internal class Product : BlApi.IProduct
 
     public void DeleteProduct(int productId) //delete a product by its id
     {
-        if (productId < 0)
-            throw new BlInvalidEntityException("Id",0);
-        foreach (var order in dal.Order.GetAll())
+        try
         {
+            var tmp = dal.Product.GetById(productId); //if product doesn't exist get exception from data layer 
             var list = from item in dal.OrderItem.GetAll()// get a list of orders in order to check if the wanted product is there
-                       where dal.Product.GetById(item?.Id ?? 0).Id == productId //search which product.id is equal to the given product id
-                       select item;
-            if (list != null) //if there is a product.id that match the wanted one
-            {
-                dal.Product.Delete(productId); //delete this product
-            }
-        }
+                       select item?.ProductID == productId; //search which product.id is equal to the given product id
 
+            if (list != null) //if there is a product.id that match the wanted one
+                throw new BO.BlAlreadyExistEntityException("Product exists in an order"); //Exception: Product exists in an order
+            dal.Product.Delete(productId); //delete this product
+        }
+        catch (DO.DalDoesNotExistIdException ex)
+        {
+            throw new BO.BlMissingEntityException("Data exception:", ex);
+        }
     }
+
 
     public BO.ProductItem GetByIdC(int productId, BO.Cart cart)
     {
@@ -179,16 +181,15 @@ internal class Product : BlApi.IProduct
                     Price = doProduct.Price,
                     Name = doProduct.Name,
                     InStock = doProduct.InStock > 0,
-                    Amount = (from OrderItem in cart.Items
-                              where OrderItem.ProductID == productId
-                              select OrderItem.Amount).FirstOrDefault(0)
+                    Amount = cart.Items!.Sum(x => x.Amount)
+
                 };
 
             }
             else
                 throw new BlInvalidEntityException("Id", 0);
         }
-        catch (DO.DalDoesNotExistIdException ex) //לא בטוח
+        catch (DO.DalDoesNotExistIdException ex) 
         {
             throw new BO.BlMissingEntityException("Data exception:", ex);
         }

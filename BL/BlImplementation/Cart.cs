@@ -79,19 +79,19 @@ internal class Cart : BlApi.ICart
         try
         {
             //בדיקה האם המוצר לא קיים בהזמנה?
-            var orderItem = cart.Items.Where(x => x.ProductID == productId).FirstOrDefault() ?? throw new Exception();//product doesnt exist in cart
+            var orderItem = cart.Items!.Where(x => x.ProductID == productId).FirstOrDefault() ?? throw new Exception();//product doesnt exist in cart
             var product = dal.Product.GetById(productId);
             if (amount == 0)
             {
                 cart.TotalPrice -= orderItem.TotalPrice; //remove the total of the order item from cart total
-                cart.Items.ToList().Remove(orderItem); //remove order item from cart
+                cart.Items!.ToList().Remove(orderItem); //remove order item from cart
             }
             else if (orderItem.Amount < amount) //the amount of the item got bigger
             {
                 if (product.InStock < amount) //amount would be the updated number of products we need for orderItem
                 {
                     //exception not enough of product in stock
-                    throw new BO.BlNotInStockException(-1, product.Name);
+                    throw new BO.BlNotInStockException(-1, product.Name!);
                 }
                 else
                 {
@@ -131,7 +131,7 @@ internal class Cart : BlApi.ICart
         try
         {
             //check for every order item in Items: products exist, there are enough from each in stock, amounts positive
-            foreach (var orderItem in cart.Items)
+            foreach (var orderItem in cart.Items!)
             {
                 var product = dal.Product.GetById(orderItem.ProductID);
                 if (orderItem.Amount > product.InStock)
