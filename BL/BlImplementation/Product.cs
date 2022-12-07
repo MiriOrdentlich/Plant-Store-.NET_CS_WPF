@@ -1,15 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BlApi;
-using System.Runtime.Serialization;
-using DalApi;
-using BO;
-using DO;
-using System.Xml.Linq;
+﻿using BO;
 
 namespace BlImplementation;
 
@@ -71,6 +60,16 @@ internal class Product : BlApi.IProduct
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="productId"></param>
+    /// <param name="productName"></param>
+    /// <param name="price"></param>
+    /// <param name="amount"></param>
+    /// <exception cref="BO.BlInvalidEntityException"></exception>
+    /// <exception cref="BlMissingEntityException"></exception>
+    /// <exception cref="BO.BlAlreadyExistEntityException"></exception>
     public void AddProduct(int productId, string productName, double price, int amount)
     {
         try
@@ -109,6 +108,13 @@ internal class Product : BlApi.IProduct
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="product"></param>
+    /// <exception cref="BO.BlInvalidEntityException"></exception>
+    /// <exception cref="BlMissingEntityException"></exception>
+    /// <exception cref="BO.BlMissingEntityException"></exception>
     public void UpdateProduct(BO.Product product) //update product details
     {
         try
@@ -164,7 +170,14 @@ internal class Product : BlApi.IProduct
         }
     }
 
-
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="productId"></param>
+    /// <param name="cart"></param>
+    /// <returns></returns>
+    /// <exception cref="BlInvalidEntityException"></exception>
+    /// <exception cref="BO.BlMissingEntityException"></exception>
     public BO.ProductItem GetByIdC(int productId, BO.Cart cart)
     {
         try
