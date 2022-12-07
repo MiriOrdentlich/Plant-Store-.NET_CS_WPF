@@ -40,7 +40,6 @@ namespace DO
             : base(message) { EntityId = id; EntityName = name; }
         public DalAlreadyExistsIdException(int id, string name,string message, Exception inner) 
             : base(message, inner) { EntityId = id; EntityName = name; }
-
         //protected DalAlreadyExistsIdException(SerializationInfo info, StreamingContext context) : base(info, context) { }
         //public OverloadCapacityException(int capacity, string message) : base(message) => this.capacity = capacity;
         override public string ToString() =>

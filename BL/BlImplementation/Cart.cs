@@ -128,67 +128,75 @@ internal class Cart : BlApi.ICart
     /// <exception cref="Exceptions"></exception>
     public BO.Order ConfirmCart(BO.Cart cart, string name, string email, string address) //WHAT THE USE OF THE PARAMETERS
     {
-        //check for every order item in Items: products exist, there are enough from each in stock, amounts positive
-        foreach(var orderItem in cart.Items)
+        try
         {
-            var product = dal.Product.GetById(orderItem.ProductID);
-            if (orderItem.Amount > product.InStock)
-                 throw new BO.BlNotInStockException(); //there isn't enough from product in stock
-            if (orderItem.Amount <= 0)
-                throw new BO.BlInvalidEntityException(); //amount isn't positive
-        }
-
-        //**********************INCORRECT EXCEPTIONS !!!!***************
-        //check if address, name aren't empty and if email is empty or according to format (<string>@gmail.com)
-        if (cart.CustomerAddress is null)
-            throw new BO.BlInvalidEntityException(name, 3);
-        if (cart.CustomerEmail is not null) //NEED TO CHECK IF ACCORDING TO FORMAT 
-            throw new Exception();
-        if (cart.CustomerName is null)
-            throw new Exception();
-
-        //in case all details are correct:
-
-        //create a new DO.Order, try to add the order and get an order id in return
-        int DOorderId = dal.Order.Add(new DO.Order()
-        {
-            //Id =
-            CustomerName = cart.CustomerName,
-            CustomerAddress = cart.CustomerAddress,
-            CustomerEmail = cart.CustomerEmail,
-            OrderDate = DateTime.Now,
-            ShipDate = null,
-            DeliveryDate = null
-        });
-
-        foreach (var BOorderItem in cart.Items)
-        {
-            int orderItemId = dal.OrderItem.Add(new DO.OrderItem()
+            //check for every order item in Items: products exist, there are enough from each in stock, amounts positive
+            foreach (var orderItem in cart.Items)
             {
-                OrderID = DOorderId,
-                Amount = BOorderItem.Amount,
-                Price = BOorderItem.Price, //PRICE OR TOTAL???????
-                ProductID = BOorderItem.ProductID     
-            });
-            DO.OrderItem DOorderItem = dal.OrderItem.GetById(orderItemId);
-            DO.Product product = dal.Product.GetById(DOorderItem.ProductID);
-            product.InStock -= DOorderItem.Amount; //take off from stock the amount of products in the order
-            dal.Product.Update(product);
-        }
+                var product = dal.Product.GetById(orderItem.ProductID);
+                if (orderItem.Amount > product.InStock)
+                    throw new BO.BlNotInStockException(orderItem.Amount, name); //there isn't enough from product in stock
+                if (orderItem.Amount <= 0)
+                    throw new BO.BlInvalidEntityException(orderItem.ProductID, name, 0); //amount isn't positive
+            }
 
-        BO.Order newOrder = new BO.Order()
+            //**********************INCORRECT EXCEPTIONS !!!!***************
+            //check if address, name aren't empty and if email is empty or according to format (<string>@gmail.com)
+            if (cart.CustomerAddress is null)
+                throw new BO.BlInvalidEntityException(3); //will put EntityChoice = 3 and print- Address is null 
+            if (cart.CustomerEmail is not null) //NEED TO CHECK IF ACCORDING TO FORMAT 
+                throw new Exception();
+            if (cart.CustomerName is null)
+                throw new BO.BlInvalidEntityException(4); //will put EntityChoice = 4 and print - Name is null ;
+
+            //in case all details are correct:
+
+            //create a new DO.Order, try to add the order and get an order id in return
+            int DOorderId = dal.Order.Add(new DO.Order()
+            {
+                //Id =
+                CustomerName = cart.CustomerName,
+                CustomerAddress = cart.CustomerAddress,
+                CustomerEmail = cart.CustomerEmail,
+                OrderDate = DateTime.Now,
+                ShipDate = null,
+                DeliveryDate = null
+            });
+
+            foreach (var BOorderItem in cart.Items)
+            {
+                int orderItemId = dal.OrderItem.Add(new DO.OrderItem()
+                {
+                    OrderID = DOorderId,
+                    Amount = BOorderItem.Amount,
+                    Price = BOorderItem.Price, //PRICE OR TOTAL???????
+                    ProductID = BOorderItem.ProductID
+                });
+                DO.OrderItem DOorderItem = dal.OrderItem.GetById(orderItemId);
+                DO.Product product = dal.Product.GetById(DOorderItem.ProductID);
+                product.InStock -= DOorderItem.Amount; //take off from stock the amount of products in the order
+                dal.Product.Update(product);
+            }
+
+            BO.Order newOrder = new BO.Order()
+            {
+                Id = DOorderId,
+                CustomerAddress = cart.CustomerAddress,
+                CustomerEmail = cart.CustomerEmail,
+                CustomerName = cart.CustomerName,
+                OrderDate = DateTime.Now,
+                DeliveryDate = null,
+                ShipDate = null,
+                TotalPrice = cart.TotalPrice,
+                Status = BO.OrderStatus.Confirmed, //?????
+                Items = cart.Items
+            };
+            return newOrder;
+        }
+        catch (DO.DalDoesNotExistIdException ex )
         {
-            Id = DOorderId,
-            CustomerAddress = cart.CustomerAddress,
-            CustomerEmail = cart.CustomerEmail,
-            CustomerName = cart.CustomerName,
-            OrderDate = DateTime.Now,
-            DeliveryDate = null,
-            ShipDate = null,
-            TotalPrice = cart.TotalPrice,
-            Status = BO.OrderStatus.Confirmed, //?????
-            Items = cart.Items
-        };
-        return newOrder;
+            throw new BO.BlMissingEntityException("Data exception:", ex);
+        }
+        
     }
 }

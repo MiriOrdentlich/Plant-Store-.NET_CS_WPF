@@ -9,6 +9,7 @@ using System.Runtime.Serialization;
 using DalApi;
 using BO;
 using DO;
+using System.Xml.Linq;
 
 namespace BlImplementation;
 
@@ -27,10 +28,10 @@ internal class Product : BlApi.IProduct
         return from doProduct in dal.Product.GetAll() // get a list of products and scan it
                select new BO.ProductForList //build a new List products (type ProductForList) 
                {
-                   Id = doProduct?.Id ?? 0,
-                   Name = doProduct?.Name ?? "",
-                   Category = (BO.Category)doProduct?.Category!,
-                   Price = doProduct?.Price ?? 0
+                   Id = doProduct?.Id ?? throw new BlMissingEntityException("Missing Id"),
+                   Name = doProduct?.Name ?? throw new BlMissingEntityException("Missing Name"),
+                   Category = (BO.Category?)doProduct?.Category ?? throw new BlMissingEntityException("Missing Category"),
+                   Price = doProduct?.Price ?? throw new BlInvalidEntityException(1)
                };
     }
 
@@ -44,26 +45,29 @@ internal class Product : BlApi.IProduct
     {
         try
         {
-            //חריגות
-            //productId.IdIsNegative
-           
 
             DO.Product doProduct = dal.Product.GetById(productId); //find the wanted product by its id and copy it to a new one
 
-            return new BO.Product() //create a new Product (type BO) and return it with the wanted values
+            if (doProduct.Id > 0)
             {
-                //copy the details
-                Id = doProduct.Id, 
-                Category = (BO.Category)doProduct.Category, //take the doProduct Category, turn it into BO.Category
-                Price = doProduct.Price,
-                Name = doProduct.Name,
-                InStock = doProduct.InStock
-            };
-        }        
-        //לעדכן חריגות
-        catch(Exception ex)
+                return new BO.Product() //create a new Product (type BO) and return it with the wanted values
+                {
+                    //copy the details
+
+                    Id = doProduct.Id,
+                    Category = (BO.Category)doProduct.Category, //take the doProduct Category, turn it into BO.Category
+                    Price = doProduct.Price,
+                    Name = doProduct.Name,
+                    InStock = doProduct.InStock
+                };
+            }
+            else
+                throw new BlInvalidEntityException(doProduct.Id, doProduct.Name, 3);
+        }
+
+        catch (DO.DalDoesNotExistIdException ex) //לא בטוח
         {
-            throw new Exception("*********", ex); 
+            throw new BO.BlMissingEntityException("Data exception:", ex);
         }
     }
 
@@ -71,110 +75,75 @@ internal class Product : BlApi.IProduct
     {
         try
         {
-
-            //productId.IdIsNegative();
-            //product.Name.NameIsNull();
-            //product.Price.PriceIsNegative();
             //product.InStock.AmountIsNegative();
-
-            DO.Product newDoProduct = new DO.Product() //create a new data layer product
+            if (productId > 0)
             {
-                //copy the fields
-                Id = productId,
-                Name = productName,
-                Category = dal.Product.GetById(productId).Category,  //take the newDoProduct Category, turn it into DO.Category
-                Price = price,
-                InStock = amount
-            };
-            int check = dal.Product.Add(newDoProduct);
+                if (productName is null)
+                    throw new BO.BlInvalidEntityException(4); //will put EntityChoice = 4 and print - Name is null ;
+                if (price < 0)
+                    throw new BlInvalidEntityException(1);
+                if (amount < 0)
+                    throw new BlInvalidEntityException(0);
+
+                DO.Product newDoProduct = new DO.Product() //create a new data layer product
+                {
+                    //copy the fields
+                    Id = productId,
+                    Name = productName,
+                    Category = dal.Product.GetById(productId).Category,  //take the newDoProduct Category, turn it into DO.Category
+                    Price = price,
+                    InStock = amount
+                };
+                int check = dal.Product.Add(newDoProduct); //add the product (DO type), and dal.Product.Add(newDoProduct) returns int type
+            }
+            else
+            {
+                throw new BlMissingEntityException("Missing Id");
+            }
+
         }
 
-        catch (Exception)
+        catch (DO.DalDoesNotExistIdException ex)
         {
-            throw new Exception();
+            throw new BO.BlMissingEntityException("Data exception:", ex);
         }
     }
 
-    //public void AddProduct(BO.Product product)
-    //{
-    //    //if (productId <= 0)
-    //    //{
-    //    //    throw new ArgumentException("Invalid id");
-    //    //}
-    //    //if (productName == null)
-    //    //{
-    //    //    throw new ArgumentException("Invalid name");
-    //    //}
-    //    //if (price <= 0)
-    //    //{
-    //    //    throw new ArgumentException("Invalid price");
-    //    //}
-    //    //if (amount <= 0)
-    //    //{
-    //    //    throw new ArgumentException("Invalid amount");
-    //    //}
-    //    try
-    //    {
-
-    //        //productId.IdIsNegative();
-    //        //product.Name.NameIsNull();
-    //        //product.Price.PriceIsNegative();
-    //        //product.InStock.AmountIsNegative();
-
-    //        DO.Product newDoProduct = new DO.Product() //create a new data layer product
-    //        {
-    //            //copy the fields
-    //            Id = product.Id,
-    //            Name = product.Name,
-    //            Category = (DO.Category)product.Category, //take the newDoProduct Category, turn it into DO.Category
-    //            Price = product.Price,
-    //            InStock = product.InStock
-    //        };
-           
-    //        int a= dal.Product.Add(newDoProduct);//add the product (DO type), and dal.Product.Add(newDoProduct) returns int type
-    //    }
-    //    catch(Exception ex)
-    //    {
-    //        throw new Exception("  **********  ",ex);
-    //    }
-
-    //}
-
     public void UpdateProduct(BO.Product product) //update product details
     {
-        //if (product.Id <= 0)
-        //{
-        //    throw new ArgumentException("Invalid id");
-        //}
-        //if (product.Name == null)
-        //{
-        //    throw new ArgumentException("Invalid name");
-        //}
-        //if (product.Price <= 0)
-        //{
-        //    throw new ArgumentException("Invalid price");
-        //}
-        //if (product.InStock <= 0)
-        //{
-        //    throw new ArgumentException("Invalid amount");
-        //}
-
-
-        //productId.IdIsNegative();
-        //product.Name.NameIsNull();
-        //product.Price.PriceIsNegative();
-        //product.InStock.AmountIsNegative();
-
-        DO.Product newDoProduct = new DO.Product() //create a new data layer product
+        try
         {
-            //copy the fields
-            Id = product.Id,
-            Name = product.Name,
-            Price = product.Price,
-            InStock = product.InStock,
-            Category = (DO.Category)product.Category! //take the newDoProduct Category, turn it into DO.Category
-        };
-        dal.Product.Update(newDoProduct); //update product in 
+            //product.InStock.AmountIsNegative();
+            if (product.Id > 0)
+            {
+                if (product.Name is null)
+                    throw new BO.BlInvalidEntityException(4); //will put EntityChoice = 4 and print - Name is null ;
+                if (product.Price < 0)
+                    throw new BlInvalidEntityException(1);
+                if (product.InStock < 0)
+                    throw new BlInvalidEntityException(0);
+                DO.Product newDoProduct = new DO.Product() //create a new data layer product
+                {
+                    //copy the fields
+                    Id = product.Id,
+                    Name = product.Name,
+                    Price = product.Price,
+                    InStock = product.InStock,
+                    Category = (DO.Category)product.Category! //take the newDoProduct Category, turn it into DO.Category
+                };
+                dal.Product.Update(newDoProduct); //update product in 
+            }
+            else
+            {
+                throw new BlMissingEntityException("Missing Id");
+            }
+
+        }
+
+        catch (DO.DalDoesNotExistIdException ex)
+        {
+            throw new BO.BlMissingEntityException("Data exception:", ex);
+        }
     }
 
     public void DeleteProduct(int productId) //delete a product by its id
@@ -189,36 +158,36 @@ internal class Product : BlApi.IProduct
                 dal.Product.Delete(productId); //delete this product
             }
         }
-        
+
     }
 
     public BO.ProductItem GetByIdC(int productId, BO.Cart cart)
     {
         try
         {
-            //productId.IdIsNegative
 
             DO.Product doProduct = dal.Product.GetById(productId); //find the wanted product by its id and copy it to a new one
 
-
-            return new BO.ProductItem() //create a new Product (type BO) and return it withthe wanted values
+            if (doProduct.Id > 0)
             {
-                Id = doProduct.Id,
-                Category = (BO.Category)doProduct.Category!, //take the doProduct Category, turn it into BO.Category
-                Price = doProduct.Price,
-                Name = doProduct.Name,
-                InStock = doProduct.InStock > 0,
-                Amount = from item in cart.Items
-            };
+                return new BO.ProductItem()//create a new Product (type BO) and return it withthe wanted values   
+                {
+                    Id = doProduct.Id,
+                    Category = (BO.Category)doProduct.Category!, //take the doProduct Category, turn it into BO.Category
+                    Price = doProduct.Price,
+                    Name = doProduct.Name,
+                    InStock = doProduct.InStock > 0,
+                    Amount = from item in cart.Items //need a fix
+                };
+
+            }
+            else
+                throw new BlInvalidEntityException(doProduct.Id, doProduct.Name, 3);
         }
-        catch (Exception ex)
+        catch (DO.DalDoesNotExistIdException ex) //לא בטוח
         {
-            throw new Exception("******", ex);
-        }        
+            throw new BO.BlMissingEntityException("Data exception:", ex);
+        }
 
     }
 }
-
-
-///GetById is the same name for several methods. is that a problem in this case?
-//4now I changed the methods here to GetByIdC & GetByIdM
