@@ -103,9 +103,9 @@ internal class Product : BlApi.IProduct
 
         }
 
-        catch (DO.DalDoesNotExistIdException ex)
+        catch (DO.DalAlreadyExistsIdException ex)
         {
-            throw new BO.BlMissingEntityException("Data exception:", ex);
+            throw new BO.BlAlreadyExistEntityException("Data exception:", ex);
         }
     }
 
@@ -148,6 +148,8 @@ internal class Product : BlApi.IProduct
 
     public void DeleteProduct(int productId) //delete a product by its id
     {
+        if (productId < 0)
+            return ************;
         foreach (var order in dal.Order.GetAll())
         {
             var list = from item in dal.OrderItem.GetAll()// get a list of orders in order to check if the wanted product is there
