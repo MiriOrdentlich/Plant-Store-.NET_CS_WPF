@@ -40,7 +40,7 @@ internal class Order : BlApi.IOrder
     }
 
     /// <summary>
-    /// get a
+    /// get a DO.Order ID and return its BO.Order version
     /// </summary>
     /// <param name="orderId"></param>
     /// <returns>logical layer order</returns>
@@ -53,7 +53,7 @@ internal class Order : BlApi.IOrder
             var order = dal.Order.GetById(orderId);//get order from data by the given ID
             return GetBoOrder(order);
         }
-        catch(Exception ex)
+        catch(Exception)
         {
             throw new Exception();
         }
@@ -138,7 +138,7 @@ internal class Order : BlApi.IOrder
         if (order.OrderDate != null)
             return BO.OrderStatus.Confirmed;
         else
-            throw new Exception();
+            throw BO.();
     }
 
     /// <summary>
@@ -148,31 +148,35 @@ internal class Order : BlApi.IOrder
     /// <returns>order from logical layer</returns>
     private BO.Order GetBoOrder(DO.Order order)
     {
-        var doOrderItems = dal.OrderItem.GetAllOrderProducts(order.Id);
-        var boOrderItems = (from doOrderItem in doOrderItems
-                            let productId = doOrderItem?.ProductID ?? 0
-                            select new BO.OrderItem() //convert orderItems items from DO to BO
-                            {
-                                Id = doOrderItem?.Id ?? 0,
-                                ProductID = doOrderItem?.ProductID ?? 0,
-                                Name = dal.Product.GetById(productId).Name,
-                                Price = doOrderItem?.Price ?? 0,
-                                Amount = doOrderItem?.Amount ?? 0,
-                                TotalPrice = doOrderItem?.Price ?? 0 * doOrderItem?.Amount ?? 0 //logical considerations 
-                            }).ToList();
-
-        return new BO.Order()
+        try
         {
-            Id = order.Id,
-            OrderDate = order.DeliveryDate,
-            ShipDate = order.ShipDate,
-            DeliveryDate = order.DeliveryDate,
-            CustomerAddress = order.CustomerAddress,
-            CustomerName = order.CustomerName,
-            CustomerEmail = order.CustomerEmail,
-            Status = GetOrderStatus(order),
-            Items = boOrderItems,
-            TotalPrice = boOrderItems.Sum(x => x.TotalPrice)
-        };
+            var doOrderItems = dal.OrderItem.GetAllOrderProducts(order.Id);
+            var boOrderItems = (from doOrderItem in doOrderItems
+                                let productId = doOrderItem?.ProductID ?? 0
+                                select new BO.OrderItem() //convert orderItems items from DO to BO
+                                {
+                                    Id = doOrderItem?.Id ?? 0,
+                                    ProductID = doOrderItem?.ProductID ?? 0,
+                                    Name = dal.Product.GetById(productId).Name,
+                                    Price = doOrderItem?.Price ?? 0,
+                                    Amount = doOrderItem?.Amount ?? 0,
+                                    TotalPrice = doOrderItem?.Price ?? 0 * doOrderItem?.Amount ?? 0 //logical considerations 
+                                }).ToList();
+
+            return new BO.Order()
+            {
+                Id = order.Id,
+                OrderDate = order.DeliveryDate,
+                ShipDate = order.ShipDate,
+                DeliveryDate = order.DeliveryDate,
+                CustomerAddress = order.CustomerAddress,
+                CustomerName = order.CustomerName,
+                CustomerEmail = order.CustomerEmail,
+                Status = GetOrderStatus(order),
+                Items = boOrderItems,
+                TotalPrice = boOrderItems.Sum(x => x.TotalPrice)
+            };
+        }
+        catch()
     }
 }
