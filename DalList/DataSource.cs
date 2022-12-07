@@ -68,30 +68,26 @@ internal static class DataSource
             string fstName = firstName[s_rand.Next(6)];
             string lstName = lastName[s_rand.Next(6)];
 
-            int days = s_rand.Next(1000);
+            int days = s_rand.Next(21, 200);
             
             DateTime orderDate = DateTime.Now.AddDays(-days); // order date is berfore current date
-            DateTime? deliveryDate;
-            DateTime? shipDate;
-            if (i % 5 == 0) // 5% doesnt get delivery and ship date
+            DateTime? deliveryDate = null;
+            DateTime? shipDate = null;
+            TimeSpan timeSpan;
+            if (i < 0.8 * 20) // 5% doesnt get delivery and ship date
             {
-                deliveryDate = null;
-                shipDate = null;
+                days = s_rand.Next(10, 20);
+                timeSpan = new TimeSpan(days, 0, 0, 0);
+                shipDate = orderDate + timeSpan;
             }
-            else
-            {
-                days = s_rand.Next(1, 3);
-                TimeSpan timeSpan = new TimeSpan(days, 0, 0, 0);
-                deliveryDate = orderDate + timeSpan;
-                if ((i + 2) % 3 == 0)
-                    shipDate = null;
+            if(i < 0.8 * 0.6 * 20)
+            {            
+                days = s_rand.Next(1, 10);
+                timeSpan = new TimeSpan(days, 0, 0, 0);
+                if (shipDate != null)
+                    deliveryDate =  shipDate + timeSpan;
                 else
-                {
-                    days = s_rand.Next(3, 7);
-                    timeSpan = new TimeSpan(days, 0, 0, 0);
-                    shipDate = orderDate + timeSpan;
-                }
-
+                    deliveryDate = DateTime.MinValue + timeSpan;
             }
             //create and add order to OrdersList
             OrdersList.Add(
@@ -103,7 +99,7 @@ internal static class DataSource
                     CustomerEmail = fstName + lstName + "@gmail.com",
                     OrderDate = orderDate,
                     ShipDate = shipDate,
-                    DeliveryDate = deliveryDate,                
+                    DeliveryDate = deliveryDate             
                 });
         }
     }

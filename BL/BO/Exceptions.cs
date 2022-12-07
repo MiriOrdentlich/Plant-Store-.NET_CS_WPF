@@ -3,121 +3,150 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
-namespace BO
+namespace BO;
+
+//קיים כבר
+//לא קיים
+//לא תקין
+//נגמר מלאי
+//תאריך שגוי
+//קטגוריה שגויה
+[Serializable]
+public class BlAlreadyExistEntityException: Exception //If Already Exists
 {
-    //קיים כבר
-    //לא קיים
-    //לא תקין
-    //נגמר מלאי
-    //תאריך שגוי
-    //קטגוריה שגויה
-    [Serializable]
-    public class BlAlreadyExistEntityException: Exception //If Already Exists
+    public string EntityName;
+    public int EntityID;
+
+    public BlAlreadyExistEntityException(string name, int id)
+    : base() { EntityName = name; EntityID = id; }
+    public BlAlreadyExistEntityException(string name, int id, string message)
+    : base(message) { EntityName = name; EntityID = id; }
+    public BlAlreadyExistEntityException(int id , string name, string message, Exception exception)
+    : base(message, exception) { EntityName = name; EntityID = id; }
+
+    override public string ToString()
     {
-
-        public BlAlreadyExistEntityException(string message)
-        : base(message) { }
-        public BlAlreadyExistEntityException(string message, Exception exception)
-        : base(message, exception){ }
-
-        public override string ToString()
-        {
-            return base.ToString() + $"Entity is already exists.";
-        }
+        if (Choice == 0)
+            return $"Product: {EntityID} of type {EntityName}, already exists";
+        else // => (choice == 1)
+            return "";
     }
-
-    [Serializable]
-    public class BlMissingEntityException : Exception //If doesn't Exists
-    {
-        public BlMissingEntityException(string message)
-        : base(message) { }
-
-        public BlMissingEntityException(string message, Exception exception)
-        : base(message, exception) { }
-
-        public override string ToString()
-        {
-            return base.ToString() + $"Missing Entity";
-        }
-    }
-
-    [Serializable]
-    public class BlInvalidEntityException : Exception //If Invalid
-    {
-        public int EntityId;
-        public string EntityName;
-        public int EntityChoice;
-
-        public BlInvalidEntityException(string name, int entityChoice) :base()
-        {
-            EntityChoice = entityChoice;
-            EntityName = name;
-        }
-        public BlInvalidEntityException(int id, string name, int entityChoice)
-            : base()
-        {
-            EntityId = id; EntityName = name; EntityChoice = entityChoice;
-        }
-        public BlInvalidEntityException(int id, string name, int entityChoice, string message)
-            : base(message) { EntityId = id; EntityName = name; EntityChoice = entityChoice; }
-        public BlInvalidEntityException(string message, Exception exception)
-        : base(message, exception) { }
-
-        public override string ToString()
-        {
-            if (EntityChoice == 0) //if negative
-                return $" The {EntityName} is negative";
-            if (EntityChoice == 1) //if null
-                return $" The {EntityName}  is null";
-            else
-                return $"{EntityId} of type {EntityName}, isn't valid";
-
-        }
-        
-            
-    }
-
-    [Serializable]
-    public class BlNotInStockException : Exception //If Not In Stock
-    {
-        public int Entityamount;
-        public string EntityName;
-        public BlNotInStockException(int amount, string name)
-            : base() { Entityamount = amount; EntityName = name; }
-
-        //public BlNotInStockException(int id, string name, string message)
-        //    : base(message) { EntityId = id; EntityName = name; }
-
-        public override string ToString()
-        {
-            if(Entityamount == 0)
-                return $" {EntityName} isn't in stock";
-            else
-                return $" Not enough in stock";
-        }
-    }
-
-    [Serializable]
-    public class BlIncorrectDateException : Exception //If Incorrect Date
-    {
-
-        override public string ToString() =>
-            $" Incorrect Date";
-    }
-
-    [Serializable]
-    public class BlWrongCategoryException : Exception //If the Category is Wrong
-    {
-        public BlWrongCategoryException() 
-            : base() { }
-        public BlWrongCategoryException(string message) 
-            : base(message) { }
-        public BlWrongCategoryException(string message, Exception exception)
-            : base(message, exception) { }
-        override public string ToString() =>
-            $" Wrong Category";
-    }
-
 
 }
+
+[Serializable]
+public class BlMissingEntityException : Exception //If doesn't Exists
+{
+    public string EntityName;
+    public int EntityID;
+    public int Choice;
+    public BlMissingEntityException(string name, int id, int choice=0)
+    : base() { EntityName = name; EntityID = id; Choice = choice; }
+    public BlMissingEntityException(string name, int id, string message,int choice=0)
+    : base(message) { EntityName = name; EntityID = id; Choice = choice; }
+    public BlMissingEntityException(int id, string name, string message, Exception exception, int choice=0)
+    : base(message, exception) { EntityName = name; EntityID = id; Choice = choice; }
+    public BlMissingEntityException(string message, Exception exception,int choice = 1)
+    : base(message, exception) { Choice = choice; }
+    override public string ToString()
+    {
+        if (Choice == 0)
+            return $"Product: {EntityID} of type {EntityName}, doesn't exist";
+        else // => (choice == 1)
+            return "";
+
+
+    }
+}
+
+[Serializable]
+public class BlInvalidEntityException : Exception //If Invalid
+{
+    public int EntityId;
+    public string EntityName;
+    public int EntityChoice;
+    public string Status;
+
+    public BlInvalidEntityException(string name, int entityChoice) :base()
+    {
+        EntityChoice = entityChoice;
+        EntityName = name;
+    }
+    public BlInvalidEntityException(string name, int entityChoice, string status) : base()
+    {
+        EntityChoice = entityChoice;
+        EntityName = name;
+        Status = status;
+    }
+    public BlInvalidEntityException(int id, string name, int entityChoice)
+        : base()
+    {
+        EntityId = id; EntityName = name; EntityChoice = entityChoice;
+    }
+    public BlInvalidEntityException(int id, string name, int entityChoice, string message)
+        : base(message) { EntityId = id; EntityName = name; EntityChoice = entityChoice; }
+    public BlInvalidEntityException(string message, Exception exception)
+    : base(message, exception) { }
+
+    public override string ToString()
+    {
+        if (EntityChoice == 0) //if negative
+            return $" The {EntityName} is negative";
+        if (EntityChoice == 1) //if null
+            return $" The {EntityName} is null";
+        if (EntityChoice == 2)
+            return $" The {EntityName} has not {Status} yet";
+        if (EntityChoice == 3)
+            return $" The {EntityName} has already {Status}";
+        else
+            return $"{EntityId} of type {EntityName}, isn't valid";
+
+    }
+    
+        
+}
+
+[Serializable]
+public class BlNotInStockException : Exception //If Not In Stock
+{
+    public int Entityamount;
+    public string EntityName;
+    public BlNotInStockException(int amount, string name)
+        : base() { Entityamount = amount; EntityName = name; }
+
+    //public BlNotInStockException(int id, string name, string message)
+    //    : base(message) { EntityId = id; EntityName = name; }
+
+    public override string ToString()
+    {
+        if(Entityamount == 0)
+            return $" {EntityName} isn't in stock";
+        else
+            return $" Not enough in stock";
+    }
+}
+
+[Serializable]
+public class BlIncorrectDateException : Exception //If Incorrect Date
+{
+
+    override public string ToString() =>
+        $" Incorrect Date";
+}
+
+[Serializable]
+public class BlWrongCategoryException : Exception //If the Category is Wrong
+{
+    public BlWrongCategoryException() 
+        : base() { }
+    public BlWrongCategoryException(string message) 
+        : base(message) { }
+    public BlWrongCategoryException(string message, Exception exception)
+        : base(message, exception) { }
+    override public string ToString() =>
+        $" Wrong Category";
+}
+
+

@@ -79,8 +79,8 @@ internal class Cart : BlApi.ICart
     {
         try
         {
-            //בדיקה האם המוצר לא קיים בהזמנה?
-            var orderItem = cart.Items!.Where(x => x.ProductID == productId).FirstOrDefault() ?? throw new Exception();//product doesnt exist in cart
+            var orderItem = cart.Items!.Where(x => x.ProductID == productId).FirstOrDefault() ??
+                throw new BO.BlMissingEntityException("Product", productId);//product doesnt exist in cart
             var product = dal.Product.GetById(productId);
             if (amount == 0)
             {
@@ -141,7 +141,6 @@ internal class Cart : BlApi.ICart
                     throw new BO.BlInvalidEntityException(orderItem.ProductID, name, 0); //amount isn't positive
             }
 
-            //**********************INCORRECT EXCEPTIONS !!!!***************
             //check if address, name aren't empty and if email is empty or according to format (<string>@gmail.com)
             if (cart.CustomerAddress is null)
                 throw new BO.BlInvalidEntityException("Customer Address", 1); //will put EntityChoice = 3 and print- Address is null 

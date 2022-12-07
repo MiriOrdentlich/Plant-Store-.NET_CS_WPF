@@ -1,9 +1,4 @@
-﻿using BlApi;
-using BO;
-using DalApi;
-using DO;
-using System.Linq.Expressions;
-using System.Xml.Linq;
+﻿using BO;
 
 namespace BlImplementation;
 
@@ -115,8 +110,7 @@ internal class Order : BlApi.IOrder
                 return boOrder;
             }
             else
-                throw new BO.BlInvalidEntityException(orderId, "order Id", 0);
-
+                throw new BO.BlInvalidEntityException("Order", 3, "delivered"); //exception order already delivered
         }
         catch (DO.DalDoesNotExistIdException ex)
         {
@@ -147,7 +141,7 @@ internal class Order : BlApi.IOrder
                 return boOrder;
             }
             else
-                throw new BO.BlInvalidEntityException(orderId, "order Id", 0);
+                throw new BO.BlInvalidEntityException("Order", 3, "shipped");
         }
         catch (DO.DalDoesNotExistIdException ex)
         {
@@ -162,14 +156,14 @@ internal class Order : BlApi.IOrder
     /// <returns>status of order from logical layer</returns>
     private BO.OrderStatus GetOrderStatus(DO.Order order)
     {
-        if (order.DeliveryDate != null)
+        if (order.DeliveryDate > DateTime.MinValue)//!=NULL!!!!!!!!!!!!!!!!!!!!!!!!1
             return BO.OrderStatus.Delivered;
-        if (order.ShipDate != null)
+        if (order.ShipDate > DateTime.MinValue)
             return BO.OrderStatus.Shipped;
-        if (order.OrderDate != null)
-            return BO.OrderStatus.Confirmed;
-        else
-            throw new BO.BlInvalidEntityException("Status", 1);
+        return BO.OrderStatus.Confirmed;
+        //if (order.OrderDate != DateTime.MinValue)
+        //    return BO.OrderStatus.Confirmed;
+        //throw new BO.BlInvalidEntityException("Order", 2, "confirmed");
     }
 
     /// <summary>
@@ -181,12 +175,12 @@ internal class Order : BlApi.IOrder
     {
         try
         {
-            if (order.OrderDate == null)
-                throw new BO.BlInvalidEntityException("Order Date", 1);
-            if (order.DeliveryDate== null)
-                throw new BO.BlInvalidEntityException("Delivery Date", 1);
-            if (order.ShipDate== null)
-                throw new BO.BlInvalidEntityException("Ship Date", 1);
+            //if (order.OrderDate == null)
+            //    throw new BO.BlInvalidEntityException("Order Date", 1);
+            //if (order.DeliveryDate== null)
+            //    throw new BO.BlInvalidEntityException("Delivery Date", 1);
+            //if (order.ShipDate== null)
+            //    throw new BO.BlInvalidEntityException("Ship Date", 1);
             if (order.Id < 0)
                 throw new BlInvalidEntityException(order.Id, "Order", 0);
 
@@ -207,7 +201,7 @@ internal class Order : BlApi.IOrder
             return new BO.Order()
             {
                 Id = order.Id,
-                OrderDate = order.DeliveryDate,
+                OrderDate = order.OrderDate,
                 ShipDate = order.ShipDate,
                 DeliveryDate = order.DeliveryDate,
                 CustomerAddress = order.CustomerAddress,

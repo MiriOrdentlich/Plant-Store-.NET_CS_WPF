@@ -156,7 +156,7 @@ internal class Product : BlApi.IProduct
                        select item;
 
             if (list.Any()) //if there is a product.id that match the wanted one
-                throw new BO.BlAlreadyExistEntityException("Product exists in an order"); //Exception: Product exists in an order
+                throw new BO.BlAlreadyExistEntityException("Product", productId); //Exception: Product exists in an order
             dal.Product.Delete(productId); //delete this product
         }
         catch (DO.DalDoesNotExistIdException ex)
