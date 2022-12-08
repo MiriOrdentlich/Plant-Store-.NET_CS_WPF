@@ -17,20 +17,6 @@ internal class Program
     // define a pass to the entities
     private static IBl bl = new Bl();
 
-    //private static BO.Cart myCart = intializeCart(); //intialize a cart (just so we'll have what to work on..)
-
-    //private static BO.Cart intializeCart()
-    //{
-    //    Cart cart = new Cart();
-    //    for (int i = 0; i < 5; i++)
-    //    {
-    //        cart = bl.Cart.AddItem(cart, 100000 + i);
-    //    }
-    //    cart.CustomerAddress = "Petach Tikva";
-    //    cart.CustomerEmail = "bla@gmail.com";
-    //    cart.CustomerName = "bla";
-    //    return cart;
-    //}
     private static void ProductFunc(Cart myCart)
     {
         Console.WriteLine(@"1 - get all products (for manager)
@@ -57,12 +43,6 @@ enter your choice:"); // print
                     Console.WriteLine(temp);                
                 break;
 
-            //case ProductOptions.getProductsClient:
-            //    IEnumerable<BO.ProductItem?> productItems = bl.Product.GetProducts(); ;
-            //    foreach (var temp in productItems)
-            //        Console.WriteLine(temp);
-            //    break;
-
             case ProductOptions.getProductManager:
                 Console.WriteLine("Enter ID of the product to get"); 
                 if (int.TryParse(Console.ReadLine(), out id) == false)
@@ -70,21 +50,7 @@ enter your choice:"); // print
                 Console.WriteLine(bl.Product.GetByIdM(id).ToString());
                 break;
 
-            case ProductOptions.getProductClient:
-
-                //Cart cart = new Cart();
-                //Console.WriteLine("Enter customer name");
-                //cart.CustomerName = Console.ReadLine();
-                //Console.WriteLine("Enter customer address");
-                //cart.CustomerAddress = Console.ReadLine();
-                //Console.WriteLine("Enter customer email");
-                //cart.CustomerEmail = Console.ReadLine();
-                //Console.WriteLine("Enter the total price of cart");
-                //if (double.TryParse(Console.ReadLine(), out price) == false)
-                //    throw new Exception("Invalid input");
-                //cart.TotalPrice = price;
-                //ITEMS????
-               
+            case ProductOptions.getProductClient:              
                 Console.WriteLine("Enter ID of the product to get");
                 if (int.TryParse(Console.ReadLine(), out id) == false)
                     throw new Exception("Your input is not valid");
@@ -202,9 +168,6 @@ enter your choice:");
 enter your choice:");// print instructions
 
         if (CartOptions.TryParse(Console.ReadLine(), out CartOptions c2) == false) throw new Exception("Invalid input");
-        //define vriables to use later for inputs:
-        //Cart cart;
-        //double price;
         int id, amount;
         string name, email, address;
         switch(c2)

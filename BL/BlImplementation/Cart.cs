@@ -79,6 +79,7 @@ internal class Cart : BlApi.ICart
     {
         try
         {
+            (cart.CustomerEmail
             var orderItem = cart.Items!.Where(x => x.ProductID == productId).FirstOrDefault() ??
                 throw new BO.BlMissingEntityException("Product", productId);//product doesnt exist in cart
             var product = dal.Product.GetById(productId);
