@@ -68,10 +68,9 @@ internal class Order : BlApi.IOrder
     }
 
     /// <summary>
-   /// 
-   /// </summary>
-   /// <returns></returns>
-   /// <exception cref="NotImplementedException"></exception>
+    /// 
+    /// </summary>
+    /// <returns></returns>
     public IEnumerable<BO.OrderForList?> getOrdersList()
     {
         var doOrderList = dal.Order.GetAll(); //get orders list from data layer
@@ -88,9 +87,9 @@ internal class Order : BlApi.IOrder
     }
 
     /// <summary>
-    /// 
+    /// update order to Delivered => order arrived to client
     /// </summary>
-    /// <param name="orderId"></param>
+    /// <param name="orderId">order to ship</param>
     /// <returns></returns>
     /// <exception cref="NotImplementedException"></exception>
     public BO.Order UpdateOrderDelivery(int orderId)
@@ -98,8 +97,10 @@ internal class Order : BlApi.IOrder
         try
         {
             if (orderId < 0)
-                throw new BlInvalidEntityException(orderId, "order Id", 0);
+                throw new BO.BlInvalidEntityException(orderId, "order Id", 0);
             var doOrder = dal.Order.GetById(orderId);
+            if (GetOrderStatus(doOrder) == OrderStatus.Confirmed)//can't deliver order if haven't shipped it yet
+                throw new BO.BlInvalidEntityException("Order", 2, "shipped");
             if (GetOrderStatus(doOrder) == OrderStatus.Shipped) //order stage is shipped => order haven't been delivered yet
             {
                 var boOrder = GetBoOrder(doOrder);
@@ -119,11 +120,13 @@ internal class Order : BlApi.IOrder
     }
 
     /// <summary>
-    /// 
+    /// update order to Shipped => order sent to client
     /// </summary>
-    /// <param name="orderId"></param>
+    /// <param name="orderId">id of order to ship</param>
     /// <returns></returns>
-    /// <exception cref="NotImplementedException"></exception>
+    /// <exception cref="BlInvalidEntityException"></exception>
+    /// <exception cref="BO.BlInvalidEntityException"></exception>
+    /// <exception cref="BO.BlMissingEntityException"></exception>
     public BO.Order UpdateOrderShipping(int orderId)
     {
         try
@@ -156,14 +159,11 @@ internal class Order : BlApi.IOrder
     /// <returns>status of order from logical layer</returns>
     private BO.OrderStatus GetOrderStatus(DO.Order order)
     {
-        if (order.DeliveryDate > DateTime.MinValue)//!=NULL!!!!!!!!!!!!!!!!!!!!!!!!1
+        if (order.DeliveryDate != null)
             return BO.OrderStatus.Delivered;
-        if (order.ShipDate > DateTime.MinValue)
+        if (order.ShipDate != null)
             return BO.OrderStatus.Shipped;
         return BO.OrderStatus.Confirmed;
-        //if (order.OrderDate != DateTime.MinValue)
-        //    return BO.OrderStatus.Confirmed;
-        //throw new BO.BlInvalidEntityException("Order", 2, "confirmed");
     }
 
     /// <summary>
@@ -175,12 +175,6 @@ internal class Order : BlApi.IOrder
     {
         try
         {
-            //if (order.OrderDate == null)
-            //    throw new BO.BlInvalidEntityException("Order Date", 1);
-            //if (order.DeliveryDate== null)
-            //    throw new BO.BlInvalidEntityException("Delivery Date", 1);
-            //if (order.ShipDate== null)
-            //    throw new BO.BlInvalidEntityException("Ship Date", 1);
             if (order.Id < 0)
                 throw new BlInvalidEntityException(order.Id, "Order", 0);
 

@@ -29,7 +29,8 @@ internal class Cart : BlApi.ICart
                 if (product.InStock > 0)
                 {
                     cart.Items = (cart.Items?.Append(new BO.OrderItem
-                    { /*Id =??*/
+                    { 
+                        Id = 0,
                         Name = product.Name,
                         Price = product.Price,
                         ProductID = product.Id,
@@ -61,7 +62,7 @@ internal class Cart : BlApi.ICart
             return cart;
         }
 
-        catch (DO.DalDoesNotExistIdException ex) //לא בטוח
+        catch (DO.DalDoesNotExistIdException ex)
         {
             throw new BO.BlMissingEntityException("Data exception:", ex);
         }
@@ -79,7 +80,6 @@ internal class Cart : BlApi.ICart
     {
         try
         {
-            (cart.CustomerEmail
             var orderItem = cart.Items!.Where(x => x.ProductID == productId).FirstOrDefault() ??
                 throw new BO.BlMissingEntityException("Product", productId);//product doesnt exist in cart
             var product = dal.Product.GetById(productId);
@@ -146,7 +146,7 @@ internal class Cart : BlApi.ICart
             //check if address, name aren't empty and if email is empty or according to format (<string>@gmail.com)
             if (cart.CustomerAddress is null)
                 throw new BO.BlInvalidEntityException("Customer Address", 1); //will put EntityChoice = 3 and print- Address is null 
-            if (cart.CustomerEmail is null || !(cart.CustomerEmail.Contains(str))) //CHECK IF ACCORDING TO FORMAT 
+            if (cart.CustomerEmail is null || !cart.CustomerEmail.Contains(str)) //CHECK IF ACCORDING TO FORMAT 
                 throw new BO.BlInvalidEntityException("Customer Email", 1);
             if (cart.CustomerName is null)
                 throw new BO.BlInvalidEntityException("Customer Name", 1); //will put EntityChoice = 4 and print - Name is null
@@ -190,7 +190,7 @@ internal class Cart : BlApi.ICart
                 DeliveryDate = null,
                 ShipDate = null,
                 TotalPrice = cart.TotalPrice,
-                Status = BO.OrderStatus.Confirmed, //?????
+                Status = BO.OrderStatus.Confirmed, 
                 Items = cart.Items
             };
             return newOrder;

@@ -7,12 +7,7 @@ using System.Xml.Serialization;
 
 namespace BO;
 
-//קיים כבר
-//לא קיים
-//לא תקין
-//נגמר מלאי
-//תאריך שגוי
-//קטגוריה שגויה
+
 [Serializable]
 public class BlAlreadyExistEntityException: Exception //If Already Exists
 {
@@ -99,9 +94,9 @@ public class BlInvalidEntityException : Exception //If Invalid
         if (EntityChoice == 1) //if null
             return $" The {EntityName} isn't valid";
         if (EntityChoice == 2)
-            return $" The {EntityName} has not {Status} yet";
+            return $" The {EntityName} has not {Status} yet"; //used for incorrect update on order status
         if (EntityChoice == 3)
-            return $" The {EntityName} has already {Status}";
+            return $" The {EntityName} has already {Status}";//used for incorrect update on order status
         else
             return $"{EntityId} of type {EntityName}, isn't valid";
 
@@ -118,15 +113,12 @@ public class BlNotInStockException : Exception //If Not In Stock
     public BlNotInStockException(int amount, string name)
         : base() { Entityamount = amount; EntityName = name; }
 
-    //public BlNotInStockException(int id, string name, string message)
-    //    : base(message) { EntityId = ; EntityName = name; }
-
     public override string ToString()
     {
         if(Entityamount == 0)
             return $" {EntityName} isn't in stock";
         else
-            return $" Not enough in stock";
+            return $" Not enough of {EntityName} in stock";
     }
 }
 
