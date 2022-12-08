@@ -7,6 +7,7 @@ namespace BlImplementation;
 internal class Cart : BlApi.ICart
 {
     DalApi.IDal dal = new Dal.DalList();
+    private static int Index = 1000000;
 
     /// <summary>
     /// add new item to cart
@@ -30,7 +31,7 @@ internal class Cart : BlApi.ICart
                 {
                     cart.Items = (cart.Items?.Append(new BO.OrderItem
                     { 
-                        Id = 0,
+                        Id = Index,
                         Name = product.Name,
                         Price = product.Price,
                         ProductID = product.Id,
@@ -113,7 +114,7 @@ internal class Cart : BlApi.ICart
             return cart;
         }
 
-        catch (DO.DalDoesNotExistIdException ex) //לא בטוח
+        catch (DO.DalDoesNotExistIdException ex)
         {
             throw new BO.BlMissingEntityException("Data exception:", ex);
         }
@@ -146,13 +147,11 @@ internal class Cart : BlApi.ICart
             //check if address, name aren't empty and if email is empty or according to format (<string>@gmail.com)
             if (cart.CustomerAddress is null)
                 throw new BO.BlInvalidEntityException("Customer Address", 1); //will put EntityChoice = 3 and print- Address is null 
-            if (cart.CustomerEmail is null || !cart.CustomerEmail.Contains(str)) //CHECK IF ACCORDING TO FORMAT 
+            if (cart.CustomerEmail is null || !cart.CustomerEmail.Contains(str)) //Check is according to format (<string>@gmail.com)
                 throw new BO.BlInvalidEntityException("Customer Email", 1);
             if (cart.CustomerName is null)
-                throw new BO.BlInvalidEntityException("Customer Name", 1); //will put EntityChoice = 4 and print - Name is null
+                throw new BO.BlInvalidEntityException("Customer Name", 1); //will put EntityChoice = 1 and print - Name is null
             //in case all details are correct:
-            //in case all details are correct:
-
             //create a new DO.Order, try to add the order and get an order id in return
             int DOorderId = dal.Order.Add(new DO.Order()
             {
@@ -171,7 +170,7 @@ internal class Cart : BlApi.ICart
                 {
                     OrderID = DOorderId,
                     Amount = BOorderItem.Amount,
-                    Price = BOorderItem.Price, //PRICE OR TOTAL???????
+                    Price = BOorderItem.Price,
                     ProductID = BOorderItem.ProductID
                 });
                 DO.OrderItem DOorderItem = dal.OrderItem.GetById(orderItemId);

@@ -7,11 +7,14 @@ internal class Product : BlApi.IProduct
     private DalApi.IDal dal = new Dal.DalList();
 
 
+
     /// <summary>
     /// GetListedProducts shows a list of products to the manager and for the client Catalogue
     /// </summary>
     /// <returns></returns> the new List products (type ProductForList)
     /// <exception cref="NullReferenceException"></exception>
+
+    //Manager:
     public IEnumerable<BO.ProductForList?> GetListedProducts()
     {
         return from doProduct in dal.Product.GetAll() // get a list of products and scan it
@@ -61,15 +64,15 @@ internal class Product : BlApi.IProduct
     }
 
     /// <summary>
-    /// 
+    /// add a new product
     /// </summary>
-    /// <param name="productId"></param>
-    /// <param name="productName"></param>
-    /// <param name="price"></param>
-    /// <param name="amount"></param>
-    /// <exception cref="BO.BlInvalidEntityException"></exception>
-    /// <exception cref="BlMissingEntityException"></exception>
-    /// <exception cref="BO.BlAlreadyExistEntityException"></exception>
+    /// <param name="productId">the product of the id</param>
+    /// <param name="productName">the product's name</param>
+    /// <param name="category">it's category</param>
+    /// <param name="price">it's price</param>
+    /// <param name="amount">it's amount</param>
+    /// <exception cref="BO.BlInvalidEntityException">throw if the input isn't valid</exception> 
+    /// <exception cref="BO.BlAlreadyExistEntityException">throw if the product already exists</exception>
     public void AddProduct(int productId, string productName, BO.Category category, double price, int amount)
     {
         try
@@ -102,11 +105,10 @@ internal class Product : BlApi.IProduct
     }
 
     /// <summary>
-    /// 
+    /// update an existing product
     /// </summary>
     /// <param name="product"></param>
-    /// <exception cref="BO.BlInvalidEntityException"></exception>
-    /// <exception cref="BlMissingEntityException"></exception>
+    /// <exception cref="BO.BlInvalidEntityException">throw if the input isn't valid</exception>
     /// <exception cref="BO.BlMissingEntityException"></exception>
     public void UpdateProduct(BO.Product product) //update product details
     {
@@ -116,7 +118,7 @@ internal class Product : BlApi.IProduct
             if (product.Id < 0)
                 throw new BO.BlInvalidEntityException("product Id", 0);
             if (product.Name is null)
-                throw new BO.BlInvalidEntityException("product Name", 1); //will put EntityChoice = 4 and print - Name is null ;
+                throw new BO.BlInvalidEntityException("product Name", 1); //will put EntityChoice = 1 and print - Name is null ;
             if (product.Price < 0)
                 throw new BO.BlInvalidEntityException("product price", 0);
             if (product.InStock < 0)
@@ -140,10 +142,10 @@ internal class Product : BlApi.IProduct
     }
 
     /// <summary>
-    /// 
+    /// Delete a product from the list
     /// </summary>
-    /// <param name="productId"></param>
-    /// <exception cref="BO.BlAlreadyExistEntityException"></exception>
+    /// <param name="productId">the product id</param>
+    /// <exception cref="BO.BlAlreadyExistEntityException">throw </exception>
     /// <exception cref="BO.BlMissingEntityException"></exception>
     public void DeleteProduct(int productId) //delete a product by its id
     {
@@ -156,27 +158,28 @@ internal class Product : BlApi.IProduct
 
             if (list.Any()) //if there is a product.id that match the wanted one
                 throw new BO.BlAlreadyExistEntityException("Product", productId, -1); //Exception: Product exists in an order
-            dal.Product.Delete(productId); //delete this product
+            dal.Product.Delete(productId); //delete the product
         }
         catch (DO.DalDoesNotExistIdException ex)
         {
             throw new BO.BlMissingEntityException("Data exception:", ex);
         }
     }
+    //Client
 
     /// <summary>
-    /// 
+    /// Get a product by it's id for the client
     /// </summary>
     /// <param name="productId"></param>
     /// <param name="cart"></param>
     /// <returns></returns>
-    /// <exception cref="BlInvalidEntityException"></exception>
-    /// <exception cref="BO.BlMissingEntityException"></exception>
+    /// <exception cref="BlInvalidEntityException">if the id is negative</exception>
+    /// <exception cref="BO.BlMissingEntityException">if the id doesnt exist</exception>
+    
     public BO.ProductItem GetByIdC(int productId, BO.Cart cart)
     {
         try
         {
-
             DO.Product doProduct = dal.Product.GetById(productId); //find the wanted product by its id and copy it to a new one
 
             if (doProduct.Id > 0)

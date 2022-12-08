@@ -46,14 +46,14 @@ public class BlMissingEntityException : Exception //If doesn't Exists
     : base(message) { EntityName = name; EntityID = id; Choice = choice; }
     public BlMissingEntityException(int id, string name, string message, Exception exception, int choice=0)
     : base(message, exception) { EntityName = name; EntityID = id; Choice = choice; }
-    public BlMissingEntityException(string message, Exception exception,int choice = 1)
+    public BlMissingEntityException(string message, Exception exception,int choice = 1) //if (choice == 1)
     : base(message, exception) { Choice = choice; }
     override public string ToString()
     {
         if (Choice == 0)
             return $"Product: {EntityID} of type {EntityName}, doesn't exist";
         else // => (choice == 1)
-            return "";
+            return base.ToString();
     }
 }
 

@@ -10,7 +10,7 @@ namespace BlTest;
 public enum FirstChoice { Exit, Product, Order, Cart };
 public enum CartOptions { add = 1, update, confirm };
 public enum OrderOptions { getOrders = 1, getOrderInfo, updateOrderShipping, updateOrderDelivery, trackOrder };
-public enum ProductOptions { getProductsManager = 1, getProductsClient, getProductManager, getProductClient, addProduct, deleteProduct, updateProduct };
+public enum ProductOptions { getProductsManager = 1, getProductManager, getProductClient, addProduct, deleteProduct, updateProduct };
 
 internal class Program
 {
@@ -20,12 +20,11 @@ internal class Program
     private static void ProductFunc(Cart myCart)
     {
         Console.WriteLine(@"1 - get all products (for manager)
-2 - get all products (for client) -> not valid
-3 - get product by ID
-4 - get product by ID (for client)
-5 - add product
-6 - delete product
-7 - update product
+2 - get product by ID
+3 - get product by ID (for client)
+4 - add product
+5 - delete product
+6 - update product
 enter your choice:"); // print
         if (ProductOptions.TryParse(Console.ReadLine(), out ProductOptions c2) == false) //checks if the choice is valid
             throw new BO.BlInvalidEntityException("choice",1);

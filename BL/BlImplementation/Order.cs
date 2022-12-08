@@ -68,9 +68,9 @@ internal class Order : BlApi.IOrder
     }
 
     /// <summary>
-    /// 
+    /// get order of list and return a OrderForList
     /// </summary>
-    /// <returns></returns>
+    /// <returns></returns> OrderForList type
     public IEnumerable<BO.OrderForList?> getOrdersList()
     {
         var doOrderList = dal.Order.GetAll(); //get orders list from data layer
