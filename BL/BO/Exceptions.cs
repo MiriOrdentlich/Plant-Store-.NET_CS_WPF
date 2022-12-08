@@ -62,13 +62,8 @@ public class BlMissingEntityException : Exception //If doesn't Exists
     }
 }
 
+
 [Serializable]
-public class BlInvalidEmailException : Exception //If Invalid
-{
-
-}
-
-    [Serializable]
 public class BlInvalidEntityException : Exception //If Invalid
 {
     public int EntityId;
@@ -102,7 +97,7 @@ public class BlInvalidEntityException : Exception //If Invalid
         if (EntityChoice == 0) //if negative
             return $" The {EntityName} is negative";
         if (EntityChoice == 1) //if null
-            return $" The {EntityName} is null";
+            return $" The {EntityName} isn't valid";
         if (EntityChoice == 2)
             return $" The {EntityName} has not {Status} yet";
         if (EntityChoice == 3)
@@ -124,7 +119,7 @@ public class BlNotInStockException : Exception //If Not In Stock
         : base() { Entityamount = amount; EntityName = name; }
 
     //public BlNotInStockException(int id, string name, string message)
-    //    : base(message) { EntityId = id; EntityName = name; }
+    //    : base(message) { EntityId = ; EntityName = name; }
 
     public override string ToString()
     {
@@ -138,9 +133,10 @@ public class BlNotInStockException : Exception //If Not In Stock
 [Serializable]
 public class BlIncorrectDateException : Exception //If Incorrect Date
 {
-
-    override public string ToString() =>
-        $" Incorrect Date";
+    public BlIncorrectDateException(string message, Exception exception)
+    : base(message, exception) {}
+    override public string ToString() => 
+        base.ToString() /*+ $" Incorrect Date"*/;
 }
 
 [Serializable]

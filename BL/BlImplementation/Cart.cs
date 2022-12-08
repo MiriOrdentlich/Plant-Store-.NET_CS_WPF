@@ -130,6 +130,7 @@ internal class Cart : BlApi.ICart
     /// <exception cref="Exceptions"></exception>
     public BO.Order ConfirmCart(BO.Cart cart, string name, string email, string address) //WHAT THE USE OF THE PARAMETERS
     {
+        string str = "@gmail.com";
         try
         {
             //check for every order item in Items: products exist, there are enough from each in stock, amounts positive
@@ -145,11 +146,11 @@ internal class Cart : BlApi.ICart
             //check if address, name aren't empty and if email is empty or according to format (<string>@gmail.com)
             if (cart.CustomerAddress is null)
                 throw new BO.BlInvalidEntityException("Customer Address", 1); //will put EntityChoice = 3 and print- Address is null 
-            if (cart.CustomerEmail is null) //NEED TO CHECK IF ACCORDING TO FORMAT 
-                throw new Exception();
+            if (cart.CustomerEmail is null || !(cart.CustomerEmail.Contains(str))) //CHECK IF ACCORDING TO FORMAT 
+                throw new BO.BlInvalidEntityException("Customer Email", 1);
             if (cart.CustomerName is null)
-                throw new BO.BlInvalidEntityException("Customer Name", 1); //will put EntityChoice = 4 and print - Name is null ;
-
+                throw new BO.BlInvalidEntityException("Customer Name", 1); //will put EntityChoice = 4 and print - Name is null
+            //in case all details are correct:
             //in case all details are correct:
 
             //create a new DO.Order, try to add the order and get an order id in return

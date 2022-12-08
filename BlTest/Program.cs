@@ -28,7 +28,7 @@ internal class Program
 7 - update product
 enter your choice:"); // print
         if (ProductOptions.TryParse(Console.ReadLine(), out ProductOptions c2) == false) //checks if the choice is valid
-            throw new Exception("Your choice is not valid");
+            throw new BO.BlInvalidEntityException("choice",1);
         //define vriables to use later for inputs:
         int id, amount;
         double price;
@@ -46,14 +46,14 @@ enter your choice:"); // print
             case ProductOptions.getProductManager:
                 Console.WriteLine("Enter ID of the product to get"); 
                 if (int.TryParse(Console.ReadLine(), out id) == false)
-                    throw new Exception("Your input is not valid");
+                    throw new BO.BlInvalidEntityException("id", 1);
                 Console.WriteLine(bl.Product.GetByIdM(id).ToString());
                 break;
 
             case ProductOptions.getProductClient:              
                 Console.WriteLine("Enter ID of the product to get");
                 if (int.TryParse(Console.ReadLine(), out id) == false)
-                    throw new Exception("Your input is not valid");
+                    throw new BO.BlInvalidEntityException("id", 1);
                 myCart = bl.Cart.AddItem(myCart, id);
                 Console.WriteLine(bl.Product.GetByIdC(id, myCart)); //print productItem
                 break;
@@ -61,25 +61,25 @@ enter your choice:"); // print
             case ProductOptions.addProduct:
                 Console.WriteLine("Enter product ID");
                 if (int.TryParse(Console.ReadLine(), out id) == false)
-                    throw new Exception("Your input is not valid");             
+                    throw new BO.BlInvalidEntityException("id", 1);             
                 Console.WriteLine("Enter name");
                 name = Console.ReadLine();
                 Console.WriteLine("Enter price"); // print
                 if (double.TryParse(Console.ReadLine(), out price) == false)
-                    throw new Exception("Your input is not valid");
+                    throw new BO.BlInvalidEntityException("price", 1);
                 Console.WriteLine("Enter amount"); 
                 if (int.TryParse(Console.ReadLine(), out amount) == false) 
-                    throw new Exception("Your input is not valid");
+                    throw new BO.BlInvalidEntityException("amount", 1);
                 Console.WriteLine("Enter catgory");
                 if (BO.Category.TryParse(Console.ReadLine(), out category) == false)
-                    throw new Exception("Your input is not valid");
+                    throw new BO.BlInvalidEntityException("catgory", 1);
                 bl.Product.AddProduct(id, name!, category, price, amount);
                 break;
 
             case ProductOptions.deleteProduct:
                 Console.WriteLine("Enter product ID");
                 if (int.TryParse(Console.ReadLine(), out id) == false)
-                    throw new Exception("Your input is not valid");
+                    throw new BO.BlInvalidEntityException("id", 1);
                 bl.Product.DeleteProduct(id);
                 break;
 
@@ -87,27 +87,27 @@ enter your choice:"); // print
                 BO.Product product = new BO.Product();
                 Console.WriteLine("Enter product ID");
                 if (int.TryParse(Console.ReadLine(), out id) == false)
-                    throw new Exception("Your input is not valid");
+                    throw new BO.BlInvalidEntityException("id", 1);
                 product.Id = id;
                 Console.WriteLine("Enter name");
                 product.Name = Console.ReadLine();
                 Console.WriteLine("Enter price"); // print
                 if (double.TryParse(Console.ReadLine(), out price) == false)
-                    throw new Exception("Your input is not valid");
+                    throw new BO.BlInvalidEntityException("price", 1);
                 product.Price = price;
                 Console.WriteLine("Enter amount");
                 if (int.TryParse(Console.ReadLine(), out amount) == false)
-                    throw new Exception("Your input is not valid");
+                    throw new BO.BlInvalidEntityException("amount", 1);
                 product.InStock = amount;
                 Console.WriteLine("Enter catgory");
                 if (BO.Category.TryParse(Console.ReadLine(), out category) == false)
-                    throw new Exception("Your input is not valid");
+                    throw new BO.BlInvalidEntityException("catgory", 1);
                 product.Category = category;
                 bl.Product.UpdateProduct(product);
                 break;    
                 
             default:
-                throw new Exception("Invalid input"); // for invalid choice
+                throw new BO.BlInvalidEntityException("input", 1);// for invalid choice
         }
     }
     private static void OrderFunc(Cart myCart)
@@ -119,7 +119,7 @@ enter your choice:"); // print
 5 - follow order
 enter your choice:");
 
-        if (OrderOptions.TryParse(Console.ReadLine(), out OrderOptions c2) == false) throw new Exception("Invalid input");
+        if (OrderOptions.TryParse(Console.ReadLine(), out OrderOptions c2) == false) throw new BO.BlInvalidEntityException("input", 1);
         switch (c2)
         {
             case OrderOptions.getOrders: 
@@ -131,33 +131,33 @@ enter your choice:");
             case OrderOptions.getOrderInfo:
                 Console.WriteLine("Enter order ID");
                 if (int.TryParse(Console.ReadLine(), out int id) == false)
-                    throw new Exception("Invalid input"); //throw if not valid
+                    throw new BO.BlInvalidEntityException("order Id", 1);// for invalid choice
                 Console.WriteLine(bl.Order.GetOrderInfo(id));
                 break;
 
             case OrderOptions.updateOrderShipping:
                 Console.WriteLine("Enter order ID");
                 if (int.TryParse(Console.ReadLine(), out id) == false)
-                    throw new Exception("Invalid input"); //throw if not valid
+                    throw new BO.BlInvalidEntityException("order Id", 1); //throw if not valid
                 Console.WriteLine(bl.Order.UpdateOrderShipping(id));
                 break;
 
             case OrderOptions.updateOrderDelivery:
                 Console.WriteLine("Enter order ID");
                 if (int.TryParse(Console.ReadLine(), out id) == false)
-                    throw new Exception("Invalid input"); //throw if not valid
+                    throw new BO.BlInvalidEntityException("order Id", 1); //throw if not valid
                 Console.WriteLine(bl.Order.UpdateOrderDelivery(id));
                 break;
 
             case OrderOptions.trackOrder:
                 Console.WriteLine("Enter order ID");
                 if (int.TryParse(Console.ReadLine(), out id) == false)
-                    throw new Exception("Invalid input"); //throw if not valid
+                    throw new BO.BlInvalidEntityException("order Id", 1); //throw if not valid
                 Console.WriteLine(bl.Order.TrackOrder(id));
                 break;
 
             default:
-                throw new Exception("Invalid input"); //throw if the input isnt valid
+                throw new BO.BlInvalidEntityException("input", 1); //throw if the input isnt valid
         }
     }
     private static void CartFunc(Cart myCart)
@@ -167,40 +167,44 @@ enter your choice:");
 3 - confirm cart and commit order
 enter your choice:");// print instructions
 
-        if (CartOptions.TryParse(Console.ReadLine(), out CartOptions c2) == false) throw new Exception("Invalid input");
+        if (CartOptions.TryParse(Console.ReadLine(), out CartOptions c2) == false) throw new BO.BlInvalidEntityException("input", 1);
         int id, amount;
-        string name, email, address;
+        string name, email, address, str="@gmail.com",hlp;
         switch(c2)
         {
             case CartOptions.add:                
-                Console.WriteLine("Enter ID of product to add");
-                if (int.TryParse(Console.ReadLine(), out id) == false) throw new Exception("Invalid input");
+                Console.WriteLine("Enter product Id to add");
+                if (int.TryParse(Console.ReadLine(), out id) == false) throw new BO.BlInvalidEntityException("product Id", 1);
                 myCart = bl.Cart.AddItem(myCart, id);
                 Console.WriteLine(myCart);
                 break;
 
             case CartOptions.update:
-                Console.WriteLine("Enter ID of product to update its amount");
-                if (int.TryParse(Console.ReadLine(), out id) == false) throw new Exception("Invalid input");
+                Console.WriteLine("Enter product Id to update its amount");
+                if (int.TryParse(Console.ReadLine(), out id) == false) throw new BO.BlInvalidEntityException("product Id", 1);
                 Console.WriteLine("Enter the new amount");
-                if (int.TryParse(Console.ReadLine(), out amount) == false) throw new Exception("Invalid input");
+                if (int.TryParse(Console.ReadLine(), out amount) == false) throw new BO.BlInvalidEntityException("amount", 1);
                 myCart = bl.Cart.UpdateItemAmount(myCart, id, amount);
                 Console.WriteLine(myCart);
                 break;
 
             case CartOptions.confirm:
                 Console.WriteLine("Enter customer name");
-                name = Console.ReadLine() ?? throw new Exception("Invalid input");
+                name = Console.ReadLine() ?? throw new BO.BlInvalidEntityException("Name", 1);
                 Console.WriteLine("Enter customer address");
-                address = Console.ReadLine() ?? throw new Exception("Invalid input");
+                address = Console.ReadLine() ?? throw new BO.BlInvalidEntityException("Address", 1);
                 Console.WriteLine("Enter customer email");
-                email = Console.ReadLine() ?? throw new Exception("Invalid input");
+                hlp= Console.ReadLine();
+                if (hlp != null && hlp.Contains(str))
+                    email = hlp;
+                else
+                    throw new BO.BlInvalidEntityException("Email", 1);
                 var order = bl.Cart.ConfirmCart(myCart, name, email, address);
                 Console.WriteLine(order);
                 break;
 
             default:
-                throw new Exception("Invalid input");
+                throw new BO.BlInvalidEntityException("input", 1);
         }
     }
 
@@ -228,7 +232,7 @@ enter your choice:");// print instructions
 3 - Cart
 enter your choice:"); // print
 
-                if (FirstChoice.TryParse(Console.ReadLine(), out FirstChoice c1) == false) throw new Exception("Invalid input");
+                if (FirstChoice.TryParse(Console.ReadLine(), out FirstChoice c1) == false) throw new BO.BlInvalidEntityException("input", 1);
 
                 switch (c1)
                 {
@@ -249,7 +253,7 @@ enter your choice:"); // print
                         break;
 
                     default:
-                        throw new Exception("Invalid input");
+                        throw new BO.BlInvalidEntityException("input", 1);
                 }
             }
             catch (Exception exception)
