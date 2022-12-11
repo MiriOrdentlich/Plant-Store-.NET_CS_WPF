@@ -34,9 +34,19 @@ internal class DalOrder : IOrder
         if ( DataSource.OrdersList.RemoveAll(x => x?.Id == id) == 0)
             throw new DO.DalDoesNotExistIdException(id, "Order");
     }
-    public IEnumerable<Order?> GetAll()
+    public IEnumerable<Order?> GetAll(Func<Order? , bool>? filter)
     {
-        return new List<Order?>(DataSource.OrdersList);
+        //create a new list, copy the existing list to the new one, return the new list.
+        if (filter == null)
+        {
+            return DataSource.OrdersList.Select(x => x);
+        }
+        else
+        {
+            return from x in DataSource.OrdersList
+                   where filter(x)
+                   select x;
+        }
     }
 }
     

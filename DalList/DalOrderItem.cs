@@ -43,18 +43,29 @@ internal class DalOrderItem : IOrderItem
         if (DataSource.OrderItemsList.RemoveAll(x => x?.Id == id) == 0)
             throw new DO.DalDoesNotExistIdException(id, "Order Item");
     }
-    public IEnumerable<OrderItem?> GetAll()
+    public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? filter)
     {
-        return new List<OrderItem?>(DataSource.OrderItemsList);
-    }   
-    public IEnumerable<DO.OrderItem?> GetAllOrderProducts(int orderID)
-    {
-        List<OrderItem?> tempArr = new List<OrderItem?>();
-        foreach (var item in DataSource.OrderItemsList)
+        //create a new list, copy the existing list to the new one, return the new list.
+
+        if (filter == null)
         {
-            if(item?.OrderID == orderID)
-                tempArr.Add(item);
+            return DataSource.OrderItemsList.Select(x => x);
         }
-        return tempArr;
+        else
+        {
+            return from x in DataSource.OrderItemsList
+                   where filter(x)
+                   select x;
+        }
     }
+    //public IEnumerable<DO.OrderItem?> GetAllOrderProducts(int orderID)
+    //{
+    //    List<OrderItem?> tempArr = new List<OrderItem?>();
+    //    foreach (var item in DataSource.OrderItemsList)
+    //    {
+    //        if(item?.OrderID == orderID)
+    //            tempArr.Add(item);
+    //    }
+    //    return tempArr;
+    //}
 }

@@ -1,4 +1,5 @@
 ﻿using BO;
+using DO;
 
 namespace BlImplementation;
 
@@ -57,7 +58,7 @@ internal class Product : BlApi.IProduct
                 throw new BlInvalidEntityException(doProduct.Id, doProduct.Name! , 0);
         }
 
-        catch (DO.DalDoesNotExistIdException ex) //לא בטוח
+        catch (DO.DalDoesNotExistIdException ex)
         {
             throw new BO.BlMissingEntityException("Data exception:", ex);
         }
@@ -152,10 +153,10 @@ internal class Product : BlApi.IProduct
         try
         {
             var tmp = dal.Product.GetById(productId); //if product doesn't exist get exception from data layer 
-            var list = from item in dal.OrderItem.GetAll()// get a list of orders in order to check if the wanted product is there
-                       where item?.ProductID == productId //search which product.id is equal to the given product id
-                       select item;
 
+            // get a list of orders in order to check if the wanted product is there,
+            //search which product.id is equal to the given product id:
+            var list = dal.OrderItem.GetAll(x => x?.ProductID == productId);
             if (list.Any()) //if there is a product.id that match the wanted one
                 throw new BO.BlAlreadyExistEntityException("Product", productId, -1); //Exception: Product exists in an order
             dal.Product.Delete(productId); //delete the product

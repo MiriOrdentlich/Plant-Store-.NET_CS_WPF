@@ -73,10 +73,9 @@ internal class Order : BlApi.IOrder
     /// <returns></returns> OrderForList type
     public IEnumerable<BO.OrderForList?> getOrdersList()
     {
-        var doOrderList = dal.Order.GetAll(); //get orders list from data layer
-        return from doOrder in doOrderList
-               let orderItems = dal.OrderItem.GetAllOrderProducts(doOrder?.Id ?? 0)
-               select new BO.OrderForList()
+        return from doOrder in dal.Order.GetAll() //get orders list from data layer
+               let orderItems = dal.OrderItem.GetAll(x => x?.OrderID == doOrder?.Id) //get all order items from data layer that belong to the current order
+               select new BO.OrderForList() 
                {
                    Id = doOrder?.Id ?? 0,
                    CustomerName = doOrder?.CustomerName,

@@ -37,9 +37,19 @@ internal class DalProduct : IProduct
         if (DataSource.ProductsList.RemoveAll(x => x?.Id == id) == 0)
             throw new DO.DalDoesNotExistIdException(id, "Product"); //throw if doesn't exist
     }
-    public IEnumerable<Product?> GetAll()
+    public IEnumerable<Product?> GetAll(Func<Product?, bool>? filter)
     {
         //create a new list, copy the existing list to the new one, return the new list.
-        return new List<Product?>(DataSource.ProductsList);
+
+        if (filter == null)
+        {
+            return DataSource.ProductsList.Select(x => x);
+        }
+        else
+        {
+            return from x in DataSource.ProductsList
+                   where filter(x)
+                   select x;
+        }
     }
 }
