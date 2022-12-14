@@ -7,6 +7,7 @@
         mc:Ignorable="d"
         Title="ProductListWindow" Height="640" Width="800">
     <Grid Name="MainGrid">
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
             <RowDefinition Height="500*"/>
@@ -14,14 +15,18 @@
           
         </Grid.RowDefinitions>
         <Grid Name="UpGrid" HorizontalAlignment="Stretch" Grid.Row="0" Height="auto" VerticalAlignment="Stretch" Width="auto">
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label Content="Category" Grid.Column="0" FontSize="22"/>
-            <ComboBox x:Name="CategorySelector" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="CategorySelector_SelectionChanged"/>
+            <Label Content="Category" Grid.Column="0" FontSize="22" Background="#FF8DACA0"/>
+            <ComboBox x:Name="CategorySelector" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="CategorySelector_SelectionChanged" Background="#FF8DACA0"/>
         </Grid>
         <ListView x:Name="ProductListView" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick="UpdateProductButton_MouseDoubleClick">
+            <ListView.Background>
+                <ImageBrush ImageSource="https://cdn.crispedge.com/8daca0.png"/>
+            </ListView.Background>
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>

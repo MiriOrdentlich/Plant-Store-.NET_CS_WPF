@@ -6,9 +6,8 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>       
-        <Image Source="C:\Users\maria\OneDrive\שולחן העבודה\489f1854f6b58139452c0f4ef8387798.jpg"></Image>
-
+    <Grid>
+        <Image Source="C:\Users\maria\OneDrive\שולחן העבודה\489f1854f6b58139452c0f4ef8387798.jpg" Stretch="Fill"></Image>
         <Button x:Name="btnProducts" Content="Products" HorizontalAlignment="Center" VerticalAlignment="Center" Height="60" Width="160" FontSize="24" Click="ShowProductsButton_Click"/>
     </Grid>
 </Window>

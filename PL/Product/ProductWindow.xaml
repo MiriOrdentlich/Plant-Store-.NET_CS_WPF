@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="ProductWindow" Height="450" Width="800">
     <Grid>
+        <Image Source="https://cdn.crispedge.com/8daca0.png" Stretch="Fill"></Image>
+
         <TextBox x:Name="txtID" HorizontalAlignment="Left" Margin="360,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156" Height="33"/>
         <Label Content="ID:" HorizontalAlignment="Left" Margin="260,70,0,0" VerticalAlignment="Top" Height="33" Width="36" FontSize="18"/>
         <ComboBox x:Name="cmbCategorySelector" HorizontalAlignment="Left" Margin="360,120,0,0" VerticalAlignment="Top" Width="156" Height="33"/>
