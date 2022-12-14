@@ -16,9 +16,9 @@ internal class Product : BlApi.IProduct
     /// <exception cref="NullReferenceException"></exception>
 
     //Manager:
-    public IEnumerable<BO.ProductForList?> GetListedProducts()
+    public IEnumerable<BO.ProductForList?> GetListedProducts(Func<ProductForList?, bool>? filter)
     {
-        return from doProduct in dal.Product.GetAll() // get a list of products and scan it
+        var productForList = from doProduct in dal.Product.GetAll() // get a list of products and scan it
                select new BO.ProductForList //build a new List products (type ProductForList) 
                {
                    Id = doProduct?.Id ?? 0,
@@ -26,6 +26,16 @@ internal class Product : BlApi.IProduct
                    Category = (BO.Category)doProduct?.Category!,
                    Price = doProduct?.Price ?? 0
                };
+        if (filter == null)
+        {
+            return productForList;
+        }
+        else
+        {
+            return from x in productForList
+                   where filter(x)
+                   select x;
+        }
     }
 
     /// <summary>

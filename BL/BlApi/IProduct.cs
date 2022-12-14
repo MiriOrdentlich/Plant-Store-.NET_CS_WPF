@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace BlApi;
 public interface IProduct 
 {
-    public IEnumerable<ProductForList?> GetListedProducts(); //MANAGER and CLIENT   
+    public IEnumerable<ProductForList?> GetListedProducts(Func<ProductForList?, bool>? filter = null); //MANAGER and CLIENT   
 
     /// <summary>
     /// MANAGER

@@ -6,11 +6,8 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
-    VerticalAlignment="Stretch" Width="auto">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions >
+    <Grid>
+        <Button x:Name="btnProducts" Content="Products" HorizontalAlignment="Center" VerticalAlignment="Center" Height="60" Width="160" FontSize="24" Click="ShowProductsButton_Click"/>
+
     </Grid>
 </Window>

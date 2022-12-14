@@ -177,8 +177,7 @@ internal class Order : BlApi.IOrder
             if (order.Id < 0)
                 throw new BlInvalidEntityException(order.Id, "Order", 0);
 
-
-            var doOrderItems = dal.OrderItem.GetAllOrderProducts(order.Id);
+            var doOrderItems = dal.OrderItem.GetAll(x => x?.OrderID == order.Id);
             var boOrderItems = (from doOrderItem in doOrderItems
                                 let productId = doOrderItem?.ProductID ?? 0
                                 select new BO.OrderItem() //convert orderItems items from DO to BO

@@ -12,16 +12,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL.BoEntities
+namespace PL.Product
 {
     /// <summary>
-    /// Interaction logic for StudentListWindow.xaml
+    /// Interaction logic for ProductWindow.xaml
     /// </summary>
-    public partial class StudentListWindow : Window
+    public partial class ProductWindow : Window
     {
-        public StudentListWindow()
+        public ProductWindow()
         {
             InitializeComponent();
+            cmbCategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            //ComboBoxItem newItem = new ComboBoxItem();
+            //newItem.Content = "None"; //for case Add new Product
+            //cmbCategorySelector.ItemsSource.;
         }
     }
 }

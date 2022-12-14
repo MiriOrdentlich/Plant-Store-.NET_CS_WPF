@@ -1,0 +1,23 @@
+﻿<Window x:Class="PL.Product.ProductWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL.Product"
+        mc:Ignorable="d"
+        Title="ProductWindow" Height="450" Width="800">
+    <Grid>
+        <TextBox x:Name="txb_Id" HorizontalAlignment="Left" Margin="360,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156" Height="33"/>
+        <Label Content="Id:" HorizontalAlignment="Left" Margin="260,70,0,0" VerticalAlignment="Top" Height="33" Width="36" FontSize="18"/>
+        <ComboBox x:Name="cmbCategorySelector" HorizontalAlignment="Left" Margin="360,120,0,0" VerticalAlignment="Top" Width="156" Height="33"/>
+        <Label Content="Category:" HorizontalAlignment="Left" Margin="260,120,0,0" VerticalAlignment="Top" Height="33" Width="95" FontSize="18"/>
+        <TextBox x:Name="txb_Name" HorizontalAlignment="Left" Margin="360,170,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156" Height="33"/>
+        <Label Content="Name:" HorizontalAlignment="Left" Margin="260,170,0,0" VerticalAlignment="Top" Height="33" Width="76" FontSize="18"/>
+        <TextBox x:Name="txb_Price" HorizontalAlignment="Left" Margin="360,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156" Height="33"/>
+        <Label Content="Price:" HorizontalAlignment="Left" Margin="260,220,0,0" VerticalAlignment="Top" Height="33" Width="76" FontSize="18"/>
+        <TextBox x:Name="txb_InStock" HorizontalAlignment="Left" Margin="360,270,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156" Height="33"/>
+        <Label Content="InStock:" HorizontalAlignment="Left" Margin="260,270,0,0" VerticalAlignment="Top" Height="33" Width="76" FontSize="18"/>
+        <Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Left" Margin="420,350,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btnUpdate" Content="Update" HorizontalAlignment="Left" Margin="420,350,0,0" VerticalAlignment="Top" />
+    </Grid>
+</Window>
