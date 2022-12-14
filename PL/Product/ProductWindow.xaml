@@ -7,17 +7,17 @@
         mc:Ignorable="d"
         Title="ProductWindow" Height="450" Width="800">
     <Grid>
-        <TextBox x:Name="txb_Id" HorizontalAlignment="Left" Margin="360,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156" Height="33"/>
-        <Label Content="Id:" HorizontalAlignment="Left" Margin="260,70,0,0" VerticalAlignment="Top" Height="33" Width="36" FontSize="18"/>
+        <TextBox x:Name="txtID" HorizontalAlignment="Left" Margin="360,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156" Height="33"/>
+        <Label Content="ID:" HorizontalAlignment="Left" Margin="260,70,0,0" VerticalAlignment="Top" Height="33" Width="36" FontSize="18"/>
         <ComboBox x:Name="cmbCategorySelector" HorizontalAlignment="Left" Margin="360,120,0,0" VerticalAlignment="Top" Width="156" Height="33"/>
         <Label Content="Category:" HorizontalAlignment="Left" Margin="260,120,0,0" VerticalAlignment="Top" Height="33" Width="95" FontSize="18"/>
-        <TextBox x:Name="txb_Name" HorizontalAlignment="Left" Margin="360,170,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156" Height="33"/>
+        <TextBox x:Name="txtName" HorizontalAlignment="Left" Margin="360,170,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156" Height="33"/>
         <Label Content="Name:" HorizontalAlignment="Left" Margin="260,170,0,0" VerticalAlignment="Top" Height="33" Width="76" FontSize="18"/>
-        <TextBox x:Name="txb_Price" HorizontalAlignment="Left" Margin="360,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156" Height="33"/>
+        <TextBox x:Name="txtPrice" HorizontalAlignment="Left" Margin="360,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156" Height="33"/>
         <Label Content="Price:" HorizontalAlignment="Left" Margin="260,220,0,0" VerticalAlignment="Top" Height="33" Width="76" FontSize="18"/>
-        <TextBox x:Name="txb_InStock" HorizontalAlignment="Left" Margin="360,270,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156" Height="33"/>
+        <TextBox x:Name="txtInStock" HorizontalAlignment="Left" Margin="360,270,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156" Height="33"/>
         <Label Content="InStock:" HorizontalAlignment="Left" Margin="260,270,0,0" VerticalAlignment="Top" Height="33" Width="76" FontSize="18"/>
-        <Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Left" Margin="420,350,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btnUpdate" Content="Update" HorizontalAlignment="Left" Margin="420,350,0,0" VerticalAlignment="Top" />
+        <Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Left" Margin="420,350,0,0" VerticalAlignment="Top" FontSize="16" Click="AddButton_Click"/>
+        <Button x:Name="btnUpdate" Content="Update" HorizontalAlignment="Left" Margin="420,350,0,0" VerticalAlignment="Top"  FontSize="16"/>
     </Grid>
 </Window>
