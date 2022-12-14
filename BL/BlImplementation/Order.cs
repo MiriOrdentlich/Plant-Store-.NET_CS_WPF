@@ -18,7 +18,7 @@ internal class Order : BlApi.IOrder
         {
             if (orderId < 0)
                 throw new BlInvalidEntityException(orderId, "order Id", 0);
-            var order = dal.Order.GetById(orderId); //get order from data by the given ID
+            var order = dal.Order.Get(x => x?.Id == orderId); //get order from data by the given ID
             BO.OrderTracking trackOrder = new BO.OrderTracking()
             {
                 Id = orderId,
@@ -57,7 +57,7 @@ internal class Order : BlApi.IOrder
         {
             if (orderId < 0)
                 throw new BlInvalidEntityException(orderId, "order Id", 0);
-            var order = dal.Order.GetById(orderId);//get order from data by the given ID
+            var order = dal.Order.Get(x => x?.Id == orderId);//get order from data by the given ID
             return GetBoOrder(order);
         }
         catch (DO.DalDoesNotExistIdException ex)
@@ -97,7 +97,7 @@ internal class Order : BlApi.IOrder
         {
             if (orderId < 0)
                 throw new BO.BlInvalidEntityException(orderId, "order Id", 0);
-            var doOrder = dal.Order.GetById(orderId);
+            var doOrder = dal.Order.Get(x => x?.Id == orderId);
             if (GetOrderStatus(doOrder) == OrderStatus.Confirmed)//can't deliver order if haven't shipped it yet
                 throw new BO.BlInvalidEntityException("Order", 2, "shipped");
             if (GetOrderStatus(doOrder) == OrderStatus.Shipped) //order stage is shipped => order haven't been delivered yet
@@ -132,7 +132,7 @@ internal class Order : BlApi.IOrder
         {
             if (orderId < 0)
                 throw new BlInvalidEntityException(orderId, "order Id", 0);
-            var doOrder = dal.Order.GetById(orderId);
+            var doOrder = dal.Order.Get(x => x?.Id == orderId);
             if (GetOrderStatus(doOrder) == OrderStatus.Confirmed) //order stage is confirmed => order hasn't shipped yet
             {
                 var boOrder = GetBoOrder(doOrder);
@@ -184,7 +184,7 @@ internal class Order : BlApi.IOrder
                                 {
                                     Id = doOrderItem?.Id ?? 0,
                                     ProductID = doOrderItem?.ProductID ?? 0,
-                                    Name = dal.Product.GetById(productId).Name,
+                                    Name = dal.Product.Get(x => x?.Id == productId).Name,
                                     Price = doOrderItem?.Price ?? 0,
                                     Amount = doOrderItem?.Amount ?? 0,
                                     TotalPrice = doOrderItem?.Price ?? 0 * doOrderItem?.Amount ?? 0 //logical considerations 

@@ -19,10 +19,11 @@ internal class DalProduct : IProduct
         DataSource.ProductsList.Add(product); // if product isn't in list, add product to list
         return product.Id;
     }
-    public Product GetById(int id) //Request 
+    public Product Get(Func<Product?, bool>? filter) //Request 
     {
         //search for the wanted product, throw if doesn't exist
-        return DataSource.ProductsList.Find(x => x?.Id == id) ?? throw new DO.DalDoesNotExistIdException(id, "Product");
+        return DataSource.ProductsList.Find(x => filter(x)) ??
+            throw new DO.DalDoesNotExistIdException(0, "Product"); //PROBLEM!!!!!!!!!
     }
     public void Update(Product product)
     {
