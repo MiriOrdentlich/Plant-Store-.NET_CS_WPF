@@ -1,5 +1,6 @@
 ﻿using BlApi;
 using BO;
+using DalApi;
 using DO;
 
 namespace BlImplementation;
@@ -24,7 +25,7 @@ internal class Cart : BlApi.ICart
             var orderItem = (from item in cart.Items
                              where item.ProductID == productId
                              select item).FirstOrDefault();
-            var product = dal.Product.GetById(productId);
+            var product = dal.Product.Get(x => x?.Id == productId);
             if (orderItem is null)
             {
                 if (product.InStock > 0)
@@ -83,7 +84,7 @@ internal class Cart : BlApi.ICart
         {
             var orderItem = cart.Items!.Where(x => x.ProductID == productId).FirstOrDefault() ??
                 throw new BO.BlMissingEntityException("Product", productId);//product doesnt exist in cart
-            var product = dal.Product.GetById(productId);
+            var product = dal.Product.Get(x => x?.Id == productId);
             if (amount == 0)
             {
                 cart.TotalPrice -= orderItem.TotalPrice; //remove the total of the order item from cart total
@@ -135,14 +136,16 @@ internal class Cart : BlApi.ICart
         try
         {
             //check for every order item in Items: products exist, there are enough from each in stock, amounts positive
-            foreach (var orderItem in cart.Items!)
-            {
-                var product = dal.Product.GetById(orderItem.ProductID);
-                if (orderItem.Amount > product.InStock)
-                    throw new BO.BlNotInStockException(orderItem.Amount, name); //there isn't enough from product in stock
-                if (orderItem.Amount <= 0)
-                    throw new BO.BlInvalidEntityException(orderItem.ProductID, name, 0); //amount isn't positive
-            }
+            cart.Items?.Select(item =>
+            item.Amount > dal.Product.Get(x => x?.Id == item.ProductID).InStock ? throw new BO.BlNotInStockException(item.Amount, name) : //there isn't enough from product in stock
+                item.Amount <= 0 ? throw new BO.BlInvalidEntityException(item.ProductID, name, 0) : 0);
+            //var product = dal.Product.GetById(x.ProductID);
+
+            //    if (orderItem.Amount > product.InStock)
+            //        throw new BO.BlNotInStockException(orderItem.Amount, name); //there isn't enough from product in stock
+            //    if (orderItem.Amount <= 0)
+            //        throw new BO.BlInvalidEntityException(orderItem.ProductID, name, 0); //amount isn't positive
+            
 
             //check if address, name aren't empty and if email is empty or according to format (<string>@gmail.com)
             if (cart.CustomerAddress is null)
@@ -155,7 +158,7 @@ internal class Cart : BlApi.ICart
             //create a new DO.Order, try to add the order and get an order id in return
             int DOorderId = dal.Order.Add(new DO.Order()
             {
-                //Id =
+                //Id get updated in func Add
                 CustomerName = cart.CustomerName,
                 CustomerAddress = cart.CustomerAddress,
                 CustomerEmail = cart.CustomerEmail,
@@ -163,6 +166,11 @@ internal class Cart : BlApi.ICart
                 ShipDate = null,
                 DeliveryDate = null
             });
+
+
+            //cart.Items?.Select(x => 
+            //x.Amount > dal.Product.GetById(x.ProductID).InStock ? throw new BO.BlNotInStockException(x.Amount, name) : //there isn't enough from product in stock
+            //    x.Amount <= 0 ? throw new BO.BlInvalidEntityException(x.ProductID, name, 0) : 0);
 
             foreach (var BOorderItem in cart.Items)
             {
@@ -173,11 +181,12 @@ internal class Cart : BlApi.ICart
                     Price = BOorderItem.Price,
                     ProductID = BOorderItem.ProductID
                 });
-                DO.OrderItem DOorderItem = dal.OrderItem.GetById(orderItemId);
-                DO.Product product = dal.Product.GetById(DOorderItem.ProductID);
-                product.InStock -= DOorderItem.Amount; //take off from stock the amount of products in the order
-                dal.Product.Update(product);
+                DO.OrderItem DOorderItem = dal.OrderItem.Get(x=> x?.Id == orderItemId);
+                DO.Product DOproduct = dal.Product.Get(x => x?.Id == DOorderItem.ProductID);
+                DOproduct.InStock -= DOorderItem.Amount; //take off from stock the amount of products in the order
+                dal.Product.Update(DOproduct);
             }
+
 
             BO.Order newOrder = new BO.Order()
             {
@@ -197,7 +206,6 @@ internal class Cart : BlApi.ICart
         catch (DO.DalDoesNotExistIdException ex )
         {
             throw new BO.BlMissingEntityException("Data exception:", ex);
-        }
-        
+        }        
     }
 }

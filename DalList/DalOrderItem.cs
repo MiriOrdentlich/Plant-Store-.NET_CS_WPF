@@ -13,14 +13,12 @@ internal class DalOrderItem : IOrderItem
         DataSource.OrderItemsList.Add(orderItem); // if orderItem isn't in list, add orderItem to list
         return orderItem.Id;
     }
-    public OrderItem GetById(int id)
+    public OrderItem Get(Func<OrderItem?, bool>? filter)
     {
-        //search orderItemList for order item that match the given id
+        //search orderItemList for order item that match the given filter
         //if order item not found throw exception
-        OrderItem p = DataSource.OrderItemsList.Find(x => x?.Id == id) ??
-            throw new DO.DalDoesNotExistIdException(id, "Order Item");
-        ;
-        return p;
+        return DataSource.OrderItemsList.Find(x => filter(x)) ??
+            throw new DO.DalDoesNotExistIdException(0, "Order Item"); //PROBLEM!!!!!!!!!
     }
     public OrderItem GetByProductAndOrder(int productID, int orderID)
     {

@@ -49,7 +49,7 @@ internal class Product : BlApi.IProduct
         try
         {
 
-            DO.Product doProduct = dal.Product.GetById(productId); //find the wanted product by its id and copy it to a new one
+            DO.Product doProduct = dal.Product.Get(x => x?.Id == productId); //find the wanted product by its id and copy it to a new one
 
             if (doProduct.Id > 0)
             {
@@ -162,7 +162,7 @@ internal class Product : BlApi.IProduct
     {
         try
         {
-            var tmp = dal.Product.GetById(productId); //if product doesn't exist get exception from data layer 
+            var tmp = dal.Product.Get(x => x?.Id == productId); //if product doesn't exist get exception from data layer 
 
             // get a list of orders in order to check if the wanted product is there,
             //search which product.id is equal to the given product id:
@@ -191,7 +191,7 @@ internal class Product : BlApi.IProduct
     {
         try
         {
-            DO.Product doProduct = dal.Product.GetById(productId); //find the wanted product by its id and copy it to a new one
+            DO.Product doProduct = dal.Product.Get(x => x?.Id == productId); //find the wanted product by its id and copy it to a new one
 
             if (doProduct.Id > 0)
             {
