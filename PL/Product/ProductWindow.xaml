@@ -18,6 +18,6 @@
         <TextBox x:Name="txtInStock" HorizontalAlignment="Left" Margin="360,270,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="156" Height="33"/>
         <Label Content="InStock:" HorizontalAlignment="Left" Margin="260,270,0,0" VerticalAlignment="Top" Height="33" Width="76" FontSize="18"/>
         <Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Left" Margin="420,350,0,0" VerticalAlignment="Top" FontSize="16" Click="AddButton_Click"/>
-        <Button x:Name="btnUpdate" Content="Update" HorizontalAlignment="Left" Margin="420,350,0,0" VerticalAlignment="Top"  FontSize="16"/>
+        <Button x:Name="btnUpdate" Content="Update" HorizontalAlignment="Left" Margin="420,350,0,0" VerticalAlignment="Top"  FontSize="16" Click="UpdateButton_Click"/>
     </Grid>
 </Window>

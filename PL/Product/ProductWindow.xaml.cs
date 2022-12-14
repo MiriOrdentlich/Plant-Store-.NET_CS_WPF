@@ -27,17 +27,9 @@ namespace PL.Product
         {
             InitializeComponent();
             cmbCategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            //cmbCategorySelector.Text = "None";
-            txtID.Text = "0";
-            txtPrice.Text = "0";
-            txtInStock.Text = "0";
-            //ComboBoxItem newItem = new ComboBoxItem();
-            //newItem.Content = "None"; //for case Add new Product
-            //cmbCategorySelector.ItemsSource.;
         }
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-
             try
             {
                 if (int.TryParse(txtID.Text, out int id) == false)
@@ -50,6 +42,31 @@ namespace PL.Product
                     throw new BO.BlInvalidEntityException("amount", 1);                
                 bl.Product.AddProduct(id, txtName.Text, category, price, amount);
                 MessageBox.Show("Product added successfully");
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.ToString());
+            }
+        }
+
+        private void UpdateButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (int.TryParse(txtID.Text, out int id) == false)
+                    throw new BO.BlInvalidEntityException("ID", 1);
+                if (double.TryParse(txtPrice.Text, out double price) == false)
+                    throw new BO.BlInvalidEntityException("price", 1);
+                if (int.TryParse(txtInStock.Text, out int amount) == false)
+                    throw new BO.BlInvalidEntityException("amount", 1);
+                BO.Product p = new BO.Product();
+                p.Id=id;
+                p.Name=txtName.Text;
+                p.InStock=amount;
+                p.Price=price;
+                p.Category = (BO.Category)cmbCategorySelector.SelectedIndex;
+                bl.Product.UpdateProduct(p);
+                MessageBox.Show("Product updated successfully");
             }
             catch (Exception exception)
             {
