@@ -52,7 +52,6 @@ namespace PL.Product
             p.txtID.Text = productForList?.Id.ToString();
             p.txtID.IsEnabled = false;
             p.txtPrice.Text = productForList?.Price.ToString();
-           // p.txtInStock.Text =             // כמות מוצרים היא 0 או נאל ?????????????????????????????????
             p.txtName.Text = productForList?.Name;
             p.cmbCategorySelector.Text = productForList?.Category.ToString();
             p.btnAdd.Visibility = Visibility.Hidden;
