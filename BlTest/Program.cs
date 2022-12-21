@@ -1,9 +1,6 @@
 ﻿//Naama Schweitzer 325447654 , Miri Ordentlich 213687346
 
-using BlImplementation;
-using BlApi;
 using BO;
-using DO;
 
 namespace BlTest;
 
@@ -15,7 +12,7 @@ public enum ProductOptions { getProductsManager = 1, getProductManager, getProdu
 internal class Program
 {
     // define a pass to the entities
-    private static IBl bl = new Bl();
+    private static readonly BlApi.IBl bl = BlApi.Factory.Get()!;
 
     private static void ProductFunc(Cart myCart)
     {
@@ -168,7 +165,7 @@ enter your choice:");// print instructions
 
         if (CartOptions.TryParse(Console.ReadLine(), out CartOptions c2) == false) throw new BO.BlInvalidEntityException("input", 1);
         int id, amount;
-        string name, email, address, str="@gmail.com",hlp;
+        string? name, email, address, str = "@gmail.com", hlp;
         switch(c2)
         {
             case CartOptions.add:                
@@ -193,7 +190,7 @@ enter your choice:");// print instructions
                 Console.WriteLine("Enter customer address");
                 address = Console.ReadLine() ?? throw new BO.BlInvalidEntityException("Address", 1);
                 Console.WriteLine("Enter customer email");
-                hlp= Console.ReadLine();
+                hlp = Console.ReadLine();
                 if (hlp != null && hlp.Contains(str))
                     email = hlp;
                 else

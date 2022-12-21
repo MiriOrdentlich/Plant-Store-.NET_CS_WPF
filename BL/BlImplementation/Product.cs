@@ -5,8 +5,7 @@ namespace BlImplementation;
 
 internal class Product : BlApi.IProduct
 {
-    private DalApi.IDal dal = new Dal.DalList();
-
+    private static readonly DalApi.IDal dal = DalApi.Factory.Get()!;
 
 
     /// <summary>

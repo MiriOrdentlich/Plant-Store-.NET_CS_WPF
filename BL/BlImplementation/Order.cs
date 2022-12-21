@@ -4,7 +4,7 @@ namespace BlImplementation;
 
 internal class Order : BlApi.IOrder
 {
-    DalApi.IDal dal = new Dal.DalList();
+    private static readonly DalApi.IDal dal = DalApi.Factory.Get()!;
 
     /// <summary>
     /// method gets dates of different statuses in oreder to follow order. 

@@ -7,7 +7,7 @@ namespace BlImplementation;
 
 internal class Cart : BlApi.ICart
 {
-    DalApi.IDal dal = new Dal.DalList();
+    private static readonly DalApi.IDal dal = DalApi.Factory.Get()!;
     private static int Index = 1000000;
 
     /// <summary>
@@ -172,7 +172,7 @@ internal class Cart : BlApi.ICart
             //x.Amount > dal.Product.GetById(x.ProductID).InStock ? throw new BO.BlNotInStockException(x.Amount, name) : //there isn't enough from product in stock
             //    x.Amount <= 0 ? throw new BO.BlInvalidEntityException(x.ProductID, name, 0) : 0);
 
-            foreach (var BOorderItem in cart.Items)
+            foreach (var BOorderItem in cart.Items!)
             {
                 int orderItemId = dal.OrderItem.Add(new DO.OrderItem()
                 {

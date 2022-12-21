@@ -19,7 +19,7 @@ internal class DalProduct : IProduct
         DataSource.ProductsList.Add(product); // if product isn't in list, add product to list
         return product.Id;
     }
-    public Product Get(Func<Product?, bool>? filter) //Request 
+    public Product Get(Func<Product?, bool> filter) //Request 
     {
         //search for the wanted product, throw if doesn't exist
         return DataSource.ProductsList.Find(x => filter(x)) ??

@@ -2,7 +2,7 @@
 
 namespace BlImplementation;
 
-sealed public class Bl : IBl //Bl inherited from IBl
+sealed internal class Bl : IBl //Bl inherited from IBl
 {
 
     /// <summary>

@@ -11,7 +11,7 @@ namespace BO;
 [Serializable]
 public class BlAlreadyExistEntityException: Exception //If Already Exists
 {
-    public string EntityName;
+    public string? EntityName;
     public int EntityID;
     public int Choice;
     public BlAlreadyExistEntityException(string name, int id, int choice = 0)
@@ -37,7 +37,7 @@ public class BlAlreadyExistEntityException: Exception //If Already Exists
 [Serializable]
 public class BlMissingEntityException : Exception //If doesn't Exists
 {
-    public string EntityName;
+    public string? EntityName;
     public int EntityID;
     public int Choice;
     public BlMissingEntityException(string name, int id, int choice=0)
@@ -62,9 +62,9 @@ public class BlMissingEntityException : Exception //If doesn't Exists
 public class BlInvalidEntityException : Exception //If Invalid
 {
     public int EntityId;
-    public string EntityName;
+    public string? EntityName;
     public int EntityChoice;
-    public string Status;
+    public string? Status;
 
     public BlInvalidEntityException(string name, int entityChoice) :base()
     {

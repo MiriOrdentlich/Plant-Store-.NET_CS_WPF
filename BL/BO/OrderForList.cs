@@ -12,7 +12,7 @@ public class OrderForList
     public string? CustomerName { get; set; }
     public double TotalPrice { get; set; }
     public int AmountOfItems { get; set; }
-    public OrderStatus Status { get; set; } 
+    public OrderStatus? Status { get; set; } 
 
     public override string ToString()
     {

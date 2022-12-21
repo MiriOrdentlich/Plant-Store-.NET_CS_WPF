@@ -1,11 +1,7 @@
-﻿using BlApi;
-using BO;
-using System;
-using System.Collections;
+﻿using System;
 using System.Linq;
 using System.Windows;
-using System.Windows.Documents;
-using System.Xml.Linq;
+
 
 namespace PL.Product
 {
@@ -14,7 +10,7 @@ namespace PL.Product
     /// </summary>
     public partial class ProductListWindow : Window
     {
-        private IBl bl = new BlImplementation.Bl();
+        private static readonly BlApi.IBl bl = BlApi.Factory.Get()!;
         public ProductListWindow()
         {
             InitializeComponent();
