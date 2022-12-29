@@ -28,11 +28,11 @@ internal class DalOrderItem : IOrderItem
             throw new DO.DalDoesNotExistIdException(0, "Order Item"); //??????
         return p;
     }  
-    public void Update(OrderItem? orderItem)
+    public void Update(OrderItem orderItem)
     {
         // search for order item in list. if didn't find order item -> throw exception
-        if (DataSource.OrderItemsList.RemoveAll(x => x?.Id == orderItem?.Id) == 0)
-            throw new DO.DalDoesNotExistIdException(orderItem?.Id ?? 0, "OrderItem");
+        if (DataSource.OrderItemsList.RemoveAll(x => x?.Id == orderItem.Id) == 0)
+            throw new DO.DalDoesNotExistIdException(orderItem.Id, "OrderItem");
         DataSource.OrderItemsList.Add(orderItem);
     }
     public void Delete(int id)

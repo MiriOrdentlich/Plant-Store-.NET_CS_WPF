@@ -21,11 +21,11 @@ internal class DalOrder : IOrder
         return DataSource.OrdersList.Find(x => filter(x)) ??
             throw new DO.DalDoesNotExistIdException( 0 , "Order"); //PROBLEM!!!!!!!!!
     }
-    public void Update(Order? order)
+    public void Update(Order order)
     {
         // search for order in list. if didn't find order -> throw exception else 
-        if (DataSource.OrdersList.RemoveAll(x => x?.Id == order?.Id) == 0)
-            throw new DO.DalDoesNotExistIdException(order?.Id ?? 0, "Order");
+        if (DataSource.OrdersList.RemoveAll(x => x?.Id == order.Id) == 0)
+            throw new DO.DalDoesNotExistIdException(order.Id, "Order");
         DataSource.OrdersList.Add(order);
     }
     public void Delete(int id)

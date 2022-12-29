@@ -23,10 +23,32 @@ namespace PL.Product
     public partial class ProductWindow : Window
     {
         private static readonly BlApi.IBl bl = BlApi.Factory.Get()!;
-        public ProductWindow()
+
+        public BO.Product? prodCurrent;
+        //public ProductWindow()
+        //{
+        //    InitializeComponent();
+        //    cmbCategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+        //}
+        public ProductWindow(int idBOProduct = -1)
         {
+
             InitializeComponent();
             cmbCategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            //COMBINE ADD AND UPDATE?????????????
+            txtID.Text = idBOProduct.ToString();
+
+            try
+            {
+                prodCurrent = (idBOProduct != -1) ? bl?.Product.GetByIdM(idBOProduct) : null;
+            }
+            catch (Exception exception)
+            {
+                prodCurrent = null;
+                MessageBox.Show(exception.ToString());
+                this.Close();
+            }
+            //this.DataContext = prodCurrent;         
         }
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
@@ -59,14 +81,15 @@ namespace PL.Product
                     throw new BO.BlInvalidEntityException("price", 1);
                 if (int.TryParse(txtInStock.Text, out int amount) == false)
                     throw new BO.BlInvalidEntityException("amount", 1);
-                BO.Product p = new BO.Product();
-                p.Id=id;
-                p.Name=txtName.Text;
-                p.InStock=amount;
-                p.Price=price;
-                p.Category = (BO.Category)cmbCategorySelector.SelectedIndex;
-                bl.Product.UpdateProduct(p);
+                //prodCurrent = new BO.Product();
+                //prodCurrent.Id = id;
+                //prodCurrent.Name = txtName.Text;
+                //prodCurrent.InStock = amount;
+                //prodCurrent.Price = price;
+                //prodCurrent.Category = (BO.Category)cmbCategorySelector.SelectedIndex;
+                bl.Product.UpdateProduct(prodCurrent!);
                 MessageBox.Show("Product updated successfully");
+                this.Close();
             }
             catch (Exception exception)
             {

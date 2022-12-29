@@ -19,15 +19,6 @@ public enum Category
     Tables,
     BigStorage,
     SmallStorage,
-    Beds 
+    Beds,
+    None
 };
-
-//public enum OrderItem
-//{
-//    OrderItem_A,
-//}
-
-//public enum DateTime
-//{
-//    DateTime_A,
-//}

@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Product"
         mc:Ignorable="d"
-        Title="ProductListWindow" Height="640" Width="800">
+        DataContext="{Binding Path=logicProducts, RelativeSource={RelativeSource self}}"
+        Title="ProductListWindow" Height="640" Width="800" Activated="Window_Activated">
     <Grid Name="MainGrid">
 
         <Grid.RowDefinitions>
@@ -21,15 +22,11 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Label Content="Category" Grid.Column="0" FontSize="22" Background="#FF8DACA0"/>
-            <ComboBox x:Name="CategorySelector" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="CategorySelector_SelectionChanged" Background="#FF8DACA0"/>
+            <ComboBox x:Name="CategorySelector" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" SelectionChanged="CategorySelector_SelectionChanged" Background="#FF8DACA0"
+                      Text="{Binding RelativeSource={RelativeSource ProductListWindow}, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnExceptions=True}"/>
         </Grid>
-        <ListView x:Name="ProductListView" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick="UpdateProductButton_MouseDoubleClick" Background="#FFF8EDDE">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <ListView x:Name="ProductListView" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick="UpdateProductButton_MouseDoubleClick" Background="#FFF8EDDE"/>
+
         <Button x:Name="btnAddProduct" Content="Add new Product" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5" Click="AddProductButton_Click"/>
         <Button x:Name="btnRefresh" Content="↺" HorizontalAlignment="Left" Height="24" Margin="650,6,0,0" Grid.Row="2" VerticalAlignment="Top" Width="25" Click="RefreshButton_Click" FontSize="18" BorderBrush="{x:Null}" Background="#00DDDDDD"/>
     </Grid>

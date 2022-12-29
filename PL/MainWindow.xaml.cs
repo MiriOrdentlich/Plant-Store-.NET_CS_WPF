@@ -1,6 +1,5 @@
-﻿using BlApi;
-using System.Windows;
-
+﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace PL
 {
@@ -10,11 +9,14 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        private IBl bl = new BlImplementation.Bl(); //NOT SURE
+        private BlApi.IBl? bl = BlApi.Factory.Get(); //NOT SURE
         public MainWindow()
         {
             InitializeComponent();
         }
-        private void ShowProductsButton_Click(object sender, RoutedEventArgs e) => new Product.ProductListWindow().Show();
+        private void ShowManagerChoiceButton_Click(object sender, RoutedEventArgs e) => new ManagerWindow().Show();
+        private void ShowOrdersButton_Click(object sender, RoutedEventArgs e) => new Order.OrderListWindow().Show();
+        private void ShowCartsButton_Click(object sender, RoutedEventArgs e) => new Cart.CartListWindow().Show();
+
     }
 }
