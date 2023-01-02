@@ -38,7 +38,7 @@ namespace PL.Order
         public OrderListWindow()
         {
             InitializeComponent();
-            OrderListWindow.ItemsSource = bl.Order.getOrdersList();
+            OrderListView.ItemsSource = bl.Order.getOrdersList();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
             //CategoryFilter = BO.Category.None;
         }
@@ -57,31 +57,18 @@ namespace PL.Order
             //    OrderListView.ItemsSource = bl.Order.GetListedOrders(x => x?.Category.ToString() == CategorySelector.SelectedItem.ToString());
         }
 
-        private void AddOrderButton_Click(object sender, RoutedEventArgs e)
-        {
-            OrderWindow p = new Order.OrderWindow();
-            //set default values:
-            p.idTextBox.Text = "0";
-            p.priceTextBox.Text = "0";
-            p.inStockTextBox.Text = "0";
-            //p.cmbCategorySelector.Text = "None";
-
-            p.btnAdd.Visibility = Visibility.Visible;
-            p.btnUpdate.Visibility = Visibility.Hidden;
-            p.ShowDialog();
-            //OrderListView.ItemsSource = bl.Order.GetListedOrders();
-        }
-
         private void UpdateOrderButton_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
             OrderWindow p = new Order.OrderWindow();
             var OrderList = bl.Order.getOrdersList().ToList(); //get the current Order list (which is in the same order as OrderListView)
-            var OrderForList = OrderList[OrderListWindow.SelectedIndex]; //the Order user clicked on
+            var OrderForList = OrderList[OrderListView.SelectedIndex]; //the Order user clicked on
                                                                          //set default values:
             p.idTextBox.Text = OrderForList?.Id.ToString();
             p.idTextBox.IsEnabled = false;
-            p.priceTextBox.Text = OrderForList?.Price.ToString();
-            p.nameTextBox.Text = OrderForList?.Name;
+            p.totalPriceTextBox.Text = OrderForList?.TotalPrice.ToString();
+            p.customerNameTextBox.Text = OrderForList?.CustomerName;
+            p.customerAddressTextBox.Text = OrderForList?.CustomerName;
+            p.emailNameTextBox.Text = OrderForList?.CustomerName;
             p.categoryComboBox.Text = OrderForList?.Category.ToString();
             p.btnAdd.Visibility = Visibility.Hidden;
             p.btnUpdate.Visibility = Visibility.Visible;
