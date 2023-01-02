@@ -19,9 +19,20 @@ namespace PL.Order
     /// </summary>
     public partial class OrderWindow : Window
     {
-        public OrderWindow()
+        public OrderWindow(int idBOOrder = -1)
         {
             InitializeComponent();
+            idTextBox.Text = idBOOrder.ToString();
+        }
+
+        private void btnUpdateStatus_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnFollowOrder_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

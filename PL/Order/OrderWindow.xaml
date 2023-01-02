@@ -20,8 +20,8 @@
             <Label Content="Items:" HorizontalAlignment="Stretch" Grid.Row="0" VerticalAlignment="Stretch"/>
             <ListView x:Name="OrderListView" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick="UpdateOrderButton_MouseDoubleClick" Background="#FFF8EDDE"/>
         </Grid>
-
-        <Button x:Name="btnFollowOrder" Content="Follow Order" HorizontalAlignment="Left" Margin="168,386,0,10" Padding="5" Click="AddOrderButton_Click" Width="101"/>
+        <Button x:Name="btnUpdateStatus" Content="Update Order Status" HorizontalAlignment="Left" Margin="194,378,0,25" Padding="5" Click="btnUpdateStatus_Click" Width="121"/>
+        <Button x:Name="btnFollowOrder" Content="Follow Order" HorizontalAlignment="Left" Margin="43,378,0,25" Padding="5" Click="btnFollowOrder_Click" Width="82"/>
         <Grid x:Name="DetailsGrid" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="73,0,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
