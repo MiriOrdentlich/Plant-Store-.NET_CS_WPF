@@ -172,6 +172,7 @@ internal class Cart : BlApi.ICart
             //x.Amount > dal.Product.GetById(x.ProductID).InStock ? throw new BO.BlNotInStockException(x.Amount, name) : //there isn't enough from product in stock
             //    x.Amount <= 0 ? throw new BO.BlInvalidEntityException(x.ProductID, name, 0) : 0);
 
+            //for every Product item in cart update the proper product amount in cart and create a new order Item::
             foreach (var BOorderItem in cart.Items!)
             {
                 int orderItemId = dal.OrderItem.Add(new DO.OrderItem()
@@ -187,7 +188,7 @@ internal class Cart : BlApi.ICart
                 dal.Product.Update(DOproduct);
             }
 
-
+            //create the order:
             BO.Order newOrder = new BO.Order()
             {
                 Id = DOorderId,

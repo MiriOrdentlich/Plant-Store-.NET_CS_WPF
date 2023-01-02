@@ -6,9 +6,9 @@ namespace PL.Cart
     /// <summary>
     /// Interaction logic for CartListWindow.xaml
     /// </summary>
-    public partial class CartListWindow : Window
+    public partial class CatalogWindow : Window
     {
-        public CartListWindow()
+        public CatalogWindow()
         {
             InitializeComponent();
         }

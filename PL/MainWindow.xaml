@@ -8,8 +8,8 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Image Source="C:\Users\maria\OneDrive\שולחן העבודה\489f1854f6b58139452c0f4ef8387798.jpg" Stretch="Fill"></Image>
-        <Button x:Name="btnManager" Content="Manager View" HorizontalAlignment="Left" VerticalAlignment="Center" Height="60" Width="160" FontSize="24" Click="ShowManagerChoiceButton_Click" Margin="84,0,0,0"/>
+        <Button x:Name="btnManager" Content="Manager View" HorizontalAlignment="Left" VerticalAlignment="Center" Height="60" Width="160" FontSize="24" Click="ShowManagerOptionsButton_Click" Margin="84,0,0,0"/>
         <Button x:Name="btnOrders" Content="Follow Order" HorizontalAlignment="Center" VerticalAlignment="Center" Height="60" Width="160" FontSize="24" Click="ShowOrdersButton_Click"/>
-        <Button x:Name="btnCarts" Content="New Cart" HorizontalAlignment="Left" VerticalAlignment="Center" Height="60" Width="160" FontSize="24" Click="ShowCartsButton_Click" Margin="549,0,0,0"/>
+        <Button x:Name="btnCarts" Content="New Cart" HorizontalAlignment="Left" VerticalAlignment="Center" Height="60" Width="160" FontSize="24" Click="ShowCatalogButton_Click" Margin="549,0,0,0"/>
     </Grid>
 </Window>
