@@ -24,19 +24,25 @@ namespace PL.Product
     {
         private static readonly BlApi.IBl bl = BlApi.Factory.Get()!;
 
-        public BO.Product? prodCurrent;
-        //public ProductWindow()
-        //{
-        //    InitializeComponent();
-        //    categoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
-        //}
+        //public BO.Product? prodCurrent { get; set; }
+
+
+
+        public BO.Product? prodCurrent
+        {
+            get { return (BO.Product?)GetValue(prodCurrentProperty); }
+            set { SetValue(prodCurrentProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for prodCurrent.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty prodCurrentProperty =
+            DependencyProperty.Register("prodCurrent", typeof(BO.Product), typeof(Window), new PropertyMetadata(null));
+
         public ProductWindow(int idBOProduct = -1)
         {
 
             InitializeComponent();
             categoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            //COMBINE ADD AND UPDATE?????????????
-            idTextBox.Text = idBOProduct.ToString();
 
             try
             {
@@ -48,16 +54,8 @@ namespace PL.Product
                 MessageBox.Show(exception.ToString());
                 this.Close();
             }
-            //this.DataContext = prodCurrent;         
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-            System.Windows.Data.CollectionViewSource productViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("productViewSource")));
-            // Load data by setting the CollectionViewSource.Source property:
-            // productViewSource.Source = [generic data source]
-        }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
@@ -90,12 +88,6 @@ namespace PL.Product
                     throw new BO.BlInvalidEntityException("price", 1);
                 if (int.TryParse(inStockTextBox.Text, out int amount) == false)
                     throw new BO.BlInvalidEntityException("amount", 1);
-                //prodCurrent = new BO.Product();
-                //prodCurrent.Id = id;
-                //prodCurrent.Name = txtName.Text;
-                //prodCurrent.InStock = amount;
-                //prodCurrent.Price = price;
-                //prodCurrent.Category = (BO.Category)categoryComboBox.SelectedIndex;
                 bl.Product.UpdateProduct(prodCurrent!);
                 MessageBox.Show("Product updated successfully");
                 this.Close();

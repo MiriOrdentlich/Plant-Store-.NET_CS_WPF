@@ -25,23 +25,16 @@ namespace PL.Product
         public static readonly DependencyProperty logicProductsProperty =
             DependencyProperty.Register("logicProducts", typeof(ObservableCollection<BO.ProductForList?>), typeof(ProductListWindow), new PropertyMetadata(null));
 
-        public BO.Category CategoryFilter { get; set; } = BO.Category.None;
+        //public BO.Category CategoryFilter { get; set; } = BO.Category.None;
 
         public ProductListWindow()
         {
             InitializeComponent();
-            ProductListView.ItemsSource = bl.Product.GetListedProducts();
+            productDataGrid.ItemsSource = bl.Product.GetListedProducts();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            //CategoryFilter = BO.Category.None;
+            CategorySelector.SelectedItem = BO.Category.None;
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-            System.Windows.Data.CollectionViewSource productViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("productViewSource")));
-            // Load data by setting the CollectionViewSource.Source property:
-            // productViewSource.Source = [generic data source]
-        }
         private void CategorySelector_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             ShowProductList();
@@ -52,41 +45,33 @@ namespace PL.Product
         private void AddProductButton_Click(object sender, RoutedEventArgs e)
         {
             ProductWindow p = new Product.ProductWindow();
-            //set default values:
-            p.idTextBox.Text = "0";
-            p.priceTextBox.Text = "0";
-            p.inStockTextBox.Text = "0";
-            //p.cmbCategorySelector.Text = "None";
+            ////set default values:
+            //p.idTextBox.Text = "0";
+            //p.priceTextBox.Text = "0";
+            //p.inStockTextBox.Text = "0";
+            ////p.cmbCategorySelector.Text = "None";
 
             p.btnAdd.Visibility = Visibility.Visible;
             p.btnUpdate.Visibility = Visibility.Hidden;
             p.ShowDialog();
-            //ProductListView.ItemsSource = bl.Product.GetListedProducts();
+            productDataGrid.ItemsSource = bl?.Product.GetListedProducts();
         }
 
         private void UpdateProductButton_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
-            ProductWindow p = new Product.ProductWindow();
-            var productList = bl.Product.GetListedProducts().ToList(); //get the current product list (which is in the same order as ProductListView)
-            var productForList = productList[ProductListView.SelectedIndex]; //the product user clicked on
-            //set default values:
-            p.idTextBox.Text = productForList?.Id.ToString();
-            p.idTextBox.IsEnabled = false;
-            p.priceTextBox.Text = productForList?.Price.ToString();
-            p.nameTextBox.Text = productForList?.Name;
-            p.categoryComboBox.Text = productForList?.Category.ToString();
-            p.btnAdd.Visibility = Visibility.Hidden;
-            p.btnUpdate.Visibility = Visibility.Visible;
-            p.ShowDialog();
-            //ProductListView.ItemsSource = bl.Product.GetListedProducts();
+            if (productDataGrid.ItemsSource != null)
+            {
+                var p = (BO.ProductForList?)productDataGrid.SelectedItem;
+                int id = p?.Id ?? 0;
+                new ProductWindow(id).Show();
+                productDataGrid.ItemsSource = bl?.Product.GetListedProducts();
 
-            //int id = ((BO.ProductForList?)(sender as ProductListView)?.DataContext)?.Id
-            //    ?? throw new NullReferenceException("null event sender");
-            //new ProductWindow(id).Show();
+            }
         }
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
+            CategorySelector.SelectedItem = BO.Category.None;
             ShowProductList();
             //ProductListView.ItemsSource = bl.Product.GetListedProducts();
             //CategorySelector.SelectedItem = null;
@@ -99,13 +84,15 @@ namespace PL.Product
 
         private void ShowProductList()
         {
-            //BO.Category? category = CategorySelector.SelectedItem as BO.Category?;
-            if (CategoryFilter == BO.Category.None)
-                //ProductListView.ItemsSource = bl.Product.GetListedProducts();
+            BO.Category? category = CategorySelector.SelectedItem as BO.Category?;
+            if (category == BO.Category.None)
                 logicProducts = new(bl.Product.GetListedProducts());
+                //logicProducts = new(bl.Product.GetListedProducts());
             else
-                //ProductListView.ItemsSource = bl.Product.GetListedProducts(BO.Filter);        
-                logicProducts = new(bl.Product.GetListedProducts(x => x!.Category == CategoryFilter));
+                logicProducts = new(bl.Product.GetListedProducts(x => x!.Category == category));
+            productDataGrid.ItemsSource = logicProducts;
+            //if (CategorySelector.SelectedItem != null)
+            //    ProductListView.ItemsSource = bl.Product.GetListedProducts(x => x?.Category.ToString() == CategorySelector.SelectedItem.ToString());
         }
     }
 }
