@@ -5,8 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Order"
         mc:Ignorable="d"
-        Title="OrderListWindow" Height="450" Width="800">
-    <Grid>
-        
+        DataContext="{Binding Path=logicOrders, RelativeSource={RelativeSource self}}"
+        Title="OrderListWindow" Height="640" Width="800" Activated="Window_Activated">
+    <Grid Name="MainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <ListView x:Name="OrderListView" Grid.Column="1" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick="UpdateOrderButton_MouseDoubleClick" Background="#FFF8EDDE"/>
+
+        <Button x:Name="btnFollowOrder" Content="Follow Order" HorizontalAlignment="Center" Margin="0,339,0,169" Padding="5" Click="AddOrderButton_Click" Width="139"/>
     </Grid>
 </Window>

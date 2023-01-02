@@ -53,13 +53,13 @@ namespace PL.Product
         {
             ProductWindow p = new Product.ProductWindow();
             //set default values:
-            p.txtID.Text = "0";
-            p.txtPrice.Text = "0";
-            p.txtInStock.Text = "0";
+            p.idTextBox.Text = "0";
+            p.priceTextBox.Text = "0";
+            p.inStockTextBox.Text = "0";
             //p.cmbCategorySelector.Text = "None";
 
             p.btnAdd.Visibility = Visibility.Visible;
-            p.btnUpdate.Visibility = Visibility.Hidden; 
+            p.btnUpdate.Visibility = Visibility.Hidden;
             p.ShowDialog();
             //ProductListView.ItemsSource = bl.Product.GetListedProducts();
         }
@@ -70,16 +70,16 @@ namespace PL.Product
             var productList = bl.Product.GetListedProducts().ToList(); //get the current product list (which is in the same order as ProductListView)
             var productForList = productList[ProductListView.SelectedIndex]; //the product user clicked on
             //set default values:
-            p.txtID.Text = productForList?.Id.ToString();
-            p.txtID.IsEnabled = false;
-            p.txtPrice.Text = productForList?.Price.ToString();
-            p.txtName.Text = productForList?.Name;
-            p.cmbCategorySelector.Text = productForList?.Category.ToString();
+            p.idTextBox.Text = productForList?.Id.ToString();
+            p.idTextBox.IsEnabled = false;
+            p.priceTextBox.Text = productForList?.Price.ToString();
+            p.nameTextBox.Text = productForList?.Name;
+            p.categoryComboBox.Text = productForList?.Category.ToString();
             p.btnAdd.Visibility = Visibility.Hidden;
             p.btnUpdate.Visibility = Visibility.Visible;
             p.ShowDialog();
             //ProductListView.ItemsSource = bl.Product.GetListedProducts();
-            
+
             //int id = ((BO.ProductForList?)(sender as ProductListView)?.DataContext)?.Id
             //    ?? throw new NullReferenceException("null event sender");
             //new ProductWindow(id).Show();
