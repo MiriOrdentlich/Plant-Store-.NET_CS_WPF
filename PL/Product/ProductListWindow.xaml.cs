@@ -35,6 +35,13 @@ namespace PL.Product
             //CategoryFilter = BO.Category.None;
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            System.Windows.Data.CollectionViewSource productViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("productViewSource")));
+            // Load data by setting the CollectionViewSource.Source property:
+            // productViewSource.Source = [generic data source]
+        }
         private void CategorySelector_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             ShowProductList();

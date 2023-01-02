@@ -28,15 +28,15 @@ namespace PL.Product
         //public ProductWindow()
         //{
         //    InitializeComponent();
-        //    cmbCategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+        //    categoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
         //}
         public ProductWindow(int idBOProduct = -1)
         {
 
             InitializeComponent();
-            cmbCategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            categoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
             //COMBINE ADD AND UPDATE?????????????
-            txtID.Text = idBOProduct.ToString();
+            idTextBox.Text = idBOProduct.ToString();
 
             try
             {
@@ -50,19 +50,28 @@ namespace PL.Product
             }
             //this.DataContext = prodCurrent;         
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            System.Windows.Data.CollectionViewSource productViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("productViewSource")));
+            // Load data by setting the CollectionViewSource.Source property:
+            // productViewSource.Source = [generic data source]
+        }
+
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (int.TryParse(txtID.Text, out int id) == false)
+                if (int.TryParse(idTextBox.Text, out int id) == false)
                     throw new BO.BlInvalidEntityException("ID", 1);
-                if (BO.Category.TryParse(cmbCategorySelector.Text, out BO.Category category) == false)
+                if (BO.Category.TryParse(categoryComboBox.Text, out BO.Category category) == false)
                     throw new BO.BlInvalidEntityException("category", 1);
-                if (double.TryParse(txtPrice.Text, out double price) == false)
+                if (double.TryParse(priceTextBox.Text, out double price) == false)
                     throw new BO.BlInvalidEntityException("price", 1);
-                if (int.TryParse(txtInStock.Text, out int amount) == false)
+                if (int.TryParse(inStockTextBox.Text, out int amount) == false)
                     throw new BO.BlInvalidEntityException("amount", 1);                
-                bl.Product.AddProduct(id, txtName.Text, category, price, amount);
+                bl.Product.AddProduct(id, nameTextBox.Text, category, price, amount);
                 MessageBox.Show("Product added successfully");
             }
             catch (Exception exception)
@@ -75,18 +84,18 @@ namespace PL.Product
         {
             try
             {
-                if (int.TryParse(txtID.Text, out int id) == false)
+                if (int.TryParse(idTextBox.Text, out int id) == false)
                     throw new BO.BlInvalidEntityException("ID", 1);
-                if (double.TryParse(txtPrice.Text, out double price) == false)
+                if (double.TryParse(priceTextBox.Text, out double price) == false)
                     throw new BO.BlInvalidEntityException("price", 1);
-                if (int.TryParse(txtInStock.Text, out int amount) == false)
+                if (int.TryParse(inStockTextBox.Text, out int amount) == false)
                     throw new BO.BlInvalidEntityException("amount", 1);
                 //prodCurrent = new BO.Product();
                 //prodCurrent.Id = id;
                 //prodCurrent.Name = txtName.Text;
                 //prodCurrent.InStock = amount;
                 //prodCurrent.Price = price;
-                //prodCurrent.Category = (BO.Category)cmbCategorySelector.SelectedIndex;
+                //prodCurrent.Category = (BO.Category)categoryComboBox.SelectedIndex;
                 bl.Product.UpdateProduct(prodCurrent!);
                 MessageBox.Show("Product updated successfully");
                 this.Close();
