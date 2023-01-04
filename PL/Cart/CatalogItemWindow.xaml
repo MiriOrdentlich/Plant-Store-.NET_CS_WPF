@@ -8,16 +8,6 @@
         DataContext="{Binding Path=prodItemCurrent, RelativeSource={RelativeSource self}}"
         Title="CatalogItemWindow" Height="450" Width="800">
     <Grid>
-        <Grid.Resources>
-            <Style TargetType="Border">
-                <Setter Property="CornerRadius" Value="5"/>
-            </Style>
-        </Grid.Resources>
-        <!--Grid.Resources>
-                <Grid.Resources CornerRadius="8"/>
-
-            <CornerRadius x:Key="ControlCornerRadius">8</CornerRadius>
-        </Grid.Resources-->
         <Grid x:Name="productItemDetailsGrid" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -38,20 +28,12 @@
             <Label Grid.Column="0" Content="Id:" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
             <TextBox x:Name="idTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="NaN" Margin="3" Grid.Row="2" Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" IsReadOnly="True"/>
             <Label Grid.Column="0" Content="In Stock:" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
-            <CheckBox x:Name="inStockCheckBox" Grid.Column="1" Content="" HorizontalAlignment="Left" IsChecked="{Binding InStock, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="3" Grid.Row="3" VerticalAlignment="Center" IsEnabled="True"/>
+            <CheckBox x:Name="inStockCheckBox" Grid.Column="1" Content="" HorizontalAlignment="Left" IsChecked="{Binding InStock, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="3" Grid.Row="3" VerticalAlignment="Center" IsHitTestVisible="False"/>
             <Label Grid.Column="0" Content="Name:" HorizontalAlignment="Left" Margin="3" Grid.Row="4" VerticalAlignment="Center"/>
             <TextBox x:Name="nameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="NaN" Margin="3" Grid.Row="4" Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" IsReadOnly="True"/>
             <Label Grid.Column="0" Content="Price:" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
             <TextBox x:Name="priceTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="NaN" Margin="3" Grid.Row="5" Text="{Binding Price, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" IsReadOnly="True"/>
         </Grid>
-        <Button x:Name="btnAdd" Content="Add to cart" HorizontalAlignment="Center" Margin="0,350,0,55" FontSize="16" Click="AddButton_Click">
-        </Button>
-        <Button Margin="55,384,95,21">
-            <Button.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="5"/>
-                </Style>
-            </Button.Resources>
-        </Button>
+        <Button x:Name="btnAdd" Content="Add to cart" HorizontalAlignment="Center" Margin="0,350,0,55" FontSize="16" Click="AddButton_Click"/>
     </Grid>
 </Window>

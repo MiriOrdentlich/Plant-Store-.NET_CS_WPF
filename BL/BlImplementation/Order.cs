@@ -79,7 +79,7 @@ internal class Order : BlApi.IOrder
                {
                    Id = doOrder?.Id ?? 0,
                    CustomerName = doOrder?.CustomerName,
-                   AmountOfItems = orderItems.Count(),
+                   AmountOfItems = orderItems.Sum(x => x?.Amount ?? 0), 
                    TotalPrice = orderItems.Sum(x => x?.Price ?? 0 * x?.Amount ?? 0),
                    Status = GetOrderStatus((DO.Order)doOrder)  //NEED TO CHECK                 
                };

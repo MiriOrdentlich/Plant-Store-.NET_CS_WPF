@@ -233,5 +233,4 @@ internal class Product : BlApi.IProduct
                    select x;
         }
     }
-
 }

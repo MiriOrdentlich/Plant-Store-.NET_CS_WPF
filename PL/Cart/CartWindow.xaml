@@ -6,19 +6,19 @@
         xmlns:local="clr-namespace:PL.Cart"
         mc:Ignorable="d"
         DataContext="{Binding Path=currentCart, RelativeSource={RelativeSource self}}"        
-        Title="CartWindow" Height="450" Width="800" Activated="Window_Activated">    
+        Title="CartWindow" Height="450" Width="800">    
     <Grid x:Name="MainGrid">
-        <Button x:Name="btnDeleteCart" Content="Empty Cart" HorizontalAlignment="Left" FontSize="20" Click="btnDeleteCart_Click" Margin="561,179,0,217" Width="121"/>
-        <Button x:Name="btnConfirmCart" Content="Checkout" HorizontalAlignment="Left" Margin="572,267,0,131" FontSize="20" Click="btnConfirmCart_Click" Width="100"/>
+        <Button x:Name="btnDeleteCart" Content="Empty Cart" HorizontalAlignment="Left" FontSize="20" Click="btnDeleteCart_Click" Padding="5" Margin="561,179,0,217" Width="121"/>
+        <Button x:Name="btnConfirmCart" Content="Checkout" HorizontalAlignment="Left" Margin="572,267,0,131" FontSize="20" Padding="5" Click="btnConfirmCart_Click" Width="100"/>
 
-        <DataGrid x:Name="orderItemDataGrid" DataContext="{Binding Path=Items}" VerticalAlignment="Top" HorizontalAlignment="Left" AutoGenerateColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected">
+        <DataGrid x:Name="orderItemDataGrid" VerticalAlignment="Top" HorizontalAlignment="Left" AutoGenerateColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" Width="500">
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="amountColumn" Binding="{Binding Amount}" Header="Amount" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="priceColumn" Binding="{Binding Price}" Header="Price" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="productIDColumn" Binding="{Binding ProductID}" Header="Product ID" Width="SizeToHeader"/>
-                <DataGridTextColumn x:Name="totalPriceColumn" Binding="{Binding TotalPrice}" Header="Total Price" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Order Item ID" Width="*"/>
+                <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="*"/>
+                <DataGridTextColumn x:Name="amountColumn" Binding="{Binding Amount}" Header="Amount" Width="*"/>
+                <DataGridTextColumn x:Name="priceColumn" Binding="{Binding Price}" Header="Price" Width="*"/>
+                <DataGridTextColumn x:Name="productIDColumn" Binding="{Binding ProductID}" Header="Product ID" Width="*"/>
+                <DataGridTextColumn x:Name="totalPriceColumn" Binding="{Binding TotalPrice}" Header="Total Price" Width="*"/>
                 <DataGridTemplateColumn Header="+" Width="SizeToHeader">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -42,8 +42,8 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Label Content="Total Price:" FontSize="20" HorizontalAlignment="Left" Margin="448,341,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtTotalPrice" Text="{Binding TotalPrice}" FontSize="20" TextAlignment="Center" Margin="562,345,118,56" TextWrapping="Wrap" BorderBrush="{x:Null}" IsReadOnly="True"/>
-        <Label Content="CART" FontSize="40" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,10,70,0" Width="118"/>
+        <Label Content="Total Price:" FontSize="20" HorizontalAlignment="Left" Margin="448,341,0,0" VerticalAlignment="Top" Height="40" Width="auto"/>
+        <TextBox x:Name="txtTotalPrice" Text="{Binding TotalPrice}" FontSize="20" Padding="5" TextAlignment="Center" Height="40" Width="auto" Margin="562,345,118,56" TextWrapping="Wrap" BorderBrush="{x:Null}" IsReadOnly="True"/>
+        <Label Content="CART" FontSize="40" HorizontalAlignment="Right" Padding="5" VerticalAlignment="Top" Height="60" Width="auto" Margin="0,10,70,0"/>
     </Grid>
 </Window>

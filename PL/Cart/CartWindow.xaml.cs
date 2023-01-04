@@ -34,6 +34,7 @@ namespace PL.Cart
         public CartWindow(BO.Cart userCart)
         {
             InitializeComponent();
+            orderItemDataGrid.ItemsSource = userCart.Items;
             currentCart = userCart;
         }
 
@@ -43,7 +44,8 @@ namespace PL.Cart
             {
                 var item = (BO.OrderItem?)orderItemDataGrid.SelectedItem;
                 currentCart = bl.Cart.AddItem(currentCart, item?.Id ?? 0);
-                new CartWindow(currentCart);
+                //new CartWindow(currentCart);
+                orderItemDataGrid.Items.Refresh();
             }
         }
 
@@ -54,7 +56,7 @@ namespace PL.Cart
                 var item = (BO.OrderItem?)orderItemDataGrid.SelectedItem;
                 int amnt = item?.Amount ?? 0;
                 currentCart = bl.Cart.UpdateItemAmount(currentCart, item?.Id ?? 0, amnt - 1);
-                new CartWindow(currentCart);
+                orderItemDataGrid.Items.Refresh();
             }
         }
 
@@ -63,9 +65,8 @@ namespace PL.Cart
             if (orderItemDataGrid.ItemsSource != null)
             {
                 var item = (BO.OrderItem?)orderItemDataGrid.SelectedItem;
-                int amnt = item?.Amount ?? 0;
-                currentCart = bl.Cart.UpdateItemAmount(currentCart, item?.Id ?? 0, amnt - 1);
-                new CartWindow(currentCart);
+                currentCart = bl.Cart.UpdateItemAmount(currentCart, item?.Id ?? 0, 0);
+                orderItemDataGrid.Items.Refresh();
             }
         }
 
@@ -74,10 +75,7 @@ namespace PL.Cart
             currentCart.Items = new List<BO.OrderItem>(); //release current item list and create a new empty item list
             orderItemDataGrid.Items.Refresh();
         }
-        private void Window_Activated(object sender, EventArgs e)
-        {
 
-        }
         private void btnConfirmCart_Click(object sender, RoutedEventArgs e)
         {
             new CheckoutWindow(currentCart).Show();

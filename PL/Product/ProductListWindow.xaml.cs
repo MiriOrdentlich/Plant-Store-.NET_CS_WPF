@@ -63,7 +63,6 @@ namespace PL.Product
                 int id = p?.Id ?? 0;
                 new ProductWindow(id).Show();
                 productDataGrid.ItemsSource = bl?.Product.GetListedProducts();
-
             }
         }
 
