@@ -1,18 +1,8 @@
-﻿using PL.Order;
+﻿
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace PL.Order
 {
@@ -22,6 +12,7 @@ namespace PL.Order
     public partial class OrderListWindow : Window
     {
         private static readonly BlApi.IBl bl = BlApi.Factory.Get()!;
+
 
         public ObservableCollection<BO.OrderForList?> logicOrders
         {
@@ -36,30 +27,36 @@ namespace PL.Order
         public OrderListWindow()
         {
             InitializeComponent();
-            OrderListView.ItemsSource = bl.Order.getOrdersList();
+            orderForListDataGrid.ItemsSource = bl.Order.getOrdersList();
+            CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            CategorySelector.SelectedItem = BO.Category.None;
         }
 
-        //private void Window_Loaded(object sender, RoutedEventArgs e)
-        //{
-
-        //    System.Windows.Data.CollectionViewSource OrderViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("OrderViewSource")));
-        //    // Load data by setting the CollectionViewSource.Source property:
-        //    // OrderViewSource.Source = [generic data source]
-        //}
+        private void CategorySelector_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            ShowOrderList();
+            //if (CategorySelector.SelectedItem != null)
+            //    OrderListView.ItemsSource = bl.Order.GetListedOrders(x => x?.Category.ToString() == CategorySelector.SelectedItem.ToString());
+        }
 
         private void UpdateOrderButton_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
-            OrderWindow p = new Order.OrderWindow();
-            var OrderList = bl.Order.getOrdersList().ToList(); //get the current Order list (which is in the same order as OrderListView)
-            var OrderForList = OrderList[OrderListView.SelectedIndex]; //the Order user clicked on
-            //set values:
-            p.idTextBox.Text = OrderForList?.Id.ToString();
-            p.idTextBox.IsEnabled = false;
-            p.totalPriceTextBox.Text = OrderForList?.TotalPrice.ToString();
-            p.customerNameTextBox.Text = OrderForList?.CustomerName;
-            p.customerAddressTextBox.Text = OrderForList?.CustomerName;
-            p.customerEmailTextBox.Text = OrderForList?.CustomerName;
-            p.ShowDialog();
+            if (orderForListDataGrid.ItemsSource != null)
+            {
+                var p = (BO.OrderForList?)orderForListDataGrid.SelectedItem;
+                int id = p?.Id ?? 0;
+                new OrderWindow(id).Show();
+                orderForListDataGrid.ItemsSource = bl?.Order.getOrdersList();
+
+            }
+        }
+
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            CategorySelector.SelectedItem = BO.Category.None;
+            ShowOrderList();
+            //OrderListView.ItemsSource = bl.Order.GetListedOrders();
+            //CategorySelector.SelectedItem = null;
         }
 
         private void Window_Activated(object sender, EventArgs e)
@@ -69,8 +66,16 @@ namespace PL.Order
 
         private void ShowOrderList()
         {
-            logicOrders = new(bl.Order.getOrdersList());
+            BO.Category? category = CategorySelector.SelectedItem as BO.Category?;
+            if (category == BO.Category.None)
+                logicOrders = new(bl.Order.getOrdersList());
+            else
+                logicOrders = new(bl.Order.getOrdersList(/*x => x!.Category == category*/));
+            orderForListDataGrid.ItemsSource = logicOrders;
+            //if (CategorySelector.SelectedItem != null)
+            //    OrderListView.ItemsSource = bl.Order.GetListedOrders(x => x?.Category.ToString() == CategorySelector.SelectedItem.ToString());
         }
+
     }
 }
 

@@ -30,7 +30,6 @@
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="categoryColumn" Binding="{Binding Category}" Header="Category" Width="Auto" IsReadOnly="True"/>
                 <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id" Width="Auto" IsReadOnly="True"/>
-                <DataGridTextColumn x:Name="inStockColumn" Binding="{Binding InStock}" Header="In Stock" Width="Auto" IsReadOnly="True"/>
                 <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="Auto" IsReadOnly="True"/>
                 <DataGridTextColumn x:Name="priceColumn" Binding="{Binding Price}" Header="Price" Width="Auto" IsReadOnly="True"/>
             </DataGrid.Columns>

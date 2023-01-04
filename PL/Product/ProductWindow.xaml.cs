@@ -24,10 +24,6 @@ namespace PL.Product
     {
         private static readonly BlApi.IBl bl = BlApi.Factory.Get()!;
 
-        //public BO.Product? prodCurrent { get; set; }
-
-
-
         public BO.Product? prodCurrent
         {
             get { return (BO.Product?)GetValue(prodCurrentProperty); }

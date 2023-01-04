@@ -23,11 +23,20 @@
             </Grid.ColumnDefinitions>
 
             <Label Content="Category" Grid.Column="0" FontSize="22" Background="#FF8DACA0"/>
-            <ComboBox x:Name="CategorySelector" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" DisplayMemberPath="Category" Height="NaN" ItemsSource="{Binding}"/>
+            <ComboBox x:Name="CategorySelector" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Height="NaN" SelectionChanged="CategorySelector_SelectionChanged"/>
 
         </Grid>
+        <DataGrid x:Name="orderForListDataGrid" Grid.Row="1" AutoGenerateColumns="False" EnableRowVirtualization="True" MouseDoubleClick="UpdateOrderButton_MouseDoubleClick" Background="#FFF8EDDE" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="amountOfItemsColumn" Binding="{Binding AmountOfItems}" Header="Amount Of Items" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="customerNameColumn" Binding="{Binding CustomerName}" Header="Customer Name" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="statusColumn" Binding="{Binding Status}" Header="Status" Width="SizeToHeader"/>
+                <DataGridTextColumn x:Name="totalPriceColumn" Binding="{Binding TotalPrice}" Header="Total Price" Width="SizeToHeader"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button x:Name="btnRefresh" Content="↺" HorizontalAlignment="Left" Height="24" Margin="650,6,0,0" Grid.Row="2" VerticalAlignment="Top" Width="25" Click="RefreshButton_Click" FontSize="18" BorderBrush="{x:Null}" Background="#00DDDDDD"/>
 
-        <ListView x:Name="OrderListView" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick="UpdateOrderButton_MouseDoubleClick" Background="#FFF8EDDE"/>
     </Grid>
 </Window>
 

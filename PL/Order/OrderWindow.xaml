@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL.Order"
         mc:Ignorable="d"
+        DataContext="{Binding Path=orderCurrent, RelativeSource={RelativeSource self}}"
         Title="OrderWindow" Height="450" Width="800">
     <Grid Name="MainGrid">
         <Grid.ColumnDefinitions>
@@ -18,10 +19,19 @@
                 <RowDefinition Height="400"/>
             </Grid.RowDefinitions>
             <Label Content="Items:" HorizontalAlignment="Stretch" Grid.Row="0" VerticalAlignment="Stretch"/>
-            <ListView x:Name="OrderItemsListView" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" Background="#FFF8EDDE"/>
+            <DataGrid x:Name="orderItemDataGrid" Grid.Row="1" Background="#FFF8EDDE" AutoGenerateColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected">
+                <DataGrid.Columns>
+                    <DataGridTextColumn x:Name="amountColumn" Binding="{Binding Amount}" Header="Amount" Width="SizeToHeader"/>
+                    <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id" Width="SizeToHeader"/>
+                    <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="SizeToHeader"/>
+                    <DataGridTextColumn x:Name="priceColumn" Binding="{Binding Price}" Header="Price" Width="SizeToHeader"/>
+                    <DataGridTextColumn x:Name="productIDColumn" Binding="{Binding ProductID}" Header="Product ID" Width="SizeToHeader"/>
+                    <DataGridTextColumn x:Name="totalPriceColumn" Binding="{Binding TotalPrice}" Header="Total Price" Width="SizeToHeader"/>
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
-        <Button x:Name="btnUpdateStatus" Content="Update Order Status" HorizontalAlignment="Left" Margin="194,378,0,25" Padding="5" Click="btnUpdateStatus_Click" Width="121"/>
-        <Button x:Name="btnFollowOrder" Content="Follow Order" HorizontalAlignment="Left" Margin="43,378,0,25" Padding="5" Click="btnFollowOrder_Click" Width="82"/>
+        <Button x:Name="btnUpdateStatus" Content="Update Order Status" HorizontalAlignment="Left" Margin="194,371,0,15" Padding="5" Click="btnUpdateStatus_Click" Width="121"/>
+        <Button x:Name="btnFollowOrder" Content="Follow Order" HorizontalAlignment="Left" Margin="47,371,0,15" Padding="5" Click="btnFollowOrder_Click" Width="92"/>
         <Grid x:Name="DetailsGrid" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="73,0,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
@@ -39,7 +49,7 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label Grid.Column="0" Content="Customer Address:" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
-            <TextBox x:Name="customerAddressTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="NaN" Margin="3" Grid.Row="0" Text="{Binding CustomerAddress, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <TextBox x:Name="customerAddressTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="NaN" Margin="3" Grid.Row="0" Text="{Binding CustomerAddress, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" IsEnabled="False"/>
             <Label Grid.Column="0" Content="Customer Email:" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
             <TextBox x:Name="customerEmailTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="NaN" Margin="3" Grid.Row="1" Text="{Binding CustomerEmail, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" IsEnabled="False"/>
             <Label Grid.Column="0" Content="Customer Name:" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
