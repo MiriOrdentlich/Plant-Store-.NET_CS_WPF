@@ -14,7 +14,7 @@ internal class Product : BlApi.IProduct
     /// <returns></returns> the new List products (type ProductForList)
     /// <exception cref="NullReferenceException"></exception>
 
-    //Manager:
+    //For Manager:
     public IEnumerable<BO.ProductForList?> GetListedProducts(Func<ProductForList?, bool>? filter)
     {
         var productForList = from doProduct in dal.Product.GetAll() // get a list of products and scan it
@@ -175,10 +175,11 @@ internal class Product : BlApi.IProduct
             throw new BO.BlMissingEntityException("Data exception:", ex);
         }
     }
-    //Client
+    
+    //For Client:
 
     /// <summary>
-    /// Get a product by it's id for the client
+    /// Get a product Item by its id for the client (convert DO.Product to BO.ProductItem)
     /// </summary>
     /// <param name="productId"></param>
     /// <param name="cart"></param>
@@ -215,4 +216,22 @@ internal class Product : BlApi.IProduct
         }
 
     }
+
+    public IEnumerable<BO.ProductItem?> GetListedProductItems(BO.Cart cart, Func<ProductItem?, bool>? filter)
+    {
+        var productItemsList = from doProduct in dal.Product.GetAll() // get a list of products and scan it
+                               select GetByIdC(doProduct?.Id ?? 0, cart);//build a new products list (type ProductItem) 
+
+        if (filter == null)
+        {
+            return productItemsList;
+        }
+        else
+        {
+            return from x in productItemsList
+                   where filter(x)
+                   select x;
+        }
+    }
+
 }

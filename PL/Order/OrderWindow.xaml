@@ -19,7 +19,7 @@
                 <RowDefinition Height="400"/>
             </Grid.RowDefinitions>
             <Label Content="Items:" HorizontalAlignment="Stretch" Grid.Row="0" VerticalAlignment="Stretch"/>
-            <DataGrid x:Name="orderItemDataGrid" Grid.Row="1" Background="#FFF8EDDE" AutoGenerateColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <DataGrid x:Name="orderItemDataGrid" DataContext="{Binding Path=Items}" Grid.Row="1" Background="#FFF8EDDE" AutoGenerateColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected">
                 <DataGrid.Columns>
                     <DataGridTextColumn x:Name="amountColumn" Binding="{Binding Amount}" Header="Amount" Width="SizeToHeader"/>
                     <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id" Width="SizeToHeader"/>

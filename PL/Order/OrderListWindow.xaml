@@ -26,7 +26,7 @@
             <ComboBox x:Name="CategorySelector" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Height="NaN" SelectionChanged="CategorySelector_SelectionChanged"/>
 
         </Grid>
-        <DataGrid x:Name="orderForListDataGrid" Grid.Row="1" AutoGenerateColumns="False" EnableRowVirtualization="True" MouseDoubleClick="UpdateOrderButton_MouseDoubleClick" Background="#FFF8EDDE" RowDetailsVisibilityMode="VisibleWhenSelected">
+        <DataGrid x:Name="orderForListDataGrid" Grid.Row="1" HorizontalAlignment="Left" AutoGenerateColumns="False" EnableRowVirtualization="True" MouseDoubleClick="UpdateOrderButton_MouseDoubleClick" Background="#FFF8EDDE" RowDetailsVisibilityMode="VisibleWhenSelected">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="amountOfItemsColumn" Binding="{Binding AmountOfItems}" Header="Amount Of Items" Width="SizeToHeader"/>
                 <DataGridTextColumn x:Name="customerNameColumn" Binding="{Binding CustomerName}" Header="Customer Name" Width="SizeToHeader"/>

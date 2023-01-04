@@ -11,6 +11,13 @@ public interface IProduct
     public IEnumerable<ProductForList?> GetListedProducts(Func<ProductForList?, bool>? filter = null); //MANAGER and CLIENT   
 
     /// <summary>
+    /// make a list of product items according to the filter (if there is one) by converting DO.Product 
+    /// </summary>
+    /// <param name="filter"></param>
+    /// <returns> list of product items</returns>
+    public IEnumerable<BO.ProductItem?> GetListedProductItems(BO.Cart cart, Func<ProductItem?, bool>? filter = null);
+
+    /// <summary>
     /// MANAGER
     /// base on the given Product code, build a Product object
     /// that match the needed product type

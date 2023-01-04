@@ -25,8 +25,6 @@ namespace PL.Product
         public static readonly DependencyProperty logicProductsProperty =
             DependencyProperty.Register("logicProducts", typeof(ObservableCollection<BO.ProductForList?>), typeof(ProductListWindow), new PropertyMetadata(null));
 
-        //public BO.Category CategoryFilter { get; set; } = BO.Category.None;
-
         public ProductListWindow()
         {
             InitializeComponent();
@@ -73,8 +71,6 @@ namespace PL.Product
         {
             CategorySelector.SelectedItem = BO.Category.None;
             ShowProductList();
-            //ProductListView.ItemsSource = bl.Product.GetListedProducts();
-            //CategorySelector.SelectedItem = null;
         }
 
         private void Window_Activated(object sender, EventArgs e)
@@ -87,12 +83,9 @@ namespace PL.Product
             BO.Category? category = CategorySelector.SelectedItem as BO.Category?;
             if (category == BO.Category.None)
                 logicProducts = new(bl.Product.GetListedProducts());
-                //logicProducts = new(bl.Product.GetListedProducts());
             else
                 logicProducts = new(bl.Product.GetListedProducts(x => x!.Category == category));
             productDataGrid.ItemsSource = logicProducts;
-            //if (CategorySelector.SelectedItem != null)
-            //    ProductListView.ItemsSource = bl.Product.GetListedProducts(x => x?.Category.ToString() == CategorySelector.SelectedItem.ToString());
         }
     }
 }
