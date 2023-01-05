@@ -20,7 +20,7 @@ namespace PL.Product
     /// <summary>
     /// Interaction logic for ProductWindow.xaml
     /// </summary>
-    public partial class ProductWindow : Window
+    public partial class ProductWindow  : Window 
     {
         private static readonly BlApi.IBl bl = BlApi.Factory.Get()!;
 
@@ -55,6 +55,7 @@ namespace PL.Product
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
+            idTextBox.IsReadOnly= false;
             try
             {
                 if (int.TryParse(idTextBox.Text, out int id) == false)

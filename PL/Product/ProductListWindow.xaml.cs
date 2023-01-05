@@ -3,6 +3,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 
 
 namespace PL.Product
@@ -35,6 +36,7 @@ namespace PL.Product
 
         private void CategorySelector_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
+            
             ShowProductList();
             //if (CategorySelector.SelectedItem != null)
             //    ProductListView.ItemsSource = bl.Product.GetListedProducts(x => x?.Category.ToString() == CategorySelector.SelectedItem.ToString());
@@ -57,8 +59,10 @@ namespace PL.Product
 
         private void UpdateProductButton_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
+
             if (productDataGrid.ItemsSource != null)
             {
+
                 var p = (BO.ProductForList?)productDataGrid.SelectedItem;
                 int id = p?.Id ?? 0;
                 new ProductWindow(id).Show();

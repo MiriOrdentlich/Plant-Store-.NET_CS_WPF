@@ -23,10 +23,10 @@
             </Grid.ColumnDefinitions>
             
             <Label Content="Category" Grid.Column="0" FontSize="22" Background="#FF8DACA0"/>
-            <ComboBox x:Name="CategorySelector" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Height="NaN" SelectionChanged="CategorySelector_SelectionChanged"/>
+            <ComboBox x:Name="CategorySelector" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Height="NaN" SelectionChanged="CategorySelector_SelectionChanged" />
 
         </Grid>
-        <DataGrid x:Name="productDataGrid" HorizontalAlignment="Left" Grid.Row="1" Height="auto" Width="auto" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" MouseDoubleClick="UpdateProductButton_MouseDoubleClick">
+        <DataGrid x:Name="productDataGrid" HorizontalAlignment="Left" Grid.Row="1" Height="auto" Width="auto" AutoGenerateColumns="False" EnableRowVirtualization="True" ItemsSource="{Binding}" MouseDoubleClick="UpdateProductButton_MouseDoubleClick" CanUserAddRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id" Width="Auto" IsReadOnly="True"/>
                 <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="Auto" IsReadOnly="True"/>
