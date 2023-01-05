@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:PL.Cart"
         mc:Ignorable="d"
         DataContext="{Binding Path=currentCart, RelativeSource={RelativeSource self}}"        
-        Title="CartWindow" Height="450" Width="800">    
+        Title="CartWindow" Height="450" Width="800">
     <Grid x:Name="MainGrid">
-        <Button x:Name="btnDeleteCart" Content="Empty Cart" HorizontalAlignment="Left" FontSize="20" Click="btnDeleteCart_Click" Padding="5" Margin="561,179,0,217" Width="121"/>
-        <Button x:Name="btnConfirmCart" Content="Checkout" HorizontalAlignment="Left" Margin="572,267,0,131" FontSize="20" Padding="5" Click="btnConfirmCart_Click" Width="100"/>
+        <Button x:Name="btnDeleteCart" Content="Empty Cart" HorizontalAlignment="Right" Margin="0,130,143,245" Padding="5" Click="btnDeleteCart_Click" Width="85"/>
+        <Button x:Name="btnConfirmCart" Content="Checkout" HorizontalAlignment="Right" Margin="0,250,143,129" Padding="5" Click="btnConfirmCart_Click" Width="84"/>
 
         <DataGrid x:Name="orderItemDataGrid" VerticalAlignment="Top" HorizontalAlignment="Left" AutoGenerateColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" Width="500">
             <DataGrid.Columns>

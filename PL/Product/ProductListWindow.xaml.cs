@@ -28,7 +28,7 @@ namespace PL.Product
         public ProductListWindow()
         {
             InitializeComponent();
-            productDataGrid.ItemsSource = bl.Product.GetListedProducts();
+            logicProducts = new(bl?.Product.GetListedProducts()!);
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
             CategorySelector.SelectedItem = BO.Category.None;
         }

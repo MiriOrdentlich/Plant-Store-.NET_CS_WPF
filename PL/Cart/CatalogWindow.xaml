@@ -7,14 +7,30 @@
         mc:Ignorable="d"
         DataContext="{Binding Path=listedProductItems, RelativeSource={RelativeSource self}}"        
         Title="CatalogWindow" Height="450" Width="800" Activated="Window_Activated">
-    <Grid x:Name="MainGrid">
+    <Grid x:Name="MainGrid" Background="#f9f6f0">
 
-        <Grid Name="UpGrid" Grid.Row="0" Height="50" Width="auto" HorizontalAlignment="Stretch" VerticalAlignment="Top">
-            <Button x:Name="btnRefresh" Content="↺" HorizontalAlignment="Left" Height="50" VerticalAlignment="Center" Width="50" Click="RefreshButton_Click" FontSize="28" BorderBrush="{x:Null}" Background="#00DDDDDD"/>
-            <Label Content="Category:" FontSize="18" Margin="559,0,150,0" />
-            <ComboBox x:Name="CategorySelector" HorizontalAlignment="Right" Height="NaN" SelectionChanged="CategorySelector_SelectionChanged" Width="150"/>
-            <Button x:Name="btnCart" Content="🛒" HorizontalAlignment="Left" Height="50" Margin="50,0,0,0" Padding="5" FontSize="30" BorderBrush="{x:Null}" Background="#00DDDDDD" Click="btnCart_Click"/>
+        <Grid Name="UpGrid" Grid.Row="0" Height="50" Width="auto" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="#20847C">
+            <Button x:Name="btnRefresh" Content="↺" HorizontalAlignment="Left" Height="50" VerticalAlignment="Center" Width="50" Click="RefreshButton_Click" FontSize="28" BorderBrush="{x:Null}" Background="#00DDDDDD" Foreground="#FFF0F0F0"/>
+            <Label Content="Category:" FontSize="24" Margin="517,0,175,0" Foreground="#FFF0F0F0" FontFamily="Dubai Medium" />
+            <ComboBox x:Name="CategorySelector" HorizontalAlignment="Right" Height="NaN" SelectionChanged="CategorySelector_SelectionChanged" Width="150" FontSize="15" />
+            <Button x:Name="btnCart" Content="🛒" HorizontalAlignment="Left" Height="50" Margin="50,0,0,0" Padding="5" FontSize="30" BorderBrush="{x:Null}" Background="#00DDDDDD" Click="btnCart_Click" Foreground="#FFF0F0F0"/>
         </Grid>
+        <!--<ListView x:Name="productItemDataGrid" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="2" HorizontalAlignment="Stretch"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <Image Source="{Binding ImageData}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="UniformToFill" />
+                        <TextBlock x:Name="nameColumn" Text="{Binding Name}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
+                        <TextBlock x:Name="priceColumn" Text="{Binding Price}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>-->
         <DataGrid x:Name="productItemDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" EnableRowVirtualization="True"
                   RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True" Margin="0,50,0,0" MouseDoubleClick="productItemDataGrid_MouseDoubleClick">
             <DataGrid.Columns>
@@ -22,6 +38,11 @@
                 <DataGridTextColumn x:Name="priceColumn" Binding="{Binding Price}" Header="Price" Width="SizeToHeader"/>
             </DataGrid.Columns>
         </DataGrid>
-        
+        <Button>
+            <StackPanel>
+                <Image Source="Pictures/{}.jpg" />
+                <TextBlock>Disconnect from Server</TextBlock>
+            </StackPanel>
+        </Button>
     </Grid>
 </Window>
