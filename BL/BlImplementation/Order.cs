@@ -75,11 +75,11 @@ internal class Order : BlApi.IOrder
     {
         return from doOrder in dal.Order.GetAll() //get orders list from data layer
                let orderItems = dal.OrderItem.GetAll(x => x?.OrderID == doOrder?.Id) //get all order items from data layer that belong to the current order
-               select new BO.OrderForList() 
+               select new BO.OrderForList()
                {
                    Id = doOrder?.Id ?? 0,
                    CustomerName = doOrder?.CustomerName,
-                   AmountOfItems = orderItems.Sum(x => x?.Amount ?? 0), 
+                   AmountOfItems = orderItems.Sum(x => x?.Amount ?? 0),
                    TotalPrice = orderItems.Sum(x => x?.Price ?? 0 * x?.Amount ?? 0),
                    Status = GetOrderStatus((DO.Order)doOrder)  //NEED TO CHECK                 
                };

@@ -24,15 +24,14 @@ namespace PL.Order
         public static readonly DependencyProperty logicOrdersProperty =
             DependencyProperty.Register("logicOrders", typeof(ObservableCollection<BO.OrderForList?>), typeof(OrderListWindow), new PropertyMetadata(null));
 
-        public OrderListWindow()
-        {
+        public OrderListWindow()        {
             InitializeComponent();
             orderForListDataGrid.ItemsSource = bl.Order.getOrdersList();
-            CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            CategorySelector.SelectedItem = BO.Category.None;
+            StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.OrderStatus));
+            StatusSelector.SelectedItem = BO.Category.None;
         }
 
-        private void CategorySelector_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void StatusSelector_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             ShowOrderList();
             //if (CategorySelector.SelectedItem != null)
@@ -53,7 +52,7 @@ namespace PL.Order
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
-            CategorySelector.SelectedItem = BO.Category.None;
+            StatusSelector.SelectedItem = BO.Category.None;
             ShowOrderList();
             //OrderListView.ItemsSource = bl.Order.GetListedOrders();
             //CategorySelector.SelectedItem = null;
@@ -66,14 +65,15 @@ namespace PL.Order
 
         private void ShowOrderList()
         {
-            BO.Category? category = CategorySelector.SelectedItem as BO.Category?;
-            if (category == BO.Category.None)
+            StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.OrderStatus));
+            BO.OrderStatus? status = StatusSelector.SelectedItem as BO.OrderStatus?;
+            if (status == BO.OrderStatus.Shipped)
                 logicOrders = new(bl.Order.getOrdersList());
             else
                 logicOrders = new(bl.Order.getOrdersList(/*x => x!.Category == category*/));
             orderForListDataGrid.ItemsSource = logicOrders;
-            //if (CategorySelector.SelectedItem != null)
-            //    OrderListView.ItemsSource = bl.Order.GetListedOrders(x => x?.Category.ToString() == CategorySelector.SelectedItem.ToString());
+            //if (StatusSelector.SelectedItem != null)
+            //    OrderListView.ItemsSource = bl.Order.GetListedOrders(x => x?.Status.ToString() == StatusSelector.SelectedItem.ToString());
         }
 
     }

@@ -23,7 +23,7 @@
             </Grid.ColumnDefinitions>
 
             <Label Content="Category" Grid.Column="0" FontSize="22" Background="#FF8DACA0"/>
-            <ComboBox x:Name="CategorySelector" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Height="NaN" SelectionChanged="CategorySelector_SelectionChanged"/>
+            <ComboBox x:Name="StatusSelector" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Height="NaN" SelectionChanged="StatusSelector_SelectionChanged"/>
 
         </Grid>
         <DataGrid x:Name="orderForListDataGrid" Grid.Row="1" HorizontalAlignment="Left" AutoGenerateColumns="False" EnableRowVirtualization="True" MouseDoubleClick="UpdateOrderButton_MouseDoubleClick" Background="#FFF8EDDE" RowDetailsVisibilityMode="VisibleWhenSelected">
