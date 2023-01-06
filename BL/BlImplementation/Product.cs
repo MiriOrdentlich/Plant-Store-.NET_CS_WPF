@@ -89,7 +89,7 @@ internal class Product : BlApi.IProduct
         {
             if (productId <= 100000)
                 throw new BO.BlInvalidEntityException("product Id", 1);
-            if (productName is null)
+            if (productName is null) 
                 throw new BO.BlInvalidEntityException("product Name", 1); //will put EntityChoice = 4 and print - Name is null ;
             if (price < 0)
                 throw new BO.BlInvalidEntityException("product price", 0);

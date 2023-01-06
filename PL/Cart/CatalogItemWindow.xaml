@@ -8,7 +8,12 @@
         DataContext="{Binding Path=prodItemCurrent, RelativeSource={RelativeSource self}}"
         Title="CatalogItemWindow" Height="450" Width="800">
     <Grid>
-        <Grid x:Name="productItemDetailsGrid" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0*"/>
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="productItemDetailsGrid" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="310,28,0,0" Grid.Column="1" Height="192" Width="194">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
@@ -21,8 +26,8 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Grid.Column="0" Content="Amount:" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
-            <TextBox x:Name="amountTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="NaN" Margin="3" Grid.Row="0" Text="{Binding Amount, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" IsReadOnly="True"/>
+            <Label Grid.Column="0" Content="Amount:" HorizontalAlignment="Left" Margin="3,3,0,0" Grid.Row="0" Height="26" VerticalAlignment="Top"/>
+            <TextBox x:Name="amountTextBox" Grid.Column="1" HorizontalAlignment="Center" Margin="0,7,0,7" Grid.Row="0" Text="{Binding Amount, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Width="120" IsReadOnly="True"/>
             <Label Grid.Column="0" Content="Category:" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
             <TextBox x:Name="categoryTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="NaN" Margin="3" Grid.Row="1" Text="{Binding Category, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" IsReadOnly="True"/>
             <Label Grid.Column="0" Content="Id:" HorizontalAlignment="Left" Margin="3" Grid.Row="2" VerticalAlignment="Center"/>
@@ -34,6 +39,6 @@
             <Label Grid.Column="0" Content="Price:" HorizontalAlignment="Left" Margin="3" Grid.Row="5" VerticalAlignment="Center"/>
             <TextBox x:Name="priceTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="NaN" Margin="3" Grid.Row="5" Text="{Binding Price, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" IsReadOnly="True"/>
         </Grid>
-        <Button x:Name="btnAdd" Content="Add to cart" HorizontalAlignment="Center" Margin="0,350,0,55" FontSize="16" Click="AddButton_Click"/>
+        <Button x:Name="btnAdd" Content="Add to cart" Margin="346,259,346,109" FontSize="16" Click="AddButton_Click" RenderTransformOrigin="0.38,-1.669" Grid.Column="1"/>
     </Grid>
 </Window>

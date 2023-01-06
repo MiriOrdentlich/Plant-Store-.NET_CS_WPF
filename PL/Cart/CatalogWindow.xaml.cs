@@ -70,7 +70,9 @@ namespace PL.Cart
 
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Show();
+            CategorySelector.SelectedItem = BO.Category.None;
+            ShowProductItemsList();
+            
         }
 
         private void Window_Activated(object sender, EventArgs e)
@@ -87,7 +89,7 @@ namespace PL.Cart
                 listedProductItems = new(bl.Product.GetListedProductItems(currentCart));
             else
                 listedProductItems = new(bl.Product.GetListedProductItems(currentCart, x => x!.Category == category));
-            productItemDataGrid.ItemsSource = listedProductItems;    
+            productItemDataGrid.ItemsSource = listedProductItems;
         }
     }
 }

@@ -56,6 +56,8 @@ namespace PL.Cart
             {
                 bl.Cart.AddItem(currentCart, prodItemCurrent!.Id);
                 MessageBox.Show("Product item added to cart successfully");
+                this.Close();
+
             }
             catch (Exception exception)
             {

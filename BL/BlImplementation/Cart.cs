@@ -2,6 +2,8 @@
 using BO;
 using DalApi;
 using DO;
+using System.Net.Mail;
+
 
 namespace BlImplementation;
 
@@ -150,8 +152,12 @@ internal class Cart : BlApi.ICart
             //check if address, name aren't empty and if email is empty or according to format (<string>@gmail.com)
             if (cart.CustomerAddress is null)
                 throw new BO.BlInvalidEntityException("Customer Address", 1); //will put EntityChoice = 3 and print- Address is null 
-            if (cart.CustomerEmail is null || !cart.CustomerEmail.Contains(str)) //Check is according to format (<string>@gmail.com)
-                throw new BO.BlInvalidEntityException("Customer Email", 1);
+
+
+            //if (cart.CustomerEmail is null || !cart.CustomerEmail.Contains(str)) //Check is according to format (<string>@gmail.com)
+            //    throw new BO.BlInvalidEntityException("Customer Email", 1);
+            MailAddress addressCheck = new MailAddress(str);
+
             if (cart.CustomerName is null)
                 throw new BO.BlInvalidEntityException("Customer Name", 1); //will put EntityChoice = 1 and print - Name is null
             //in case all details are correct:
