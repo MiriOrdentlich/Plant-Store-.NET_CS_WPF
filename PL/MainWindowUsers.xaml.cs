@@ -11,24 +11,17 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Data.SqlClient;
 
-
-namespace PL.users
+namespace PL
 {
     /// <summary>
-    /// Interaction logic for UsersEntry.xaml
+    /// Interaction logic for MainWindowUsers.xaml
     /// </summary>
-    public partial class UsersEntry : Window
+    public partial class MainWindowUsers : Window
     {
-        public UsersEntry()
+        public MainWindowUsers()
         {
             InitializeComponent();
-        }
-        private void btnConfirmUser_Click(object sender, RoutedEventArgs e)
-        {
-            //check the given info
-            new MainWindow().Show();
         }
     }
 }

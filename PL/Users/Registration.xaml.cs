@@ -11,17 +11,15 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.Data.SqlClient;
-
 
 namespace PL.users
 {
     /// <summary>
-    /// Interaction logic for UsersEntry.xaml
+    /// Interaction logic for Registration.xaml
     /// </summary>
-    public partial class UsersEntry : Window
+    public partial class Registration : Window
     {
-        public UsersEntry()
+        public Registration()
         {
             InitializeComponent();
         }
