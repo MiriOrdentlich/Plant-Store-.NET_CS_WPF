@@ -37,7 +37,7 @@ namespace PL.Order
             InitializeComponent();
             idTextBox.Text = idBOOrder.ToString();
             //if stat==delivered...
-            if (statusTextBox.Text == " delivered") 
+            if (statusTextBox.Text.ToString() == "Delivered") 
             {
                 btnUpdateStatus.Visibility = Visibility.Hidden;
             }
@@ -63,9 +63,9 @@ namespace PL.Order
                 if (int.TryParse(idTextBox.Text, out int id) == false)
                      throw new BO.BlInvalidEntityException("ID", 1);
                  if (statusTextBox.Text == "Shipped")
-                    bl.Order.UpdateOrderShipping(id);
+                   bl?.Order.UpdateOrderShipping(orderCurrent.Id);
                 if (statusTextBox.Text == "deliverd")
-                    bl.Order.UpdateOrderDelivery(id);
+                 bl?.Order.UpdateOrderDelivery(orderCurrent.Id);
                 MessageBox.Show("Status updated successfully");
                 this.Close();
             }

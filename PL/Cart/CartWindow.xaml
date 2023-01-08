@@ -8,8 +8,8 @@
         DataContext="{Binding Path=currentCart, RelativeSource={RelativeSource self}}"        
         Title="CartWindow" Height="450" Width="800">
     <Grid x:Name="MainGrid">
-        <Button x:Name="btnDeleteCart" Content="Empty Cart" HorizontalAlignment="Right" Margin="0,130,143,245" Padding="5" Click="btnDeleteCart_Click" Width="85"/>
-        <Button x:Name="btnConfirmCart" Content="Checkout" HorizontalAlignment="Right" Margin="0,250,143,129" Padding="5" Click="btnConfirmCart_Click" Width="84"/>
+        <Button x:Name="btnDeleteCart" Content="Empty Cart" HorizontalAlignment="Right" Margin="0,70,143,305" Padding="5" Click="btnDeleteCart_Click" Width="85"/>
+        <Button x:Name="btnConfirmCart" Content="Checkout" HorizontalAlignment="Right" Margin="0,134,144,245" Padding="5" Click="btnConfirmCart_Click" Width="84"/>
 
         <DataGrid x:Name="orderItemDataGrid" VerticalAlignment="Top" HorizontalAlignment="Left" AutoGenerateColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" Width="500">
             <DataGrid.Columns>
@@ -42,8 +42,8 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Label Content="Total Price:" FontSize="20" HorizontalAlignment="Left" Margin="448,341,0,0" VerticalAlignment="Top" Height="40" Width="auto"/>
-        <TextBox x:Name="txtTotalPrice" Text="{Binding TotalPrice}" FontSize="20" Padding="5" TextAlignment="Center" Height="40" Width="auto" Margin="562,345,118,56" TextWrapping="Wrap" BorderBrush="{x:Null}" IsReadOnly="True"/>
+        <Label Content="Total Price:" FontSize="20" HorizontalAlignment="Left" Margin="505,265,0,0" VerticalAlignment="Top" Height="40" Width="auto"/>
+        <TextBox x:Name="txtTotalPrice" Text="{Binding TotalPrice}" FontSize="20" Padding="5" TextAlignment="Center" Width="auto" Margin="610,265,70,85" TextWrapping="Wrap" BorderBrush="{x:Null}" IsReadOnly="True" RenderTransformOrigin="-1.248,0.534"/>
         <Label Content="CART" FontSize="40" HorizontalAlignment="Right" Padding="5" VerticalAlignment="Top" Height="60" Width="auto" Margin="0,10,70,0"/>
     </Grid>
 </Window>

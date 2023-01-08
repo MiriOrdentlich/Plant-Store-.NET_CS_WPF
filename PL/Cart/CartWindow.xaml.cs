@@ -43,21 +43,26 @@ namespace PL.Cart
             if (orderItemDataGrid.ItemsSource != null)
             {
                 var item = (BO.OrderItem?)orderItemDataGrid.SelectedItem;
-                currentCart = bl.Cart.AddItem(currentCart, item?.Id ?? 0);
-                //new CartWindow(currentCart);
-                orderItemDataGrid.Items.Refresh();
+                int amnt = item?.Amount ?? 0;
+                currentCart = bl.Cart.UpdateItemAmount(currentCart, item?.ProductID ?? 0, amnt + 1);
+                txtTotalPrice.Text = currentCart.TotalPrice.ToString();
             }
+            orderItemDataGrid.Items.Refresh();
+
         }
 
         private void btnDeleteProduct_Click(object sender, RoutedEventArgs e)
         {
+            
             if (orderItemDataGrid.ItemsSource != null)
             {
                 var item = (BO.OrderItem?)orderItemDataGrid.SelectedItem;
                 int amnt = item?.Amount ?? 0;
-                currentCart = bl.Cart.UpdateItemAmount(currentCart, item?.Id ?? 0, amnt - 1);
-                orderItemDataGrid.Items.Refresh();
+                currentCart = bl.Cart.UpdateItemAmount(currentCart, item?.ProductID ?? 0, amnt - 1);
+                txtTotalPrice.Text=currentCart.TotalPrice.ToString();
             }
+            orderItemDataGrid.Items.Refresh();
+
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e) //event to delete the whole order item; all the items of a product in the cart
@@ -65,14 +70,20 @@ namespace PL.Cart
             if (orderItemDataGrid.ItemsSource != null)
             {
                 var item = (BO.OrderItem?)orderItemDataGrid.SelectedItem;
-                currentCart = bl.Cart.UpdateItemAmount(currentCart, item?.Id ?? 0, 0);
-                orderItemDataGrid.Items.Refresh();
+                currentCart = bl.Cart.UpdateItemAmount(currentCart, item?.ProductID ?? 0, 0);
+                txtTotalPrice.Text = currentCart.TotalPrice.ToString();
             }
+            orderItemDataGrid.Items.Refresh();
+
         }
 
         private void btnDeleteCart_Click(object sender, RoutedEventArgs e)
         {
-            currentCart.Items = new List<BO.OrderItem>(); //release current item list and create a new empty item list
+            List<BO.OrderItem?> tmp= new();            
+            currentCart.Items = tmp; //release current item list and create a new empty item list
+            currentCart.TotalPrice =0;
+            orderItemDataGrid.ItemsSource = currentCart!.Items;
+            txtTotalPrice.Text= currentCart.TotalPrice.ToString();
             orderItemDataGrid.Items.Refresh();
         }
 

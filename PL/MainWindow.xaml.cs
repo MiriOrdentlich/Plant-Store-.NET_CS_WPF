@@ -15,7 +15,7 @@ namespace PL
             InitializeComponent();
         }
         private void ShowManagerOptionsButton_Click(object sender, RoutedEventArgs e) => new ManagerWindow().Show();
-        private void ShowOrdersButton_Click(object sender, RoutedEventArgs e) => new Order.FollowOrderWindow().Show();
+        private void ShowFollowOrdersButton_Click(object sender, RoutedEventArgs e) => new Order.FollowOrderWindow().Show();
         private void ShowCatalogButton_Click(object sender, RoutedEventArgs e) => new Cart.CatalogWindow().Show();
 
     }

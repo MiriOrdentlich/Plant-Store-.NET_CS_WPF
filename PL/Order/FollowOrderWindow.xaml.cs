@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using BO;
+using System.Windows;
 
 
 namespace PL.Order
@@ -23,6 +24,8 @@ namespace PL.Order
         public FollowOrderWindow()
         {
             InitializeComponent();
+           // OrderTrackingCurrent = bl.Order.TrackOrder(Int32.Parse(idTextBox.Text).ShowDialog());
+
         }
     }
 }

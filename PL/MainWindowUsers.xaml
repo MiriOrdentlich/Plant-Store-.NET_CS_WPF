@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindowUsers" Height="450" Width="800">
     <Grid>
-        
+        <Grid/>
+        <Button x:Name="btnRegistered" Content="Alredy a User" HorizontalAlignment="Left" Margin="472,193,0,182" Padding="5" Click="Registered_Click" Width="139" RenderTransformOrigin="0.432,-0.272" />
+        <Button x:Name="btnRegister" Content="Make me a User!" HorizontalAlignment="Left" Margin="200,193,0,182" Padding="5" Click="Register_Click" Width="142"/>
     </Grid>
 </Window>

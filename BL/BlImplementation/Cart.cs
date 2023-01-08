@@ -90,7 +90,7 @@ internal class Cart : BlApi.ICart
             if (amount == 0)
             {
                 cart.TotalPrice -= orderItem.TotalPrice; //remove the total of the order item from cart total
-                cart.Items!.ToList().Remove(orderItem); //remove order item from cart
+                ((List<BO.OrderItem?>)cart.Items!).Remove(orderItem);//remove order item from cart
             }
             else if (orderItem.Amount < amount) //the amount of the item got bigger
             {
