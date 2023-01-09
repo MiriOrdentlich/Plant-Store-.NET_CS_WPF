@@ -62,7 +62,7 @@ internal static class DataSource
                    Price = s_rand.Next(priceFrom[index_category], priceTo[index_category]),
                    Category = (Category)index_category,
                    InStock = s_rand.Next(50),
-                   ImageRelativeName = @"\pics\" + productsNames[index_category, index_name] + ".jpg"
+                   ImageRelativeName = @"\pics\" + productsNames[index_category, index_name] + ".jpeg"
                }) ;
         }
     }
