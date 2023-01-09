@@ -29,7 +29,7 @@
             <ComboBox x:Name="CategorySelector" HorizontalAlignment="Right" Height="NaN" SelectionChanged="CategorySelector_SelectionChanged" Width="150" FontSize="15" />
             <Button x:Name="btnCart" Content="🛒" HorizontalAlignment="Left" Height="50" Margin="50,0,0,0" Padding="5" FontSize="30" BorderBrush="{x:Null}" Background="#00DDDDDD" Click="btnCart_Click" Foreground="#FFF0F0F0"/>
             <Button Content="👋" HorizontalAlignment="Left" Margin="435,0,0,0" VerticalAlignment="Center" Click="btnBye_click" Height="38" Width="41" RenderTransformOrigin="1.688,-0.561"/>
-
+    
         </Grid>
         <!--<ListView x:Name="productItemDataGrid" HorizontalAlignment="Stretch" VerticalAlignment="Top">
             <ItemsControl.ItemsPanel>
@@ -61,10 +61,10 @@
                 <TextBlock>Disconnect from Server</TextBlock>
             </StackPanel>
         </Button>-->
-        <ListView x:Name="catalog" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding}"  PreviewMouseDoubleClick="productItemDataGrid_MouseDoubleClick" Margin="10,64,537,133" Grid.RowSpan="2" Grid.ColumnSpan="3">
+        <ListView x:Name="catalog" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding}"  PreviewMouseDoubleClick="productItemDataGrid_MouseDoubleClick" Margin="0,55,0,0" Grid.ColumnSpan="3" Grid.RowSpan="2">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Image Source="{Binding Path=ImageRelativeName, Converter={StaticResource ImagePathToBitmap}}" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="UniformToFill" />
+                        <Image Source="{Binding Path=ImageRelativeName, Converter={StaticResource ImagePathToBitmap}}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="UniformToFill" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
