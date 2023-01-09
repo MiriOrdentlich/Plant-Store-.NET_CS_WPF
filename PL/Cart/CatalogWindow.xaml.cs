@@ -2,6 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Controls;
+using BO;
 using System.Windows;
 
 
@@ -54,9 +58,10 @@ namespace PL.Cart
 
         private void productItemDataGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            if (productItemDataGrid.ItemsSource != null)
+            if (catalog.ItemsSource != null)
             {
-                var p = (BO.ProductItem?)productItemDataGrid.SelectedItem;
+                
+                var p = (BO.ProductItem?)catalog.SelectedItem;
                 int idProductItem = p?.Id ?? 0;
                 new CatalogItemWindow(currentCart, idProductItem).Show();
                 this.Show();
@@ -89,7 +94,11 @@ namespace PL.Cart
                 listedProductItems = new(bl.Product.GetListedProductItems(currentCart));
             else
                 listedProductItems = new(bl.Product.GetListedProductItems(currentCart, x => x!.Category == category));
-            productItemDataGrid.ItemsSource = listedProductItems;
+            catalog.ItemsSource = listedProductItems;
+        }
+        private void btnBye_click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

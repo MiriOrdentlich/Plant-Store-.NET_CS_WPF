@@ -92,5 +92,9 @@ namespace PL.Cart
             new CheckoutWindow(currentCart).Show();
             this.Close();
         }
+        private void btnBye_click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

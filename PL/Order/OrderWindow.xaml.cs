@@ -89,5 +89,10 @@ namespace PL.Order
             //MessageBox.Show(bl.Order.TrackOrder(id).ToString());
             
         }
+
+        private void btnBye_click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

@@ -22,7 +22,7 @@
             <Label Grid.Column="0" Content="Status:" HorizontalAlignment="Left" Margin="3" Grid.Row="1" VerticalAlignment="Center"/>
             <TextBox x:Name="statusTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="NaN" Margin="3" Grid.Row="1" Text="{Binding Status, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
         </Grid>
-        <ListView x:Name="trackingListView" ItemsSource="{Binding Path=Tracking}" IsEnabled="True" Margin="174,226,463,94">
+        <ListView x:Name="trackingListView" ItemsSource="{Binding Path=Tracking}" IsEnabled="True" Margin="174,226,64,31">
             <ListView.ItemContainerStyle>
                 <Style>
                     <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
@@ -49,5 +49,6 @@
             </ListView.View>
         </ListView>
         <Label Content="Order Tracking:" HorizontalAlignment="Left" Margin="79,226,0,0" VerticalAlignment="Top"/>
+        <Button Content="👋" HorizontalAlignment="Left" Margin="695,49,0,0" VerticalAlignment="Top" Click="btnBye_click" Height="39" Width="41" RenderTransformOrigin="1.688,-0.561"/>
     </Grid>
 </Window>

@@ -10,7 +10,7 @@ namespace PL.Order
     public partial class FollowOrderWindow : Window
     {
         private static readonly BlApi.IBl bl = BlApi.Factory.Get()!;
-
+        private int OrderId;
         public BO.OrderTracking ordTrack
         {
             get { return (BO.OrderTracking)GetValue(ordTrackProperty); }
@@ -21,11 +21,18 @@ namespace PL.Order
         public static readonly DependencyProperty ordTrackProperty =
             DependencyProperty.Register("ordTrack", typeof(BO.OrderTracking), typeof(Window), new PropertyMetadata(null));
 
-        public FollowOrderWindow()
+        public FollowOrderWindow(int id)
         {
             InitializeComponent();
-           // OrderTrackingCurrent = bl.Order.TrackOrder(Int32.Parse(idTextBox.Text).ShowDialog());
+            OrderId = id;
 
+            //trackingListView = bl.Order.TrackOrder(OrderId);
+            trackingListView.ItemsSource = bl.Order.TrackOrder(OrderId).Tracking;
+        }
+
+        private void btnBye_click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

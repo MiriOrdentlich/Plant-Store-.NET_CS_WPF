@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PL.users;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,24 +13,30 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace PL
+namespace PL.Order
 {
     /// <summary>
-    /// Interaction logic for ManagerWindow.xaml
+    /// Interaction logic for FollowOrderPopUpWindow.xaml
     /// </summary>
-    public partial class ManagerWindow : Window
+    public partial class FollowOrderPopUpWindow : Window
     {
-        private BlApi.IBl? bl = BlApi.Factory.Get(); //NOT SURE
-
-        public ManagerWindow()
+        public FollowOrderPopUpWindow()
         {
             InitializeComponent();
         }
-        private void ShowProductsButton_Click(object sender, RoutedEventArgs e) => new Product.ProductListWindow().Show();
-        private void ShowOrdersButton_Click(object sender, RoutedEventArgs e) => new Order.OrderListWindow().Show();
+        
+        private void FollowOrder_Click(object sender, RoutedEventArgs e)
+        {
+            if (idTextBox.Text != "") 
+            new FollowOrderWindow(Int32.Parse(idTextBox.Text)).Show();
+            else
+                MessageBox.Show("Please Enter Id");
+        }
+
         private void btnBye_click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+
     }
 }

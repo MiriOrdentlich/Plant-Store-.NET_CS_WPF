@@ -8,6 +8,8 @@
         DataContext="{Binding Path=prodCurrent, RelativeSource={RelativeSource self}}"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Button Content="👋" HorizontalAlignment="Left" Margin="695,49,0,0" VerticalAlignment="Top" Click="btnBye_click" Height="39" Width="41" RenderTransformOrigin="1.688,-0.561"/>
+
         <Grid x:Name="gridProductDetails" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="155,173,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>

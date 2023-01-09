@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Button Content="👋" HorizontalAlignment="Left" Margin="695,49,0,0" VerticalAlignment="Top" Click="btnBye_click" Height="39" Width="41" RenderTransformOrigin="1.688,-0.561"/>
+
         <Image Source="C:\Users\maria\OneDrive\שולחן העבודה\489f1854f6b58139452c0f4ef8387798.jpg" Stretch="Fill"></Image>
         <Button x:Name="btnManager" Content="Manager View" HorizontalAlignment="Left" VerticalAlignment="Center" Height="60" Width="160" FontSize="24" Click="ShowManagerOptionsButton_Click" Margin="84,0,0,0"/>
         <Button x:Name="btnOrders" Content="Follow Order" HorizontalAlignment="Center" VerticalAlignment="Center" Height="60" Width="160" FontSize="24" Click="ShowFollowOrdersButton_Click"/>

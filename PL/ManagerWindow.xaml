@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="ManagerWindow" Height="450" Width="800">
     <Grid>
+        <Button Content="👋" HorizontalAlignment="Left" Margin="695,49,0,0" VerticalAlignment="Top" Click="btnBye_click" Height="39" Width="41" RenderTransformOrigin="1.688,-0.561"/>
+
         <Button x:Name="btnProducts" Content="Products" HorizontalAlignment="Left" VerticalAlignment="Center" Height="60" Width="160" FontSize="24" Click="ShowProductsButton_Click" Margin="180,0,0,0"/>
         <Button x:Name="btnOrders" Content="Orders" HorizontalAlignment="Left" VerticalAlignment="Center" Height="60" Width="160" FontSize="24" Click="ShowOrdersButton_Click" Margin="470,0,0,0"/>
 

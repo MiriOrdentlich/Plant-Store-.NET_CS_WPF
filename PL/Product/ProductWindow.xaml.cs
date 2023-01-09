@@ -94,5 +94,9 @@ namespace PL.Product
                 MessageBox.Show(exception.ToString());
             }
         }
+        private void btnBye_click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

@@ -23,6 +23,8 @@
             </Grid.ColumnDefinitions>
 
             <Label Content="Category" Grid.Column="0" FontSize="22" Background="#FF8DACA0" Grid.ColumnSpan="2"/>
+            <Button Content="👋" HorizontalAlignment="Left" Margin="307,0,0,0" VerticalAlignment="Center" Click="btnBye_click" Height="46" Width="83" RenderTransformOrigin="1.688,-0.561" Grid.Column="1"/>
+
             <!--<ComboBox x:Name="StatusSelector" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Height="NaN" SelectionChanged="StatusSelector_SelectionChanged"/>-->
 
         </Grid>

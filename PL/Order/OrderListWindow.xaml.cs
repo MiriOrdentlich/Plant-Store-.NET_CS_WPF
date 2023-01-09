@@ -76,6 +76,10 @@ namespace PL.Order
             //if (StatusSelector.SelectedItem != null)
             //    OrderListView.ItemsSource = bl.Order.GetListedOrders(x => x?.Status.ToString() == StatusSelector.SelectedItem.ToString());
         }
+        private void btnBye_click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
 
     }
 }

@@ -92,6 +92,10 @@ namespace PL.Product
                 logicProducts = new(bl.Product.GetListedProducts(x => x!.Category == category));
             productDataGrid.ItemsSource = logicProducts;
         }
+        private void btnBye_click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
 
