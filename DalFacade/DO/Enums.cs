@@ -1,3 +1,6 @@
-﻿namespace DO;
+﻿using System.Diagnostics;
 
-public enum Category {Chairs, Tables, BigStorage, SmallStorage, Beds };
+namespace DO;
+
+public enum Category { Flowering, Ferns, CactiAndSucculents, Trees, HangingAndClimbing, Edibles }
+//public enum Category { Flowering, Ferns, CactiAndSucculents, PalmsAndTrees, HangingAndClimbing, Edibles }

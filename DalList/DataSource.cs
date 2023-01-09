@@ -24,7 +24,6 @@ internal static class DataSource
     internal static List<Product?> ProductsList { get; } = new List<Product?>(); //empty list for products
     internal static List<Order?> OrdersList { get; } = new List<Order?>(); //empty list for orders
     internal static List<OrderItem?> OrderItemsList { get; } = new List<OrderItem?>(); //empty list for orders items
-    //internal static List<Users> UsersList { get; } = new List<Users>(); //empty list for orders items
 
 
 
@@ -34,9 +33,16 @@ internal static class DataSource
         createAndInitOrders();
         createAndInitOrderItems();
     }
-    //the 5 arrays match to the 5 categories in Category by index. i did it in a way that we can later on choose
+    //the 6 arrays match to the 6 categories in Category by index. i did it in a way that we can later on choose
     //a price (also suited by index) that make sense to the product value
-    private static string[,] productsNames = new string[5, 3] { { "chair", "barstool", "armchair" }, { "dining table", "desk", "coffee table" }, { "library", "closet", "wardrobes" }, { "cabinet", "drawer", "nightstand" }, { "bed", "playpen", "sofa" } };
+    //productNames devided to: 6 categories, each category has 3 elements.
+    private static string[,] productsNames = new string[6, 3] 
+    { { "chair", "barstool", "armchair" }, //category: flowering
+            { "chair", "barstool", "armchair" },
+                { "chair", "barstool", "armchair" },
+                    { "chair", "barstool", "armchair" },
+                        { "chair", "barstool", "armchair" },
+                            { "chair", "barstool", "armchair" }};
 
     private static void createAndInitProducts()
     {
@@ -44,7 +50,7 @@ internal static class DataSource
         int[] priceTo = { 1000, 8000, 6000, 2500, 7500 };
         for (int i = 0; i < 10; i++)
         {
-            int index_category = s_rand.Next(4);
+            int index_category = s_rand.Next(5);
             int index_name = s_rand.Next(2);
 
             ProductsList.Add(
@@ -55,7 +61,8 @@ internal static class DataSource
                    Price = s_rand.Next(priceFrom[index_category], priceTo[index_category]),
                    Category = (Category)index_category,
                    InStock = s_rand.Next(50),
-               });
+                   ImageRelativeName = @"\pics\IMG" + productsNames[index_category, index_name] + ".jpg"
+               }) ;
         }
     }
     private static void createAndInitOrders()

@@ -15,6 +15,7 @@ namespace PL.Product
     {
         private static readonly BlApi.IBl bl = BlApi.Factory.Get()!;
 
+        //IEnumerable<string> e = GetEnumDescriptions<Category>();
 
         public ObservableCollection<BO.ProductForList?> logicProducts
         {

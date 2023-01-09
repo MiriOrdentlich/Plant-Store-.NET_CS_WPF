@@ -4,8 +4,9 @@
              xmlns:local="clr-namespace:PL"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-            <Style TargetType="Border">
-                <Setter Property="CornerRadius" Value="5"/>
-            </Style>
+        <local:ConvertImagePathToBitmap x:Key="ImagePathToBitmap" />
+        <Style TargetType="Border">
+            <Setter Property="CornerRadius" Value="5"/>
+        </Style>
     </Application.Resources>
 </Application>

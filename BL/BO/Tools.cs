@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -29,4 +30,18 @@ static class Tools
         return str + '\n';
     }
 
+    //this function is to help modify the output of enum values in comboBox:
+    public static IEnumerable<string> GetEnumDescriptions<TEnum>() where TEnum : struct, Enum
+    {
+        var enumType = typeof(TEnum);
+
+        IEnumerable<TEnum> enumValues = Enum.GetValues(enumType).Cast<TEnum>();
+
+        IEnumerable<string> descriptions = from enumValue in enumValues
+                                           let fieldInfo = enumType.GetField(enumValue.ToString())
+                                           let attribute = Attribute.GetCustomAttribute(fieldInfo, typeof(DescriptionAttribute)) as DescriptionAttribute
+                                           select attribute?.Description ?? enumValue.ToString();
+
+        return descriptions;
+    }
 }
