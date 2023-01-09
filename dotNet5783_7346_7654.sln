@@ -28,6 +28,26 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{5F40F09B-335
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pics", "pics", "{566AB272-8180-4522-9579-BA81C82A4771}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\Desktop\תמונת מיניפ\Ariel.webp = ..\..\..\..\Desktop\תמונת מיניפ\Ariel.webp
+		..\..\..\..\Desktop\תמונת מיניפ\Bertie.webp = ..\..\..\..\Desktop\תמונת מיניפ\Bertie.webp
+		..\..\..\..\Desktop\תמונת מיניפ\Big Ken.webp = ..\..\..\..\Desktop\תמונת מיניפ\Big Ken.webp
+		..\..\..\..\Desktop\תמונת מיניפ\Florence.webp = ..\..\..\..\Desktop\תמונת מיניפ\Florence.webp
+		..\..\..\..\Desktop\תמונת מיניפ\Francisca.webp = ..\..\..\..\Desktop\תמונת מיניפ\Francisca.webp
+		..\..\..\..\Desktop\תמונת מיניפ\Cacti\Ian.webp = ..\..\..\..\Desktop\תמונת מיניפ\Cacti\Ian.webp
+		..\..\..\..\Desktop\תמונת מיניפ\Kai.webp = ..\..\..\..\Desktop\תמונת מיניפ\Kai.webp
+		..\..\..\..\Desktop\תמונת מיניפ\Laura tree.webp = ..\..\..\..\Desktop\תמונת מיניפ\Laura tree.webp
+		..\..\..\..\Desktop\תמונת מיניפ\Leon.webp = ..\..\..\..\Desktop\תמונת מיניפ\Leon.webp
+		..\..\..\..\Desktop\תמונת מיניפ\Lizzie.webp = ..\..\..\..\Desktop\תמונת מיניפ\Lizzie.webp
+		..\..\..\..\Desktop\תמונת מיניפ\Cacti\Lyla.webp = ..\..\..\..\Desktop\תמונת מיניפ\Cacti\Lyla.webp
+		..\..\..\..\Desktop\תמונת מיניפ\Marge.webp = ..\..\..\..\Desktop\תמונת מיניפ\Marge.webp
+		..\..\..\..\Desktop\תמונת מיניפ\Peggy.webp = ..\..\..\..\Desktop\תמונת מיניפ\Peggy.webp
+		..\..\..\..\Desktop\תמונת מיניפ\Pele.webp = ..\..\..\..\Desktop\תמונת מיניפ\Pele.webp
+		..\..\..\..\Desktop\תמונת מיניפ\Toby.webp = ..\..\..\..\Desktop\תמונת מיניפ\Toby.webp
+		..\..\..\..\Desktop\תמונת מיניפ\Cacti\Val.webp = ..\..\..\..\Desktop\תמונת מיניפ\Cacti\Val.webp
+		..\..\..\..\Desktop\תמונת מיניפ\Vinnie.webp = ..\..\..\..\Desktop\תמונת מיניפ\Vinnie.webp
+		..\..\..\..\Desktop\תמונת מיניפ\Vivi.webp = ..\..\..\..\Desktop\תמונת מיניפ\Vivi.webp
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
