@@ -28,6 +28,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{5F40F09B-335
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pics", "pics", "{D864C34F-1114-4C5D-A388-EB5D50FABB33}"
+	ProjectSection(SolutionItems) = preProject
+		pics\Ariel.jpeg = pics\Ariel.jpeg
+		pics\Bertie.jpeg = pics\Bertie.jpeg
+		pics\Big Ken.jpeg = pics\Big Ken.jpeg
+		pics\Florence.jpeg = pics\Florence.jpeg
+		pics\Francisca.jpeg = pics\Francisca.jpeg
+		pics\Kai.jpeg = pics\Kai.jpeg
+		pics\Laura tree.jpeg = pics\Laura tree.jpeg
+		pics\Leon.jpeg = pics\Leon.jpeg
+		pics\Lizzie.jpeg = pics\Lizzie.jpeg
+		pics\Marge.jpeg = pics\Marge.jpeg
+		pics\Peggy.jpeg = pics\Peggy.jpeg
+		pics\Pele.jpeg = pics\Pele.jpeg
+		pics\Toby.jpeg = pics\Toby.jpeg
+		pics\Vinnie.jpeg = pics\Vinnie.jpeg
+		pics\Vivi.jpeg = pics\Vivi.jpeg
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

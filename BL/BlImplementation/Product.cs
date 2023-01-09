@@ -24,7 +24,7 @@ internal class Product : BlApi.IProduct
                    Name = doProduct?.Name ?? "",
                    Category = (BO.Category)doProduct?.Category!,
                    Price = doProduct?.Price ?? 0,
-                   ImageRelativeName = @"\pics\IMG" + doProduct?.Name + ".jpg"
+                   ImageRelativeName = @"\pics\" + doProduct?.Name + ".jpg"
                };
         if (filter == null)
         {
@@ -62,7 +62,7 @@ internal class Product : BlApi.IProduct
                     Price = doProduct.Price,
                     Name = doProduct.Name,
                     InStock = doProduct.InStock,
-                    ImageRelativeName = @"\pics\IMG" + doProduct.Name + ".jpg"
+                    ImageRelativeName = @"\pics\" + doProduct.Name + ".jpg"
                 };
             }
             else
@@ -106,7 +106,7 @@ internal class Product : BlApi.IProduct
                 Category = (DO.Category)category,  //take the newDoProduct Category, turn it into DO.Category
                 Price = price,
                 InStock = amount,
-                ImageRelativeName = @"\pics\IMG" + productName + ".jpg"
+                ImageRelativeName = @"\pics\" + productName + ".jpg"
             };
             int newId = dal.Product.Add(newDoProduct); //add the product (DO type), and dal.Product.Add(newDoProduct) returns int type
 
@@ -144,7 +144,9 @@ internal class Product : BlApi.IProduct
                 Price = product.Price,
                 InStock = product.InStock,
                 Category = (DO.Category)product.Category!, //take the newDoProduct Category, turn it into DO.Category
-                ImageRelativeName = @"\pics\IMG" + product.Name + ".jpg"
+                ImageRelativeName = @"\pics\" + product.Name + ".jpg"
+                //ImageRelativeName = @"\pics\IMG" + product.Name + ".jpg""
+
             };
             dal.Product.Update(newDoProduct); //update product in data layer
         }
@@ -209,7 +211,7 @@ internal class Product : BlApi.IProduct
                     Amount = (from item in cart.Items
                              where item.ProductID == doProduct.Id
                              select item.Amount).Sum(),
-                    ImageRelativeName = @"\pics\IMG" + doProduct.Name + ".jpg"
+                    ImageRelativeName = @"\pics\" + doProduct.Name + ".jpg"
                 };
             }
             else

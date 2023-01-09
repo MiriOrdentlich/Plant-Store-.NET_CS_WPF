@@ -37,12 +37,13 @@ internal static class DataSource
     //a price (also suited by index) that make sense to the product value
     //productNames devided to: 6 categories, each category has 3 elements.
     private static string[,] productsNames = new string[6, 3] 
-    { { "chair", "barstool", "armchair" }, //category: flowering
-            { "chair", "barstool", "armchair" },
-                { "chair", "barstool", "armchair" },
-                    { "chair", "barstool", "armchair" },
-                        { "chair", "barstool", "armchair" },
-                            { "chair", "barstool", "armchair" }};
+    //category: flowering, Ferns, CactiAndSucculents, Trees, HangingAndClimbing, Edibles
+    { { "Florence", "Francisca", "Vinnie" },
+            { "Bertie", "Pele", "Toby" },
+                { "Ian", "Lyla", "Val" },
+                    { "Ariel", "Big-Ken", "Laura tree" },
+                        { "Lizzie", "Marge", "Peggy" },
+                            { "Kai", "Leon", "Vivi" }};
 
     private static void createAndInitProducts()
     {
@@ -61,7 +62,7 @@ internal static class DataSource
                    Price = s_rand.Next(priceFrom[index_category], priceTo[index_category]),
                    Category = (Category)index_category,
                    InStock = s_rand.Next(50),
-                   ImageRelativeName = @"\pics\IMG" + productsNames[index_category, index_name] + ".jpg"
+                   ImageRelativeName = @"\pics\" + productsNames[index_category, index_name] + ".jpg"
                }) ;
         }
     }
