@@ -41,7 +41,7 @@ internal static class DataSource
     { { "Florence", "Francisca", "Vinnie" },
             { "Bertie", "Pele", "Toby" },
                 { "Ian", "Lyla", "Val" },
-                    { "Ariel", "Big-Ken", "Laura tree" },
+                    { "Ariel", "Big Ken", "Laura tree" },
                         { "Lizzie", "Marge", "Peggy" },
                             { "Kai", "Leon", "Vivi" }};
 

@@ -59,7 +59,7 @@ namespace PL.Cart
                 var item = (BO.OrderItem?)orderItemDataGrid.SelectedItem;
                 int amnt = item?.Amount ?? 0;
                 currentCart = bl.Cart.UpdateItemAmount(currentCart, item?.ProductID ?? 0, amnt - 1);
-                txtTotalPrice.Text=currentCart.TotalPrice.ToString();
+                txtTotalPrice.Text = currentCart.TotalPrice.ToString();
             }
             orderItemDataGrid.Items.Refresh();
 
@@ -80,10 +80,10 @@ namespace PL.Cart
         private void btnDeleteCart_Click(object sender, RoutedEventArgs e)
         {
             List<BO.OrderItem?> tmp= new();            
-            currentCart.Items = tmp; //release current item list and create a new empty item list
-            currentCart.TotalPrice =0;
+            currentCart.Items = tmp!; //release current item list and create a new empty item list
+            currentCart.TotalPrice = 0;
             orderItemDataGrid.ItemsSource = currentCart!.Items;
-            txtTotalPrice.Text= currentCart.TotalPrice.ToString();
+            txtTotalPrice.Text = currentCart.TotalPrice.ToString();
             orderItemDataGrid.Items.Refresh();
         }
 
@@ -94,6 +94,12 @@ namespace PL.Cart
         }
         private void btnBye_click(object sender, RoutedEventArgs e)
         {
+            this.Close();
+        }
+
+        private void btnReturn_Click(object sender, RoutedEventArgs e)
+        {
+            new CatalogWindow().Show();
             this.Close();
         }
     }

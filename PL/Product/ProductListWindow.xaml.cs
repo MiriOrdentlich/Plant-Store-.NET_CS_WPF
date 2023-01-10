@@ -66,7 +66,7 @@ namespace PL.Product
                 var p = (BO.ProductForList?)productDataGrid.SelectedItem;
                 int id = p?.Id ?? 0;
                 //new ProductWindow(id).Show();
-                ProductWindow productWindow= new Product.ProductWindow(id);
+                ProductWindow productWindow = new Product.ProductWindow(id);
                 productWindow.idTextBox.IsReadOnly = true;
                 productWindow.ShowDialog();
                 productDataGrid.ItemsSource = bl?.Product.GetListedProducts();

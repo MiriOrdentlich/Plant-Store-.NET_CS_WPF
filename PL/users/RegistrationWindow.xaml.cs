@@ -17,9 +17,9 @@ namespace PL.users
     /// <summary>
     /// Interaction logic for Registration.xaml
     /// </summary>
-    public partial class Registration : Window
+    public partial class RegistrationWindow : Window
     {
-        public Registration()
+        public RegistrationWindow()
         {
             InitializeComponent();
         }

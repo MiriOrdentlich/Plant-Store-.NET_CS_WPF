@@ -1,17 +1,7 @@
 ﻿using PL.users;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace PL.Order
 {
@@ -24,15 +14,25 @@ namespace PL.Order
         {
             InitializeComponent();
         }
-        
+
         private void FollowOrder_Click(object sender, RoutedEventArgs e)
         {
-            if (idTextBox.Text != "") 
-            new FollowOrderWindow(Int32.Parse(idTextBox.Text)).Show();
-            else
-                MessageBox.Show("Please Enter Id");
+            try
+            {
+                if (idTextBox.Text != "")
+                {
+                    if (int.TryParse(idTextBox.Text, out int id) == false)
+                        throw new BO.BlInvalidEntityException("ID", 1);
+                    new FollowOrderWindow(id).ShowDialog();
+                }
+                else
+                    MessageBox.Show("Please Enter Id");
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.ToString());
+            }
         }
-
         private void btnBye_click(object sender, RoutedEventArgs e)
         {
             this.Close();

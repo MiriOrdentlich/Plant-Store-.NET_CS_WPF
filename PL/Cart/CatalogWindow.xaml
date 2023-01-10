@@ -11,17 +11,7 @@
         <Image x:Key="oneProduct" />
 
     </Window.Resources>
-    <Grid x:Name="MainGrid" Background="#f9f6f0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="0*"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="102*"/>
-            <ColumnDefinition Width="49*"/>
-            <ColumnDefinition Width="649*"/>
-        </Grid.ColumnDefinitions>
-
+    <Grid x:Name="MainGrid">
 
         <Grid Name="UpGrid" Grid.Row="0" Height="50" Width="auto" VerticalAlignment="Top" Background="#20847C" Grid.ColumnSpan="3" Grid.RowSpan="2">
             <Button x:Name="btnRefresh" Content="↺" HorizontalAlignment="Left" Width="50" Click="RefreshButton_Click" FontSize="28" BorderBrush="{x:Null}" Background="#00DDDDDD" Foreground="#FFF0F0F0" Height="50" VerticalAlignment="Bottom"/>
@@ -31,43 +21,22 @@
             <Button Content="👋" HorizontalAlignment="Left" Margin="435,0,0,0" VerticalAlignment="Center" Click="btnBye_click" Height="38" Width="41" RenderTransformOrigin="1.688,-0.561"/>
     
         </Grid>
-        <!--<ListView x:Name="productItemDataGrid" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+         
+        <ListView x:Name="catalog" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}" ScrollViewer.CanContentScroll="True" PreviewMouseDoubleClick="productItemDataGrid_MouseDoubleClick"  HorizontalAlignment="Stretch" VerticalAlignment="Top">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="2" HorizontalAlignment="Stretch"/>
+                    <UniformGrid Columns="4" HorizontalAlignment="Stretch"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                        <Image Source="{Binding ImageData}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="UniformToFill" />
-                        <TextBlock x:Name="nameColumn" Text="{Binding Name}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
-                        <TextBlock x:Name="priceColumn" Text="{Binding Price}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
+                        <Image Source="{Binding Path=ImageRelativeName, Converter={StaticResource ImagePathToBitmap}}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="UniformToFill" />
+                        <TextBlock Text="{Binding Name}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
+                        <TextBlock Text="{Binding Price}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
-        </ListView>-->
-        <!--<DataGrid x:Name="productItemDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" EnableRowVirtualization="True"
-                  RowDetailsVisibilityMode="VisibleWhenSelected" IsReadOnly="True" Margin="10,50,0,0" MouseDoubleClick="productItemDataGrid_MouseDoubleClick" Height="320" Width="170">
-            <DataGrid.Columns>
-                <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="Auto"/>
-                <DataGridTextColumn x:Name="priceColumn" Binding="{Binding Price}" Header="Price" Width="Auto"/>
-            </DataGrid.Columns>
-            
-        </DataGrid>-->
-        <!--<Button>
-            <StackPanel>
-                <Image Source="Pictures/{}.jpeg" />
-                <TextBlock>Disconnect from Server</TextBlock>
-            </StackPanel>
-        </Button>-->
-        <ListView x:Name="catalog" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.CanContentScroll="True" ItemsSource="{Binding}"  PreviewMouseDoubleClick="productItemDataGrid_MouseDoubleClick" Margin="0,55,0,0" Grid.ColumnSpan="3" Grid.RowSpan="2">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                        <Image Source="{Binding Path=ImageRelativeName, Converter={StaticResource ImagePathToBitmap}}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="UniformToFill" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
         </ListView>
-
     </Grid>
 </Window>

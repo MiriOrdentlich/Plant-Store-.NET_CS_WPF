@@ -55,7 +55,7 @@ namespace PL.Product
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            idTextBox.IsReadOnly= false;
+            idTextBox.IsReadOnly = false;
             try
             {
                 if (int.TryParse(idTextBox.Text, out int id) == false)

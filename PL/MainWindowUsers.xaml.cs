@@ -26,6 +26,6 @@ namespace PL
         }
         private void Registered_Click(object sender, RoutedEventArgs e) => new UsersEntry().Show();
 
-        private void Register_Click(object sender, RoutedEventArgs e) => new Registration().Show();
+        private void Register_Click(object sender, RoutedEventArgs e) => new RegistrationWindow().Show();
     }
 }

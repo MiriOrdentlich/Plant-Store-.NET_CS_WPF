@@ -8,34 +8,44 @@
         DataContext="{Binding Path=currentCart, RelativeSource={RelativeSource self}}"        
         Title="CartWindow" Height="450" Width="800">
     <Grid x:Name="MainGrid">
-        <Button Content="👋" HorizontalAlignment="Left" Margin="730,61,0,0" VerticalAlignment="Top" Click="btnBye_click" Height="39" Width="41" RenderTransformOrigin="1.688,-0.561"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="400"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="UpGrid" Background="#a4ccc6" HorizontalAlignment="Stretch" Grid.Row="0" Height="auto" VerticalAlignment="Stretch" Width="auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="👋" HorizontalAlignment="Left" VerticalAlignment="Top" Click="btnBye_click"  Padding="5" FontSize="20" Background="#FFF87878"/>
+            <Button Content="←" HorizontalAlignment="Left" VerticalAlignment="Top" Click="btnReturn_Click" Background="White" Width="40" FontSize="26" Margin="50,0,0,0"/>
+        </Grid>
+        <Button x:Name="btnDeleteCart" Grid.Row="1" Content="Empty Cart" HorizontalAlignment="Right" Margin="0,70,143,299" Padding="5" Click="btnDeleteCart_Click" Height="auto" Width="auto"/>
+        <Button x:Name="btnConfirmCart" Grid.Row="1" Content="Checkout" HorizontalAlignment="Right" Margin="0,134,144,238" Padding="5" Click="btnConfirmCart_Click" Height="auto" Width="auto"/>
 
-        <Button x:Name="btnDeleteCart" Content="Empty Cart" HorizontalAlignment="Right" Margin="0,70,143,305" Padding="5" Click="btnDeleteCart_Click" Width="85"/>
-        <Button x:Name="btnConfirmCart" Content="Checkout" HorizontalAlignment="Right" Margin="0,134,144,245" Padding="5" Click="btnConfirmCart_Click" Width="84"/>
-
-        <DataGrid x:Name="orderItemDataGrid" VerticalAlignment="Top" HorizontalAlignment="Left" AutoGenerateColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" Width="500">
+        <DataGrid x:Name="orderItemDataGrid" VerticalAlignment="Top" Grid.Row="1" HorizontalAlignment="Left" AutoGenerateColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected" Width="auto">
             <DataGrid.Columns>
-                <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Order Item ID" Width="*"/>
-                <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="*"/>
-                <DataGridTextColumn x:Name="amountColumn" Binding="{Binding Amount}" Header="Amount" Width="*"/>
-                <DataGridTextColumn x:Name="priceColumn" Binding="{Binding Price}" Header="Price" Width="*"/>
-                <DataGridTextColumn x:Name="productIDColumn" Binding="{Binding ProductID}" Header="Product ID" Width="*"/>
-                <DataGridTextColumn x:Name="totalPriceColumn" Binding="{Binding TotalPrice}" Header="Total Price" Width="*"/>
-                <DataGridTemplateColumn Header="+" Width="SizeToHeader">
+                <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Order Item ID" Width="auto"/>
+                <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="auto"/>
+                <DataGridTextColumn x:Name="amountColumn" Binding="{Binding Amount}" Header="Amount" Width="auto"/>
+                <DataGridTextColumn x:Name="priceColumn" Binding="{Binding Price}" Header="Price" Width="auto"/>
+                <DataGridTextColumn x:Name="productIDColumn" Binding="{Binding ProductID}" Header="Product ID" Width="auto"/>
+                <DataGridTextColumn x:Name="totalPriceColumn" Binding="{Binding TotalPrice}" Header="Total Price" Width="auto"/>
+                <DataGridTemplateColumn Header="+" Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="+" x:Name="btnAddProduct" Click="btnAddProduct_Click" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="-" Width="SizeToHeader">
+                <DataGridTemplateColumn Header="-" Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="-" x:Name="btnDeleteProduct" Click="btnDeleteProduct_Click" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Delete" Width="SizeToHeader">
+                <DataGridTemplateColumn Header="Delete" Width="auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="🗑" x:Name="btnDelete" Click="btnDelete_Click" />
@@ -45,7 +55,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="Total Price:" FontSize="20" HorizontalAlignment="Left" Margin="505,265,0,0" VerticalAlignment="Top" Height="40" Width="auto"/>
-        <TextBox x:Name="txtTotalPrice" Text="{Binding TotalPrice}" FontSize="20" Padding="5" TextAlignment="Center" Width="auto" Margin="610,265,70,85" TextWrapping="Wrap" BorderBrush="{x:Null}" IsReadOnly="True" RenderTransformOrigin="-1.248,0.534"/>
-        <Label Content="CART" FontSize="40" HorizontalAlignment="Right" Padding="5" VerticalAlignment="Top" Height="60" Width="auto" Margin="0,10,70,0"/>
+        <TextBox x:Name="txtTotalPrice" Text="{Binding TotalPrice}" FontSize="20" Padding="5" TextAlignment="Center" Width="auto" Margin="610,265,70,85" TextWrapping="Wrap" BorderBrush="{x:Null}" IsReadOnly="True" Background="{x:Null}" RenderTransformOrigin="-1.248,0.534"/>
+        <Label Content="CART" FontSize="35" Grid.Row="0" HorizontalAlignment="Left" Padding="5" Height="auto" Width="118" FontFamily="Bahnschrift SemiBold" FontWeight="Bold" Foreground="White" Margin="682,0,0,0"/>
     </Grid>
 </Window>
