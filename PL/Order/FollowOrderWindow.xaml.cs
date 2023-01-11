@@ -10,7 +10,7 @@ namespace PL.Order
     public partial class FollowOrderWindow : Window
     {
         private static readonly BlApi.IBl bl = BlApi.Factory.Get()!;
-        private int OrderId;
+
         public BO.OrderTracking ordTrack
         {
             get { return (BO.OrderTracking)GetValue(ordTrackProperty); }
@@ -24,10 +24,9 @@ namespace PL.Order
         public FollowOrderWindow(int id)
         {
             InitializeComponent();
-            OrderId = id;
 
             //trackingListView = bl.Order.TrackOrder(OrderId);
-            trackingListView.ItemsSource = bl.Order.TrackOrder(OrderId).Tracking;
+            ordTrack = bl.Order.TrackOrder(id);
         }
 
         private void btnBye_click(object sender, RoutedEventArgs e)

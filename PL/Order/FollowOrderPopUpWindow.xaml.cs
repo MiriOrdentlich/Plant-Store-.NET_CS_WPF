@@ -22,6 +22,7 @@ namespace PL.Order
                 {
                     if (int.TryParse(idTextBox.Text, out int id) == false)
                         throw new BO.BlInvalidEntityException("ID", 1);
+                    this.Close();
                     new FollowOrderWindow(id).ShowDialog();
                 }
                 else
