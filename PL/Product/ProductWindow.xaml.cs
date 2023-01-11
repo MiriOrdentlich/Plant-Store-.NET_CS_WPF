@@ -49,6 +49,7 @@ namespace PL.Product
                 prodCurrent = null;
                 MessageBox.Show(exception.ToString());
                 this.Close();
+                new ProductListWindow().ShowDialog();
             }
         }
 
@@ -68,6 +69,8 @@ namespace PL.Product
                     throw new BO.BlInvalidEntityException("amount", 1);                
                 bl.Product.AddProduct(id, nameTextBox.Text, category, price, amount);
                 MessageBox.Show("Product added successfully");
+                this.Close();
+                new ProductListWindow().ShowDialog();
             }
             catch (Exception exception)
             {
@@ -88,6 +91,7 @@ namespace PL.Product
                 bl.Product.UpdateProduct(prodCurrent!);
                 MessageBox.Show("Product updated successfully");
                 this.Close();
+                new ProductListWindow().ShowDialog();
             }
             catch (Exception exception)
             {
@@ -98,5 +102,15 @@ namespace PL.Product
         {
             this.Close();
         }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            bl.Product.DeleteProduct(prodCurrent?.Id ?? -1);
+            this.Close();
+            new ProductListWindow().ShowDialog();
+        }
+
     }
+
+
 }

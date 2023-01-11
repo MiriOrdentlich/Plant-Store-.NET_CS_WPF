@@ -1,4 +1,7 @@
-﻿using DO;
+﻿using DalApi;
+using DO;
+using System.Net;
+using System.Xml.Linq;
 
 namespace Dal;
 
@@ -25,6 +28,7 @@ internal static class DataSource
     internal static List<Order?> OrdersList { get; } = new List<Order?>(); //empty list for orders
     internal static List<OrderItem?> OrderItemsList { get; } = new List<OrderItem?>(); //empty list for orders items
     internal static List<User?> UsersList { get; } = new List<User?>(); //empty list for users
+    
 
 
     private static void s_Initialize()
@@ -32,6 +36,7 @@ internal static class DataSource
         createAndInitProducts();
         createAndInitOrders();
         createAndInitOrderItems();
+        createAndInitUsers();
     }
 
     //the 6 arrays match to the 6 categories in Category by index. i did it in a way that we can later on choose
@@ -141,6 +146,48 @@ internal static class DataSource
 
             
         }
+    }
+    private static void createAndInitUsers()
+    {
+        //string[] Names = { "Hadas", "Noa", "Shira", "Juli" ,"April", "Sara"};
+        //string[] Passwords = {"1234","Why" , "Idc", "ok", "Shira"};
+        //string[] Adresses = {"Degel 7", "Shor 8", "St 9","Truman 66","Trumpeldor 13", "Rootin 34", "Europe 56", "Romania"};
+        //string[] Emails = { "gmail@gmail.com", "email@gmail.com", "MyEmail@gmail.com", "MyGmail@gmail.com", "Naama@gmail.com" , "Miri@gmail.com" };
+        
+        UsersList.Add(
+                    new User()
+                    {
+                        isManager = true,
+                        Name = "Naama",
+                        Address = "House",
+                        Email = "email@gmail.com",
+                        Password = "psw",
+                    }) ;
+
+        UsersList.Add(
+                    new User()
+                    {
+                        isManager = true,
+                        Name = "Miri",
+                        Address = "House",
+                        Email = "email@gmail.com",
+                        Password = "psw",
+                    });
+        //for (int i = 0; i < Names.Length; i++)
+        //{
+        //    UsersList.Add(
+        //            new User()
+        //            {
+        //                isManager = false,
+        //                Name = Names[i],
+        //                Address = Passwords[i],
+        //                Email = Emails[i],
+        //                Password = Passwords[i],
+        //            });
+        //}
+
+
+
     }
 }
 

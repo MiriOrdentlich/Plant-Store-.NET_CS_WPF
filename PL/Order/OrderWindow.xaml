@@ -18,19 +18,19 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="400"/>
             </Grid.RowDefinitions>
-            <Label Content="Items:" HorizontalAlignment="Stretch" Grid.Row="0" VerticalAlignment="Stretch"/>
-            <DataGrid x:Name="orderItemDataGrid" DataContext="{Binding Path=Items}" Grid.Row="1" Background="#FFF8EDDE" AutoGenerateColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected">
+            <Label Content="Items:" HorizontalAlignment="Stretch" Grid.Row="0" VerticalAlignment="Stretch" FontWeight="Bold" FontSize="25" Foreground="#20847C"/>
+            <DataGrid x:Name="orderItemDataGrid" BorderBrush="Transparent" DataContext="{Binding Path=Items}" VerticalAlignment="Top" HorizontalAlignment="Left" IsReadOnly="True" Grid.Row="1" Background="#FFF8EDDE" AutoGenerateColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected">
                 <DataGrid.Columns>
-                    <DataGridTextColumn x:Name="amountColumn" Binding="{Binding Amount}" Header="Amount" Width="*"/>
-                    <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id" Width="*" IsReadOnly="True"/>
-                    <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name" Width="*" IsReadOnly="True"/>
-                    <DataGridTextColumn x:Name="priceColumn" Binding="{Binding Price}" Header="Price" Width="Auto" IsReadOnly="True"/>
-                    <DataGridTextColumn x:Name="productIDColumn" Binding="{Binding ProductID}" Header="Product ID" Width="*" IsReadOnly="True"/>
-                    <DataGridTextColumn x:Name="totalPriceColumn" Binding="{Binding TotalPrice}" Header="Total Price" Width="*" IsReadOnly="True"/>
+                    <DataGridTextColumn x:Name="amountColumn" Binding="{Binding Amount}" Header="Amount"/>
+                    <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id"/>
+                    <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name"/>
+                    <DataGridTextColumn x:Name="priceColumn" Binding="{Binding Price}" Header="Price"/>
+                    <DataGridTextColumn x:Name="productIDColumn" Binding="{Binding ProductID}" Header="Product ID"/>
+                    <DataGridTextColumn x:Name="totalPriceColumn" Binding="{Binding TotalPrice}" Header="Total Price"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
-        <Button Content="👋" HorizontalAlignment="Left" Margin="354,0,0,0" VerticalAlignment="Top" Click="btnBye_click" Height="39" Width="41" RenderTransformOrigin="1.688,-0.561"/>
+        <Button Content="👋" HorizontalAlignment="Left" Margin="354,0,0,0" VerticalAlignment="Top" Click="btnBye_click" Height="39" Width="41"/>
 
         <Button x:Name="btnUpdateStatus" Content="Update Order Status" HorizontalAlignment="Left" Margin="194,371,0,15" Padding="5" Click="btnUpdateStatus_Click" Width="121"/>
         <Button x:Name="btnFollowOrder" Content="Follow Order" HorizontalAlignment="Left" Margin="47,371,0,15" Padding="5" Click="btnFollowOrder_Click" Width="92"/>

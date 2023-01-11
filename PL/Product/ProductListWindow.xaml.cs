@@ -64,7 +64,7 @@ namespace PL.Product
             if (productDataGrid.ItemsSource != null)
             {
                 var p = (BO.ProductForList?)productDataGrid.SelectedItem;
-                int id = p?.Id ?? 0;
+                int id = p?.Id ?? -1;
                 //new ProductWindow(id).Show();
                 ProductWindow productWindow = new Product.ProductWindow(id);
                 productWindow.idTextBox.IsReadOnly = true;
@@ -93,6 +93,16 @@ namespace PL.Product
                 logicProducts = new(bl.Product.GetListedProducts(x => x!.Category == category));
             productDataGrid.ItemsSource = logicProducts;
         }
+
+        private void DeleteButton_Click(Object sender, RoutedEventArgs e)
+        {
+            var p = (BO.ProductForList?)productDataGrid.SelectedItem;
+            var boProduct = bl.Product.GetByIdM(p?.Id ?? -1);
+            boProduct.InStock = 0;
+            bl.Product.UpdateProduct(boProduct);
+            ShowProductList();
+        }
+
         private void btnBye_click(object sender, RoutedEventArgs e)
         {
             this.Close();

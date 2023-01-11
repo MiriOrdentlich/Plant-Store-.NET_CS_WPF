@@ -63,9 +63,9 @@ namespace PL.Order
                 if (int.TryParse(idTextBox.Text, out int id) == false)
                      throw new BO.BlInvalidEntityException("ID", 1);
                  if (statusTextBox.Text == "Shipped")
-                   bl?.Order.UpdateOrderShipping(orderCurrent.Id);
+                   bl?.Order.UpdateOrderShipping(orderCurrent?.Id ?? -1);
                 if (statusTextBox.Text == "deliverd")
-                 bl?.Order.UpdateOrderDelivery(orderCurrent.Id);
+                 bl?.Order.UpdateOrderDelivery(orderCurrent?.Id ?? -1);
                 MessageBox.Show("Status updated successfully");
                 this.Close();
             }
@@ -86,8 +86,7 @@ namespace PL.Order
 
         private void btnFollowOrder_Click(object sender, RoutedEventArgs e) //check if 
         {
-            //MessageBox.Show(bl.Order.TrackOrder(id).ToString());
-            
+            new FollowOrderWindow(orderCurrent?.Id ?? -1).ShowDialog();
         }
 
         private void btnBye_click(object sender, RoutedEventArgs e)
