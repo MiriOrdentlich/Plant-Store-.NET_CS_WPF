@@ -5,6 +5,7 @@
              StartupUri="MainWindowUsers.xaml">
     <Application.Resources>
         <local:ConvertImagePathToBitmap x:Key="ImagePathToBitmap" />
+        <local:visibilityConverter x:Key="visibilityConverter" />
         <Style TargetType="Border">
             <Setter Property="CornerRadius" Value="5"/>
         </Style>

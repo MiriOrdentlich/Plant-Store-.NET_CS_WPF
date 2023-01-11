@@ -35,6 +35,6 @@
             <TextBox x:Name="inStockTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="NaN" Margin="3" Grid.Row="4" Text="{Binding InStock, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
         </Grid>
         <Button x:Name="btnAdd" Content="Add" HorizontalAlignment="Left" Margin="420,350,0,0" VerticalAlignment="Top" FontSize="16" Click="AddButton_Click"/>
-        <Button x:Name="btnUpdate" Content="Update" HorizontalAlignment="Left" Margin="420,350,0,0" VerticalAlignment="Top"  FontSize="16" Click="UpdateButton_Click"/>
+        <Button x:Name="btnUpdate" Content="Update" HorizontalAlignment="Left" Margin="420,350,0,0" VerticalAlignment="Top" FontSize="16" Click="UpdateButton_Click"/>
     </Grid>
 </Window>

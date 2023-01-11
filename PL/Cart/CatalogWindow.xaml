@@ -12,17 +12,20 @@
 
     </Window.Resources>
     <Grid x:Name="MainGrid">
-
-        <Grid Name="UpGrid" Grid.Row="0" Height="50" Width="auto" VerticalAlignment="Top" Background="#20847C" Grid.ColumnSpan="3" Grid.RowSpan="2">
-            <Button x:Name="btnRefresh" Content="↺" HorizontalAlignment="Left" Width="50" Click="RefreshButton_Click" FontSize="28" BorderBrush="{x:Null}" Background="#00DDDDDD" Foreground="#FFF0F0F0" Height="50" VerticalAlignment="Bottom"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="8*"/>
+        </Grid.RowDefinitions>
+        <Grid Name="UpGrid" Grid.Row="0" VerticalAlignment="Top" Background="#20847C" Grid.ColumnSpan="3" Grid.RowSpan="2">
+            <Button x:Name="btnRefresh" Content="↺" HorizontalAlignment="Left" Width="50" Click="RefreshButton_Click" FontSize="28" BorderBrush="{x:Null}" Background="#00DDDDDD" Foreground="#FFF0F0F0" VerticalAlignment="Bottom"/>
             <Label Content="Category:" FontSize="24" Margin="518,0,155,0" Foreground="#FFF0F0F0" FontFamily="Dubai Medium" RenderTransformOrigin="0.15,0.45" />
             <ComboBox x:Name="CategorySelector" HorizontalAlignment="Right" Height="NaN" SelectionChanged="CategorySelector_SelectionChanged" Width="150" FontSize="15" />
-            <Button x:Name="btnCart" Content="🛒" HorizontalAlignment="Left" Height="50" Margin="50,0,0,0" Padding="5" FontSize="30" BorderBrush="{x:Null}" Background="#00DDDDDD" Click="btnCart_Click" Foreground="#FFF0F0F0"/>
+            <Button x:Name="btnCart" Content="🛒" HorizontalAlignment="Left" Margin="50,0,0,0" Padding="5" FontSize="30" BorderBrush="{x:Null}" Background="#00DDDDDD" Click="btnCart_Click" Foreground="#FFF0F0F0"/>
             <Button Content="👋" HorizontalAlignment="Left" Margin="435,0,0,0" VerticalAlignment="Center" Click="btnBye_click" Height="38" Width="41" RenderTransformOrigin="1.688,-0.561"/>
     
         </Grid>
-         
-        <ListView x:Name="catalog" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding}" ScrollViewer.CanContentScroll="True" PreviewMouseDoubleClick="productItemDataGrid_MouseDoubleClick"  HorizontalAlignment="Stretch" VerticalAlignment="Top">
+
+        <ListView x:Name="catalog"  Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  Background="#00DDDDDD" ItemsSource="{Binding}" ScrollViewer.CanContentScroll="True" PreviewMouseDoubleClick="productItemDataGrid_MouseDoubleClick"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="4" HorizontalAlignment="Stretch"/>

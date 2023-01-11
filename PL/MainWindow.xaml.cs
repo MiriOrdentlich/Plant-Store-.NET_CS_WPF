@@ -11,6 +11,20 @@ namespace PL
     {
         private BlApi.IBl? bl = BlApi.Factory.Get();
 
+
+
+        public int isManager
+        {
+            get { return (int)GetValue(isManagerProperty); }
+            set { SetValue(isManagerProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for isManager.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty isManagerProperty =
+            DependencyProperty.Register("isManager", typeof(int), typeof(Window), new PropertyMetadata(0));
+
+
+
         public BO.Cart currentCart
         {
             get { return (BO.Cart)GetValue(currentCartProperty); }
@@ -21,9 +35,10 @@ namespace PL
         public static readonly DependencyProperty currentCartProperty =
             DependencyProperty.Register("currentCart", typeof(BO.Cart), typeof(Window), new PropertyMetadata(null));
 
-        public MainWindow()
+        public MainWindow(int flag)
         {
             InitializeComponent();
+            isManager = flag;
         }
         private void ShowFollowOrdersButton_Click(object sender, RoutedEventArgs e) => new Order.FollowOrderPopUpWindow().ShowDialog();
         private void ShowCatalogButton_Click(object sender, RoutedEventArgs e) => new Cart.CatalogWindow(currentCart).ShowDialog();

@@ -23,29 +23,6 @@ namespace PL.Users
             DependencyProperty.Register("user", typeof(BO.User), typeof(Window), new PropertyMetadata(null));
 
 
-        //public string password
-        //{
-        //    get { return (string)GetValue(passwordProperty); }
-        //    set { SetValue(passwordProperty, value); }
-        //}
-
-        //// Using a DependencyProperty as the backing store for password.  This enables animation, styling, binding, etc...
-        //public static readonly DependencyProperty passwordProperty =
-        //    DependencyProperty.Register("password", typeof(string), typeof(Window), new PropertyMetadata(null));
-
-
-        //public string userName
-        //{
-        //    get { return (string)GetValue(userNameProperty); }
-        //    set { SetValue(userNameProperty, value); }
-        //}
-
-        //// Using a DependencyProperty as the backing store for userName.  This enables animation, styling, binding, etc...
-        //public static readonly DependencyProperty userNameProperty =
-        //    DependencyProperty.Register("userName", typeof(string), typeof(Window), new PropertyMetadata(null));
-
-
-
         public UserEntry()
         {
             InitializeComponent();
@@ -62,15 +39,16 @@ namespace PL.Users
                 //user.isManager = tmp!.isManager;
                 //user.Address = tmp.Address;
                 //user.Email = tmp.Email;
-                MainWindow mw = new MainWindow();
+                int flag = user.isManager ? 0 : 1;
+                MainWindow mw = new MainWindow(flag);
                 if(user!.isManager == true)
                 {
-                    mw.btnCatalog.Visibility = Visibility.Hidden;
+                    //mw.btnCatalog.Visibility = Visibility.Hidden;
                 }
                 else if(user!.isManager == false) //user isn't a manager
                 {
-                    mw.btnOrdersList.Visibility = Visibility.Hidden;
-                    mw.btnProductsList.Visibility = Visibility.Hidden;
+                    //mw.btnOrdersList.Visibility = Visibility.Hidden;
+                    //mw.btnProductsList.Visibility = Visibility.Hidden;
                     mw.currentCart = new BO.Cart()
                     {
                         CustomerAddress = user.Address,
