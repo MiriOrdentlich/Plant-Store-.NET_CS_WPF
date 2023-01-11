@@ -25,14 +25,16 @@ namespace PL.Cart
         //    Items = new List <BO.OrderItem> ,
         //    TotalPrice = 0 };
 
-        public static BO.Cart currentCart = new BO.Cart()
+        public BO.Cart currentCart
         {
-            CustomerAddress = "",
-            CustomerEmail = "",
-            CustomerName = "",
-            Items = new List<BO.OrderItem>(),
-            TotalPrice = 0
-        };
+            get { return (BO.Cart)GetValue(currentCartProperty); }
+            set { SetValue(currentCartProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for currentCart.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty currentCartProperty =
+            DependencyProperty.Register("currentCart", typeof(BO.Cart), typeof(Window), new PropertyMetadata(null));
+
 
         public ObservableCollection<BO.ProductItem?> listedProductItems
         {
@@ -44,9 +46,10 @@ namespace PL.Cart
         public static readonly DependencyProperty listedProductItemsProperty =
             DependencyProperty.Register("listedProductItems", typeof(ObservableCollection<BO.ProductItem?>), typeof(Window), new PropertyMetadata(null));
         
-        public CatalogWindow()
+        public CatalogWindow(BO.Cart cart)
         {
             InitializeComponent();
+            currentCart = cart;
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
 

@@ -25,9 +25,9 @@ public class BlAlreadyExistEntityException: Exception //If Already Exists
     override public string ToString()
     {
         if (Choice == -1)
-            return $"Product: {EntityID} of type {EntityName}, already exists in an Order";
+            return $"EntityID of type {EntityName}, already exists in an Order";
         if (Choice == 0)
-            return $"Product: {EntityID} of type {EntityName}, already exists";
+            return $"EntityID of type {EntityName}, already exists";
         else // => (choice == 1)
             return "";
     }
@@ -37,22 +37,27 @@ public class BlAlreadyExistEntityException: Exception //If Already Exists
 [Serializable]
 public class BlMissingEntityException : Exception //If doesn't Exists
 {
+    public string? Name;
     public string? EntityName;
     public int EntityID;
     public int Choice;
     public BlMissingEntityException(string name, int id, int choice=0)
     : base() { EntityName = name; EntityID = id; Choice = choice; }
+    public BlMissingEntityException(string name, string userName, int choice = 1)
+    : base() { EntityName = name; Name = userName; Choice = choice; }
     public BlMissingEntityException(string name, int id, string message,int choice=0)
     : base(message) { EntityName = name; EntityID = id; Choice = choice; }
     public BlMissingEntityException(int id, string name, string message, Exception exception, int choice=0)
     : base(message, exception) { EntityName = name; EntityID = id; Choice = choice; }
-    public BlMissingEntityException(string message, Exception exception,int choice = 1) //if (choice == 1)
+    public BlMissingEntityException(string message, Exception exception, int choice = 2) //if (choice == 2)
     : base(message, exception) { Choice = choice; }
     override public string ToString()
     {
         if (Choice == 0)
-            return $"Product: {EntityID} of type {EntityName}, doesn't exist";
-        else // => (choice == 1)
+            return $"{EntityID} of type {EntityName}, doesn't exist";
+        else if(Choice == 1)
+            return $"{Name} of type {EntityName}, doesn't exist";
+        else
             return base.ToString();
     }
 }
@@ -104,6 +109,7 @@ public class BlInvalidEntityException : Exception //If Invalid
     
         
 }
+
 
 [Serializable]
 public class BlNotInStockException : Exception //If Not In Stock

@@ -89,7 +89,7 @@ namespace PL.Cart
 
         private void btnConfirmCart_Click(object sender, RoutedEventArgs e)
         {
-            new CheckoutWindow(currentCart).Show();
+            new CheckoutWindow(currentCart).ShowDialog();
             this.Close();
         }
         private void btnBye_click(object sender, RoutedEventArgs e)
@@ -99,7 +99,7 @@ namespace PL.Cart
 
         private void btnReturn_Click(object sender, RoutedEventArgs e)
         {
-            new CatalogWindow().Show();
+            new CatalogWindow(currentCart).ShowDialog();
             this.Close();
         }
     }

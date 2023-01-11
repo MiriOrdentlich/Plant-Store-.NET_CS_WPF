@@ -1,17 +1,4 @@
-﻿using PL.users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+﻿using System.Windows;
 
 namespace PL
 {
@@ -24,8 +11,8 @@ namespace PL
         {
             InitializeComponent();
         }
-        private void Registered_Click(object sender, RoutedEventArgs e) => new UsersEntry().Show();
-
-        private void Register_Click(object sender, RoutedEventArgs e) => new RegistrationWindow().Show();
+        private void btnUserEntry_Click(object sender, RoutedEventArgs e) => new Users.UserEntry().ShowDialog();
+        private void btnNewUserRegister_Click(object sender, RoutedEventArgs e) => new Users.RegistrationWindow().ShowDialog();
+        
     }
 }

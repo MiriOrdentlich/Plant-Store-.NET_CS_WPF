@@ -12,7 +12,7 @@ sealed internal class Bl : IBl //Bl inherited from IBl
     public IOrder Order => new Order();
     public IProduct Product => new Product();
     public ICart Cart => new Cart();
-    //public IUsers User => new Users();
+    public IUser User => new User();
 
 
 }

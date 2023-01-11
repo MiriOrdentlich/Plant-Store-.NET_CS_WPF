@@ -1,11 +1,12 @@
-﻿<Window x:Class="PL.users.UsersEntry"
+﻿<Window x:Class="PL.Users.UserEntry"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PL.users"
+        xmlns:local="clr-namespace:PL.Users"
         mc:Ignorable="d"
-        Title="UsersEntry" Height="450" Width="800">
+        DataContext="{Binding Path=user, RelativeSource={RelativeSource self}}"
+        Title="UserEntry" Height="450" Width="800">
     <Grid>
         <Grid x:Name="gridCustomerDetails" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
@@ -18,12 +19,12 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Label Grid.Column="0" Content="UserName:" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
-            <TextBox x:Name="customerNameTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="NaN" Margin="3" Grid.Row="0" Text="{Binding CustomerName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"/>
+            <Label Grid.Column="0" Content="User Name:" HorizontalAlignment="Left" Margin="3" Grid.Row="0" VerticalAlignment="Center"/>
+            <TextBox x:Name="customerNameTextBox" Text="{Binding Name, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"  Grid.Column="1" HorizontalAlignment="Left" Height="NaN" Margin="3" Grid.Row="0" VerticalAlignment="Center" Width="120"/>
             <Label Grid.Column="0" Content="Password:" HorizontalAlignment="Left" Margin="3" Grid.Row="3" VerticalAlignment="Center"/>
             <TextBox x:Name="PasswordTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="NaN" Margin="3" Grid.Row="3" Text="{Binding Password, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" />
         </Grid>
-        <Label Content="Enter your info:" Padding="5" HorizontalAlignment="Left" Margin="244,85,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#FF001BFF"/>
+        <Label Content="Enter your info:" Padding="5" HorizontalAlignment="Left" Margin="244,85,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="20" Foreground="#20847C"/>
         <Button x:Name="btnConfirm" Content="CONFIRM" HorizontalAlignment="Center" Margin="0,331,0,0" Padding="5" VerticalAlignment="Top" Width="140" Height="26" Click="btnConfirmUser_Click"/>
 
     </Grid>

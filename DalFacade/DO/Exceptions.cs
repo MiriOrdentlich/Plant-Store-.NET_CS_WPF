@@ -29,9 +29,8 @@ namespace DO
         override public string ToString() =>
             $"Id: {EntityId} of type {EntityName}, doesn't exist";
     }
-    [Serializable]
 
-    
+    [Serializable]   
 
     public class DalDoesNotExistUserNameException : Exception
     {
@@ -46,8 +45,9 @@ namespace DO
         public DalDoesNotExistUserNameException(string name, string type, string message, Exception inner)
             : base(message, inner) { EntityName = name; EntityType = type; }
         override public string ToString() =>
-            $"Id: {EntityName} of type {EntityType}, doesn't exist";
+            $"{EntityName} of type {EntityType}, doesn't exist";
     }
+
     [Serializable]
     /// <summary>
     /// Exception class for when the dal we tried to enter already exists.
@@ -72,7 +72,6 @@ namespace DO
     }
 
     [Serializable]
-
     public class DalAlreadyExistsUserException : Exception
     {
         public string EntityName; 
@@ -86,7 +85,7 @@ namespace DO
         public DalAlreadyExistsUserException(string name, string type, string message, Exception inner)
             : base(message, inner) { EntityName = name; EntityType = type; }
         override public string ToString() =>
-            $"Id: {EntityName} of type {EntityType}, is already exists";
+            $"{EntityName} of type {EntityType}, is already exists";
     }
 
     //[Serializable]

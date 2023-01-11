@@ -11,7 +11,7 @@ sealed internal class DalList : IDal
     public IProduct Product { get; } = new DalProduct();
     public IOrderItem OrderItem { get; } = new DalOrderItem();
 
-    //public IUsers Users { get; } = new DalUsers();
+    public IUser User { get; } = new DalUser();
 
 
 }

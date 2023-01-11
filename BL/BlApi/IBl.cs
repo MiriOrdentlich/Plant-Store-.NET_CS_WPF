@@ -11,7 +11,7 @@ public interface IBl
     public IOrder Order { get; }
     public IProduct Product { get; }
     public ICart Cart { get;  }
-    //public IUsers Users { get; }
+    public IUser User { get; }
 
 
 }
