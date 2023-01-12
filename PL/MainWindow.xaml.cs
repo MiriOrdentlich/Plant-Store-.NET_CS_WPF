@@ -12,7 +12,8 @@ namespace PL
         private BlApi.IBl? bl = BlApi.Factory.Get();
 
 
-
+        //will be used as flag to know which options to make abailable\unavailale for user according to their status
+        //isManager==0(==false) => user is client, isManager==1(==true) => user is manager 
         public int isManager
         {
             get { return (int)GetValue(isManagerProperty); }
@@ -35,11 +36,13 @@ namespace PL
         public static readonly DependencyProperty currentCartProperty =
             DependencyProperty.Register("currentCart", typeof(BO.Cart), typeof(Window), new PropertyMetadata(null));
 
-        public MainWindow(int flag)
+
+        public MainWindow(int flag) //for explanation on flag: see notes on isManager Dependency Property  
         {
             InitializeComponent();
             isManager = flag;
         }
+
         private void ShowFollowOrdersButton_Click(object sender, RoutedEventArgs e) => new Order.FollowOrderPopUpWindow().ShowDialog();
         private void ShowCatalogButton_Click(object sender, RoutedEventArgs e) => new Cart.CatalogWindow(currentCart).ShowDialog();
         private void ShowProductsButton_Click(object sender, RoutedEventArgs e) => new Product.ProductListWindow().ShowDialog();

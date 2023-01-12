@@ -50,10 +50,10 @@ namespace PL.Users
                 };
                 bl.User.Add(tmp);
                 //MessageBox.Show(ord.Id.ToString());
-                MainWindow mw = new MainWindow();
+                MainWindow mw = new MainWindow(0); //send 0 to mainWindow because user can't register as manager
 
-                mw.btnOrdersList.Visibility = Visibility.Hidden; //user isn't a manager
-                mw.btnProductsList.Visibility = Visibility.Hidden; //user isn't a manager
+                //mw.btnOrdersList.Visibility = Visibility.Hidden; //user isn't a manager
+                //mw.btnProductsList.Visibility = Visibility.Hidden; //user isn't a manager
                 mw.currentCart = new BO.Cart()
                 {
                     CustomerAddress = user?.Address,

@@ -20,8 +20,8 @@
             <Button Content="👋" HorizontalAlignment="Left" VerticalAlignment="Top" Click="btnBye_click"  Padding="5" FontSize="20" Background="#FFF87878"/>
             <Button Content="←" HorizontalAlignment="Left" VerticalAlignment="Top" Click="btnReturn_Click" Background="White" Width="40" FontSize="26" Margin="50,0,0,0"/>
         </Grid>
-        <Button x:Name="btnDeleteCart" Grid.Row="1" Content="Empty Cart" Visibility="{Binding ElementName=TotalPrice, Path=Text, Converter={StaticResource visibilityConverter}}" HorizontalAlignment="Right" Margin="0,70,143,299" Padding="5" Click="btnDeleteCart_Click" Height="auto" Width="auto"/>
-        <Button x:Name="btnConfirmCart" Grid.Row="1" Content="Checkout" HorizontalAlignment="Right" Margin="0,134,144,238" Padding="5" Click="btnConfirmCart_Click" Height="auto" Width="auto"/>
+        <Button x:Name="btnDeleteCart" Grid.Row="1" Content="Empty Cart" Visibility="{Binding ElementName=TotalPrice, Path=Text, Converter={StaticResource cartVisibilityConverter}}" HorizontalAlignment="Right" Margin="0,70,143,299" Padding="5" Click="btnDeleteCart_Click" Height="auto" Width="auto"/>
+        <Button x:Name="btnConfirmCart" Grid.Row="1" Content="Checkout" Visibility="{Binding ElementName=TotalPrice, Path=Text, Converter={StaticResource cartVisibilityConverter}}" HorizontalAlignment="Right" Margin="0,134,144,238" Padding="5" Click="btnConfirmCart_Click" Height="auto" Width="auto"/>
 
         <DataGrid x:Name="orderItemDataGrid" ItemsSource="{Binding Items}" VerticalAlignment="Top" Grid.Row="1" HorizontalAlignment="Left" AutoGenerateColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected">
             <DataGrid.Columns>

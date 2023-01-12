@@ -39,7 +39,7 @@ namespace PL.Users
                 //user.isManager = tmp!.isManager;
                 //user.Address = tmp.Address;
                 //user.Email = tmp.Email;
-                int flag = user.isManager ? 0 : 1;
+                int flag = user.isManager ? 1 : 0;
                 MainWindow mw = new MainWindow(flag);
                 if(user!.isManager == true)
                 {

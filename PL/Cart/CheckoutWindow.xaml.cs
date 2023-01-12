@@ -33,10 +33,10 @@ namespace PL.Cart
             {
                 BO.Order ord = bl.Cart.ConfirmCart(currentCart, customerNameTextBox.Text, customerEmailTextBox.Text, customerAddressTextBox.Text);
                 MessageBox.Show("Your order has been confirmed \nOrder ID: "+ ord.Id.ToString());
-                MainWindow mw = new MainWindow();
+                MainWindow mw = new MainWindow(0); //send 0 to mainWindow because manager can not enter checkoutWindow
 
-                mw.btnOrdersList.Visibility = Visibility.Hidden; //user isn't a manager
-                mw.btnProductsList.Visibility = Visibility.Hidden; //user isn't a manager
+                //mw.btnOrdersList.Visibility = Visibility.Hidden; //user isn't a manager
+                //mw.btnProductsList.Visibility = Visibility.Hidden; //user isn't a manager
                 //mw.currentCart = new BO.Cart()
                 //{
                 //    CustomerAddress = user?.Address,
