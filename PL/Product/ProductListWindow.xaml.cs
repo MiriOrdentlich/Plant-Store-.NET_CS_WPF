@@ -52,15 +52,14 @@ namespace PL.Product
             //p.inStockTextBox.Text = "0";
             ////p.cmbCategorySelector.Text = "None";
 
-            p.btnAdd.Visibility = Visibility.Visible;
-            p.btnUpdate.Visibility = Visibility.Hidden;
+            //p.btnAdd.Visibility = Visibility.Visible;
+            //p.btnUpdate.Visibility = Visibility.Hidden;
             p.ShowDialog();
-            productDataGrid.ItemsSource = bl?.Product.GetListedProducts();
+            productDataGrid.Items.Refresh();
         }
 
         private void UpdateProductButton_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
-
             if (productDataGrid.ItemsSource != null)
             {
                 var p = (BO.ProductForList?)productDataGrid.SelectedItem;
@@ -69,7 +68,7 @@ namespace PL.Product
                 ProductWindow productWindow = new Product.ProductWindow(id);
                 productWindow.idTextBox.IsReadOnly = true;
                 productWindow.ShowDialog();
-                productDataGrid.ItemsSource = bl?.Product.GetListedProducts();
+                productDataGrid.Items.Refresh();
             }
         }
 
@@ -86,22 +85,45 @@ namespace PL.Product
 
         private void ShowProductList()
         {
-            BO.Category? category = CategorySelector.SelectedItem as BO.Category?;
-            if (category == BO.Category.None)
-                logicProducts = new(bl.Product.GetListedProducts());
-            else
-                logicProducts = new(bl.Product.GetListedProducts(x => x!.Category == category));
-            productDataGrid.ItemsSource = logicProducts;
+            try
+            {
+
+                BO.Category? category = CategorySelector.SelectedItem as BO.Category?;
+                if (category == BO.Category.None)
+                    logicProducts = new(bl.Product.GetListedProducts());
+                else
+                    logicProducts = new(bl.Product.GetListedProducts(x => x!.Category == category));
+                productDataGrid.Items.Refresh();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.ToString());
+            }
+            //this.Close();
+            //new ProductListWindow().ShowDialog();
         }
 
         private void DeleteButton_Click(Object sender, RoutedEventArgs e)
         {
-            var p = (BO.ProductForList?)productDataGrid.SelectedItem;
-            var boProduct = bl.Product.GetByIdM(p?.Id ?? -1);
-            boProduct.InStock = 0;
-            bl.Product.UpdateProduct(boProduct);
-            ShowProductList();
+            try
+            {
+                var p = (BO.ProductForList?)productDataGrid.SelectedItem;
+                var boProduct = bl.Product.GetByIdM(p?.Id ?? -1);
+                bl.Product.DeleteProduct(p?.Id ?? -1);
+                ShowProductList();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.ToString());
+            }
         }
+
+        //private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    bl.Product.DeleteProduct(prodCurrent?.Id ?? -1);
+        //    this.Close();
+        //    new ProductListWindow().ShowDialog();
+        //}
 
         private void btnBye_click(object sender, RoutedEventArgs e)
         {

@@ -8,7 +8,11 @@
         <local:cartVisibilityConverter x:Key="cartVisibilityConverter" />
         <local:clientVisibilityConverter x:Key="clientVisibilityConverter" />
         <local:managerVisibilityConverter x:Key="managerVisibilityConverter" />
+        <local:addVisibilityConverter x:Key="addVisibilityConverter" />
 
+        
+        <!--<local:StringToDataGridItemConverter x:Key="StringToDataGridItemConverter"/>-->
+        
         <Style TargetType="Border">
             <Setter Property="CornerRadius" Value="5"/>
         </Style>

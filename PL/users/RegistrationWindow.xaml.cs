@@ -67,7 +67,6 @@ namespace PL.Users
             catch (Exception exception)
             {
                 MessageBox.Show(exception.ToString());
-                this.ShowDialog();
             }
         }
     }

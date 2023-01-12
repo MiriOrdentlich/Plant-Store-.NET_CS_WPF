@@ -60,24 +60,14 @@ namespace PL.Order
 
             try
             {
-                if (int.TryParse(idTextBox.Text, out int id) == false)
-                     throw new BO.BlInvalidEntityException("ID", 1);
-                 if (statusTextBox.Text == "Shipped")
-                   bl?.Order.UpdateOrderShipping(orderCurrent?.Id ?? -1);
-                if (statusTextBox.Text == "deliverd")
-                 bl?.Order.UpdateOrderDelivery(orderCurrent?.Id ?? -1);
+                var stat = orderCurrent?.Status.ToString();
+                if (stat == "Confirmed")
+                    orderCurrent = bl?.Order.UpdateOrderDelivery(orderCurrent?.Id ?? -1);
+                else if (statusTextBox.Text == "Deliverd")
+                    orderCurrent = bl?.Order.UpdateOrderShipping(orderCurrent?.Id ?? -1);
                 MessageBox.Show("Status updated successfully");
                 this.Close();
             }
-            //{
-            //    
-            //    if (double.TryParse(totalPriceTextBox.Text, out double price) == false)
-            //        throw new BO.BlInvalidEntityException("price", 1);
-            //    if (int.TryParse(customerAddressTextBox.Text, *******) == false)
-            //        throw new BO.BlInvalidEntityException("address", 1);
-
-            
-            
             catch (Exception exception)
             {
                 MessageBox.Show(exception.ToString());
