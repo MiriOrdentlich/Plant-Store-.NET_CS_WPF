@@ -11,7 +11,9 @@
         <Button Content="👋" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnBye_click" Height="39" Width="41"/>
         
         <!--NOTE: buttons btnProductsList, btnOrdersList are for manager only, button btnCatalog is for client only, button btnFollowOrder is for both manager and client-->
-        <Button x:Name="btnFollowOrder" Content="Follow Order" HorizontalAlignment="Center" VerticalAlignment="Top" Height="60" Width="224" FontSize="24" Click="ShowFollowOrdersButton_Click" Margin="0,309,0,0"/>
+        <Button x:Name="btnFollowOrder" Content="Follow Order" Visibility="{Binding Converter={StaticResource clientVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="60" Width="224" FontSize="24" Click="ShowFollowOrdersButton_Click" Margin="0,309,0,0"/>
+        <!--<Button x:Name="btnCatalog" Content="Catalog" Visibility="{Binding Path=isManager, Converter={StaticResource visibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="60" Width="224" FontSize="24" Click="ShowCatalogButton_Click" Margin="0,209,0,0"/>-->
+
         <Button x:Name="btnCatalog" Content="Catalog" Visibility="{Binding Converter={StaticResource clientVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="60" Width="224" FontSize="24" Click="ShowCatalogButton_Click" Margin="0,209,0,0"/>
         <Button x:Name="btnProductsList" Content="Products List" Visibility="{Binding Converter={StaticResource managerVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="60" Width="224" FontSize="24" Click="ShowProductsButton_Click" Margin="0,97,0,0"/>
         <Button x:Name="btnOrdersList" Content="Orders List" Visibility="{Binding Converter={StaticResource managerVisibilityConverter}}" HorizontalAlignment="Center" Height="60" Width="224" FontSize="24" Click="ShowOrdersButton_Click" Margin="0,201,0,0"/>
