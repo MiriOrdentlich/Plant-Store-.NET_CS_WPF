@@ -24,8 +24,6 @@
 
             <Button Content="👋" HorizontalAlignment="Left" Margin="307,0,0,0" VerticalAlignment="Center" Click="btnBye_click" Height="46" Width="83" RenderTransformOrigin="1.688,-0.561" Grid.Column="1"/>
 
-            <!--<ComboBox x:Name="StatusSelector" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Height="NaN" SelectionChanged="StatusSelector_SelectionChanged"/>-->
-
         </Grid>
         <DataGrid x:Name="orderForListDataGrid" HorizontalAlignment="Left" AutoGenerateColumns="False" EnableRowVirtualization="True" MouseDoubleClick="UpdateOrderButton_MouseDoubleClick" Background="#FFF8EDDE" RowDetailsVisibilityMode="VisibleWhenSelected" CanUserAddRows="False" Margin="0,10,0,0" Grid.RowSpan="2" Width="503">
             <DataGrid.Columns>
