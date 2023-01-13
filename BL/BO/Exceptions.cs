@@ -25,9 +25,9 @@ public class BlAlreadyExistEntityException: Exception //If Already Exists
     override public string ToString()
     {
         if (Choice == -1)
-            return $"EntityID of type {EntityName}, already exists in an Order";
+            return $"{EntityName} number {EntityID} exists in an Order";
         if (Choice == 0)
-            return $"EntityID of type {EntityName}, already exists";
+            return $"{EntityID} already exists";
         else // => (choice == 1)
             return "";
     }

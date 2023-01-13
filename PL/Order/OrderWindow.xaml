@@ -18,14 +18,14 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="400"/>
             </Grid.RowDefinitions>
-            <Label Content="Items:" HorizontalAlignment="Stretch" Grid.Row="0" VerticalAlignment="Stretch" FontWeight="Bold" FontSize="25" Foreground="#20847C"/>
+            <Label Content="Items:" HorizontalAlignment="Stretch" Grid.Row="0"  VerticalAlignment="Stretch" FontWeight="Bold" FontSize="25" Foreground="#20847C"/>
             <DataGrid x:Name="orderItemDataGrid" BorderBrush="Transparent" DataContext="{Binding Path=Items}" VerticalAlignment="Top" HorizontalAlignment="Left" IsReadOnly="True" Grid.Row="1" Background="#FFF8EDDE" AutoGenerateColumns="False" EnableRowVirtualization="True" RowDetailsVisibilityMode="VisibleWhenSelected">
                 <DataGrid.Columns>
-                    <DataGridTextColumn x:Name="amountColumn" Binding="{Binding Amount}" Header="Amount"/>
                     <DataGridTextColumn x:Name="idColumn" Binding="{Binding Id}" Header="Id"/>
                     <DataGridTextColumn x:Name="nameColumn" Binding="{Binding Name}" Header="Name"/>
-                    <DataGridTextColumn x:Name="priceColumn" Binding="{Binding Price}" Header="Price"/>
                     <DataGridTextColumn x:Name="productIDColumn" Binding="{Binding ProductID}" Header="Product ID"/>
+                    <DataGridTextColumn x:Name="amountColumn" Binding="{Binding Amount}" Header="Amount"/>
+                    <DataGridTextColumn x:Name="priceColumn" Binding="{Binding Price}" Header="Price"/>
                     <DataGridTextColumn x:Name="totalPriceColumn" Binding="{Binding TotalPrice}" Header="Total Price"/>
                 </DataGrid.Columns>
             </DataGrid>
@@ -65,7 +65,7 @@
             <Label Grid.Column="0" Content="Ship Date:" HorizontalAlignment="Left" Margin="3" Grid.Row="6" VerticalAlignment="Center"/>
             <TextBox x:Name="shipDateTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="NaN" Margin="3" Grid.Row="6" Text="{Binding ShipDate, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"  IsReadOnly="True"/>
             <Label Grid.Column="0" Content="Status:" HorizontalAlignment="Left" Margin="3" Grid.Row="7" VerticalAlignment="Center"/>
-            <TextBox x:Name="statusTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="NaN" Margin="3" Grid.Row="7" Text="{Binding Status, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" IsEnabled="True"/>
+            <TextBox x:Name="statusTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="NaN" Margin="3" Grid.Row="7" Text="{Binding Status, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120" IsReadOnly="True"/>
             <Label Grid.Column="0" Content="Total Price:" HorizontalAlignment="Left" Margin="3" Grid.Row="8" VerticalAlignment="Center"/>
             <TextBox x:Name="totalPriceTextBox" Grid.Column="1" HorizontalAlignment="Left" Height="NaN" Margin="3" Grid.Row="8" Text="{Binding TotalPrice, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Center" Width="120"  IsReadOnly="True"/>
         </Grid>
