@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 
 namespace BO;
@@ -50,7 +51,8 @@ public class BlMissingEntityException : Exception //If doesn't Exists
     public BlMissingEntityException(int id, string name, string message, Exception exception, int choice=0)
     : base(message, exception) { EntityName = name; EntityID = id; Choice = choice; }
     public BlMissingEntityException(string message, Exception exception, int choice = 2) //if (choice == 2)
-    : base(message, exception) { Choice = choice; }
+    : base(message, exception) { Choice = choice; /*EntityName = exception.InnerException.;*/ }
+  
     override public string ToString()
     {
         if (Choice == 0)
@@ -58,7 +60,7 @@ public class BlMissingEntityException : Exception //If doesn't Exists
         else if(Choice == 1)
             return $"{Name} of type {EntityName}, doesn't exist";
         else
-            return base.ToString();
+            return base.ToString();/*base.ToString()*/;
     }
 }
 

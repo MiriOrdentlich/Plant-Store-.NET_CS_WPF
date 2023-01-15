@@ -35,9 +35,9 @@ namespace PL.Order
         public OrderWindow(int idBOOrder = -1)
         {
             InitializeComponent();
-            idTextBox.Text = idBOOrder.ToString();
+            //idTextBox.Text = idBOOrder.ToString();
             //if stat==delivered...
-            if (statusTextBox.Text.ToString() == "Delivered") 
+            if (orderCurrent!.Status == BO.OrderStatus.Shipped) 
             {
                 btnUpdateStatus.Visibility = Visibility.Hidden;
             }
@@ -47,7 +47,7 @@ namespace PL.Order
                 if (orderCurrent != null)
                     orderItemDataGrid.ItemsSource = orderCurrent?.Items;
             }
-            catch (Exception exception)
+            catch (BO.BlMissingEntityException exception)
             {
                 orderCurrent = null;
                 MessageBox.Show(exception.ToString());

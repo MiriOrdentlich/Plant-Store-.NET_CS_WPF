@@ -173,6 +173,15 @@ internal static class DataSource
                         Email = "email@gmail.com",
                         Password = "psw",
                     });
+        UsersList.Add(
+                   new User()
+                   {
+                       isManager = false,
+                       Name = "NM",
+                       Address = "House",
+                       Email = "email@gmail.com",
+                       Password = "psw",
+                   });
         //for (int i = 0; i < Names.Length; i++)
         //{
         //    UsersList.Add(

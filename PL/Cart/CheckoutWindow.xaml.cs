@@ -19,7 +19,7 @@ namespace PL.Cart
 
         // Using a DependencyProperty as the backing store for currentCart.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty currentCartProperty =
-            DependencyProperty.Register("currentCart", typeof(BO.Cart), typeof(Window), new PropertyMetadata(null));
+            DependencyProperty.Register("currentCart", typeof(BO.Cart), typeof(CheckoutWindow), new PropertyMetadata(null));
 
         public CheckoutWindow(BO.Cart userCart)
         {
@@ -31,7 +31,7 @@ namespace PL.Cart
         {
             try
             {
-                BO.Order ord = bl.Cart.ConfirmCart(currentCart, customerNameTextBox.Text, customerEmailTextBox.Text, customerAddressTextBox.Text);
+                BO.Order ord = bl.Cart.ConfirmCart(currentCart, currentCart?.CustomerName ?? "", currentCart?.CustomerEmail ?? "", currentCart?.CustomerAddress ?? "");
                 MessageBox.Show("Your order has been confirmed \nOrder ID: "+ ord.Id.ToString());
                 MainWindow mw = new MainWindow(0); //send 0 to mainWindow because manager can not enter checkoutWindow
 

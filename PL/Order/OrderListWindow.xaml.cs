@@ -43,7 +43,7 @@ namespace PL.Order
             if (orderForListDataGrid.ItemsSource != null)
             {
                 var p = (BO.OrderForList?)orderForListDataGrid.SelectedItem;
-                int id = p?.Id ?? 0;
+                int id = p?.Id ?? -1;
                 new OrderWindow(id).Show();
                 orderForListDataGrid.ItemsSource = bl?.Order.getOrdersList();
 

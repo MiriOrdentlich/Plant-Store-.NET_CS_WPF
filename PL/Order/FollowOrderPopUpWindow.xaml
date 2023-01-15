@@ -9,8 +9,7 @@
     <Grid x:Name="MainGrid">
         <Label Content="Enter your order's ID:" HorizontalAlignment="Left" Margin="159,150,0,0" Grid.Row="0" FontSize="18" VerticalAlignment="Top" FontFamily="Arial Rounded MT Bold"/>
         <TextBox x:Name="idTextBox" HorizontalAlignment="Left" Height="31" Margin="380,150,0,0" Grid.Row="0" Text="{Binding Id, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" VerticalAlignment="Top" Width="149"/>
-
-        <Button x:Name="FollowOrder" Content="Enter" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Padding="5" Click="FollowOrder_Click" Margin="361,240,0,0" FontFamily="Consolas"/>
+        <Button x:Name="FollowOrder" Content="Enter" Visibility="{Binding Id, Converter={StaticResource followOrderConverter}, ElementName=Product}" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="18" Padding="5" Click="FollowOrder_Click" Margin="361,240,0,0" FontFamily="Consolas"/>
         <Button Content="👋" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnBye_click" Height="39" Width="41"/>
 
         <!--<Grid x:Name="gridTrackOrder" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="134,157,0,0">

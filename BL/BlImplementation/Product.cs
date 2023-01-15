@@ -85,7 +85,7 @@ internal class Product : BlApi.IProduct
     /// <param name="amount">it's amount</param>
     /// <exception cref="BO.BlInvalidEntityException">throw if the input isn't valid</exception> 
     /// <exception cref="BO.BlAlreadyExistEntityException">throw if the product already exists</exception>
-    public void AddProduct(int productId, string productName, BO.Category category, double price, int amount)
+    public void AddProduct(int productId, string productName, BO.Category? category, double price, int amount)
     {
         try
         {

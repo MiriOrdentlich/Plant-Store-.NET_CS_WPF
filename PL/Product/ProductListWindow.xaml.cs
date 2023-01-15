@@ -66,7 +66,6 @@ namespace PL.Product
                 int id = p?.Id ?? -1;
                 //new ProductWindow(id).Show();
                 ProductWindow productWindow = new Product.ProductWindow(id);
-                productWindow.idTextBox.IsReadOnly = true;
                 productWindow.ShowDialog();
                 productDataGrid.Items.Refresh();
             }

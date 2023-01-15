@@ -32,7 +32,7 @@ public interface IProduct
     /// <param name="productName"></param>
     /// <param name="price"></param>
     /// <param name="amount"></param>
-    public void AddProduct(int productId, string productName, BO.Category category, double price, int amount); //add a new DO product
+    public void AddProduct(int productId, string productName, BO.Category? category, double price, int amount); //add a new DO product
     public void DeleteProduct(int productId); //Delete a product
     public void UpdateProduct(BO.Product product); //update a DO product
     public BO.ProductItem GetByIdC(int productId, BO.Cart cart); //get product item details, create a product and add the product to the list

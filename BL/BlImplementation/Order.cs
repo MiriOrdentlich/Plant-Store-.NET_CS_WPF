@@ -16,8 +16,8 @@ internal class Order : BlApi.IOrder
     {
         try
         {
-            if (orderId < 0)
-                throw new BlInvalidEntityException(orderId, "order Id", 0);
+            if (orderId < 99999)
+                throw new BlInvalidEntityException(orderId, "order Id", 1);
             var order = dal.Order.Get(x => x?.Id == orderId); //get order from data by the given ID
             BO.OrderTracking trackOrder = new BO.OrderTracking()
             {

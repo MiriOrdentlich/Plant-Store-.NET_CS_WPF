@@ -33,7 +33,7 @@ namespace PL.Cart
 
         // Using a DependencyProperty as the backing store for currentCart.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty currentCartProperty =
-            DependencyProperty.Register("currentCart", typeof(BO.Cart), typeof(Window), new PropertyMetadata(null));
+            DependencyProperty.Register("currentCart", typeof(BO.Cart), typeof(CatalogWindow), new PropertyMetadata(null));
 
 
         public ObservableCollection<BO.ProductItem?> listedProductItems

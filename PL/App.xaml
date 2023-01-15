@@ -9,8 +9,11 @@
         <local:clientVisibilityConverter x:Key="clientVisibilityConverter" />
         <local:managerVisibilityConverter x:Key="managerVisibilityConverter" />
         <local:addVisibilityConverter x:Key="addVisibilityConverter" />
+        <local:updateVisibilityConverter x:Key="updateVisibilityConverter" />
+        <local:followOrderConverter x:Key="followOrderConverter" />
+        <local:IsReadOnlyConverter x:Key="IsReadOnlyConverter" />
 
-        
+
         <!--<local:StringToDataGridItemConverter x:Key="StringToDataGridItemConverter"/>-->
         
         <Style TargetType="Border">

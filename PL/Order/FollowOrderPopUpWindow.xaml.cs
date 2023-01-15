@@ -18,15 +18,30 @@ namespace PL.Order
         {
             try
             {
-                if (idTextBox.Text != "")
-                {
-                    if (int.TryParse(idTextBox.Text, out int id) == false)
-                        throw new BO.BlInvalidEntityException("ID", 1);
-                    this.Close();
-                    new FollowOrderWindow(id).ShowDialog();
-                }
-                else
-                    MessageBox.Show("Please Enter Id");
+                if (int.TryParse(idTextBox.Text, out int id) == false)
+                    throw new BO.BlInvalidEntityException("ID", 1);
+               
+                new FollowOrderWindow(id).ShowDialog();
+                //int id = idTextBox.Text;
+                //this.Close();
+                //new FollowOrderWindow(idTextBox.Text).ShowDialog();
+                //if (idTextBox.Text != "")
+                //{
+                //    if (int.TryParse(idTextBox.Text, out int id) == false)
+                //        throw new BO.BlInvalidEntityException("ID", 1);
+                //    this.Close();
+                //    new FollowOrderWindow(id).ShowDialog();
+                //}
+                //else
+                //    MessageBox.Show("Please Enter Id");
+            }
+            catch(BO.BlInvalidEntityException ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            catch (BO.BlMissingEntityException ex)
+            {
+                MessageBox.Show(ex.ToString());
             }
             catch (Exception exception)
             {

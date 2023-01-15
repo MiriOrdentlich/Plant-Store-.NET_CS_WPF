@@ -55,7 +55,7 @@ namespace PL.Product
 
             try
             {
-                prodCurrent = (idBOProduct != -1) ? bl?.Product.GetByIdM(idBOProduct) : null;
+                prodCurrent = (idBOProduct != -1) ? bl?.Product.GetByIdM(idBOProduct) : /*null*/new BO.Product() { };
             }
             catch (Exception exception)
             {
@@ -69,18 +69,17 @@ namespace PL.Product
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            idTextBox.IsReadOnly = false;
             try
             {
-                if (int.TryParse(idTextBox.Text, out int id) == false)
-                    throw new BO.BlInvalidEntityException("ID", 1);
-                if (BO.Category.TryParse(categoryComboBox.Text, out BO.Category category) == false)
-                    throw new BO.BlInvalidEntityException("category", 1);
-                if (double.TryParse(priceTextBox.Text, out double price) == false)
-                    throw new BO.BlInvalidEntityException("price", 1);
-                if (int.TryParse(inStockTextBox.Text, out int amount) == false)
-                    throw new BO.BlInvalidEntityException("amount", 1);                
-                bl.Product.AddProduct(id, nameTextBox.Text, category, price, amount);
+                //if (int.TryParse(prodCurrent.Id, out int id) == false)
+                //    throw new BO.BlInvalidEntityException("ID", 1);
+                //if (BO.Category.TryParse(categoryComboBox.Text, out BO.Category category) == false)
+                //    throw new BO.BlInvalidEntityException("category", 1);
+                //if (double.TryParse(priceTextBox.Text, out double price) == false)
+                //    throw new BO.BlInvalidEntityException("price", 1);
+                //if (int.TryParse(inStockTextBox.Text, out int amount) == false)
+                //    throw new BO.BlInvalidEntityException("amount", 1);                
+                bl.Product.AddProduct(prodCurrent?.Id ?? -1 , prodCurrent?.Name ?? "", prodCurrent!.Category, prodCurrent.Price, prodCurrent.InStock);
                 MessageBox.Show("Product added successfully");
                 this.Close();            }
             catch (Exception exception)

@@ -93,7 +93,32 @@ namespace PL
         }
     }
 
+
     public class addVisibilityConverter : IValueConverter
+    {
+        /// <summary>
+        /// if value==0 set visibility as visible , else set it as hidden
+        /// will be used to prevent manager(<=> value!=0) user from accessing irrelevant options
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if ((int)value != 0)
+                return Visibility.Hidden;
+            else
+                return Visibility.Visible;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class updateVisibilityConverter : IValueConverter
     {
         /// <summary>
         /// if value==0 set visibility as hidden, else set it as visible
@@ -106,7 +131,7 @@ namespace PL
         /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if ((string)value == "")
+            if ((int)value != 0)
                 return Visibility.Visible;
             else
                 return Visibility.Hidden;
@@ -185,7 +210,64 @@ namespace PL
             throw new NotImplementedException();
         }
     }
+    public class followOrderConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            //if (string.IsNullOrWhiteSpace((string)value))
+            //    return Visibility.Collapsed;
+            if (value != null)
+                return Visibility.Visible;
+            else
+                return Visibility.Hidden;
+        }
 
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class statusOrderConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            //if (string.IsNullOrWhiteSpace((string)value))
+            //    return Visibility.Collapsed;
+            if (value != null)
+                return Visibility.Visible;
+            else
+                return Visibility.Hidden;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    public class IsReadOnlyConverter: IValueConverter
+    {
+        /// <summary>
+        /// if value==0 set visibility as visible , else set it as hidden
+        /// will be used to prevent manager(<=> value!=0) user from accessing irrelevant options
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if ((int)value != 0)
+                return true;
+            else
+                return false;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 
     internal class Converters
     {
