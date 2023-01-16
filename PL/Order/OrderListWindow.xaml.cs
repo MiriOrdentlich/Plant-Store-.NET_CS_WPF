@@ -66,8 +66,7 @@ namespace PL.Order
         {
             //StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.OrderStatus));
           //  BO.OrderStatus? status = StatusSelector.SelectedItem as BO.OrderStatus?;
-            //if (status == BO.OrderStatus.Shipped)
-                logicOrders = new(bl.Order.getOrdersList());
+            logicOrders = new(bl.Order.getOrdersList());
             //else
             //    logicOrders = new(bl.Order.getOrdersList(/*x => x!.Category == category*/));
             orderForListDataGrid.ItemsSource = logicOrders;

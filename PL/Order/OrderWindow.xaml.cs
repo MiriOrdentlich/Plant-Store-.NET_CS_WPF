@@ -35,12 +35,6 @@ namespace PL.Order
         public OrderWindow(int idBOOrder = -1)
         {
             InitializeComponent();
-            //idTextBox.Text = idBOOrder.ToString();
-            //if stat==delivered...
-            //if (orderCurrent!.Status == BO.OrderStatus.Shipped) 
-            //{
-            //    btnUpdateStatus.Visibility = Visibility.Hidden;
-            //}
             try
             {
                 orderCurrent = (idBOOrder != -1) ? bl?.Order.GetOrderInfo(idBOOrder) : null;
