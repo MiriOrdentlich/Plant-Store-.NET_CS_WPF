@@ -12,7 +12,7 @@
         <local:updateVisibilityConverter x:Key="updateVisibilityConverter" />
         <local:followOrderConverter x:Key="followOrderConverter" />
         <local:IsReadOnlyConverter x:Key="IsReadOnlyConverter" />
-
+        <local:statusOrderConverter x:Key="statusOrderConverter" />
 
         <!--<local:StringToDataGridItemConverter x:Key="StringToDataGridItemConverter"/>-->
         

@@ -92,12 +92,12 @@ namespace PL.Product
         {
             try
             {
-                if (int.TryParse(idTextBox.Text, out int id) == false)
-                    throw new BO.BlInvalidEntityException("ID", 1);
-                if (double.TryParse(priceTextBox.Text, out double price) == false)
-                    throw new BO.BlInvalidEntityException("price", 1);
-                if (int.TryParse(inStockTextBox.Text, out int amount) == false)
-                    throw new BO.BlInvalidEntityException("amount", 1);
+                //if (int.TryParse(idTextBox.Text, out int id) == false)
+                //    throw new BO.BlInvalidEntityException("ID", 1);
+                //if (double.TryParse(priceTextBox.Text, out double price) == false)
+                //    throw new BO.BlInvalidEntityException("price", 1);
+                //if (int.TryParse(inStockTextBox.Text, out int amount) == false)
+                //    throw new BO.BlInvalidEntityException("amount", 1);
                 bl.Product.UpdateProduct(prodCurrent!);
                 MessageBox.Show("Product updated successfully");
                 this.Close();

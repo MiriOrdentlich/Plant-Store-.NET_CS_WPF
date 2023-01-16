@@ -46,9 +46,7 @@ namespace PL.Order
                 int id = p?.Id ?? -1;
                 new OrderWindow(id).Show();
                 orderForListDataGrid.ItemsSource = bl?.Order.getOrdersList();
-
             }
-
         }
 
         //private void RefreshButton_Click(object sender, RoutedEventArgs e)

@@ -37,10 +37,10 @@ namespace PL.Order
             InitializeComponent();
             //idTextBox.Text = idBOOrder.ToString();
             //if stat==delivered...
-            if (orderCurrent!.Status == BO.OrderStatus.Shipped) 
-            {
-                btnUpdateStatus.Visibility = Visibility.Hidden;
-            }
+            //if (orderCurrent!.Status == BO.OrderStatus.Shipped) 
+            //{
+            //    btnUpdateStatus.Visibility = Visibility.Hidden;
+            //}
             try
             {
                 orderCurrent = (idBOOrder != -1) ? bl?.Order.GetOrderInfo(idBOOrder) : null;
@@ -57,16 +57,14 @@ namespace PL.Order
 
         private void btnUpdateStatus_Click(object sender, RoutedEventArgs e)
         {
-
             try
             {
-                var stat = orderCurrent?.Status.ToString();
-                if (stat == "Confirmed")
-                    orderCurrent = bl?.Order.UpdateOrderDelivery(orderCurrent?.Id ?? -1);
-                else if (statusTextBox.Text == "Deliverd")
+                BO.OrderStatus? stat = orderCurrent!.Status;
+                if (stat == BO.OrderStatus.Confirmed)
                     orderCurrent = bl?.Order.UpdateOrderShipping(orderCurrent?.Id ?? -1);
+                else if (stat == BO.OrderStatus.Shipped)
+                    orderCurrent = bl?.Order.UpdateOrderDelivery(orderCurrent?.Id ?? -1);
                 MessageBox.Show("Status updated successfully");
-                this.Close();
             }
             catch (Exception exception)
             {

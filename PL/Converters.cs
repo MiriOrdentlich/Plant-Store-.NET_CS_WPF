@@ -7,21 +7,6 @@ using System.Windows.Media.Imaging;
 namespace PL
 {
 
-    //class StringToDataGridItemConverter : IValueConverter
-    //{
-    //    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    //    {
-    //        // Convert the string from the List to the appropriate type for the DataGrid
-    //        return value;
-    //    }
-
-    //    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    //    {
-    //        //// Convert the DataGrid item back to a string for the List
-    //        //return value;
-    //        throw new NotImplementedException();
-    //    }
-    //}
 
     //public class updateOrderStatusVisibilityConverter : IMultiValueConverter
     //{
@@ -168,22 +153,6 @@ namespace PL
         }
     }
 
-    //public class cartEmptyToTextConverter : IValueConverter
-    //{
-    //    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    //    {
-    //        if ((string)value == "0")
-    //            return Visibility.Hidden;
-    //        else
-    //            return Visibility.Visible;
-    //    }
-    //    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-
-    //}
-
     public class clientVisibilityConverter : IValueConverter
     {
         /// <summary>
@@ -210,12 +179,11 @@ namespace PL
             throw new NotImplementedException();
         }
     }
+
     public class followOrderConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            //if (string.IsNullOrWhiteSpace((string)value))
-            //    return Visibility.Collapsed;
             if (value != null)
                 return Visibility.Visible;
             else
@@ -227,16 +195,15 @@ namespace PL
             throw new NotImplementedException();
         }
     }
+
     public class statusOrderConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            //if (string.IsNullOrWhiteSpace((string)value))
-            //    return Visibility.Collapsed;
-            if (value != null)
-                return Visibility.Visible;
-            else
+            if ((BO.OrderStatus)value == BO.OrderStatus.Delivered)
                 return Visibility.Hidden;
+            else
+                return Visibility.Visible;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -244,6 +211,7 @@ namespace PL
             throw new NotImplementedException();
         }
     }
+
     public class IsReadOnlyConverter: IValueConverter
     {
         /// <summary>

@@ -16,6 +16,6 @@
 
         <Button x:Name="btnCatalog" Content="Catalog" Visibility="{Binding Converter={StaticResource clientVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="60" Width="224" FontSize="24" Click="ShowCatalogButton_Click" Margin="0,209,0,0"/>
         <Button x:Name="btnProductsList" Content="Products List" Visibility="{Binding Converter={StaticResource managerVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="60" Width="224" FontSize="24" Click="ShowProductsButton_Click" Margin="0,97,0,0"/>
-        <Button x:Name="btnOrdersList" Content="Orders List" Visibility="{Binding Converter={StaticResource managerVisibilityConverter}}" HorizontalAlignment="Center" Height="60" Width="224" FontSize="24" Click="ShowOrdersButton_Click" Margin="0,201,0,173"/>
+        <Button x:Name="btnOrdersList" Content="Orders List" Visibility="{Binding Converter={StaticResource managerVisibilityConverter}}" HorizontalAlignment="Center" VerticalAlignment="Top" Height="60" Width="224" FontSize="24" Click="ShowOrdersButton_Click" Margin="0,209,0,0"/>
     </Grid>
 </Window>
