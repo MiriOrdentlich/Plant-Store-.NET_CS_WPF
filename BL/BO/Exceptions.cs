@@ -51,7 +51,7 @@ public class BlMissingEntityException : Exception //If doesn't Exists
     public BlMissingEntityException(int id, string name, string message, Exception exception, int choice=0)
     : base(message, exception) { EntityName = name; EntityID = id; Choice = choice; }
     public BlMissingEntityException(string message, Exception exception, int choice = 2) //if (choice == 2)
-    : base(message, exception) { Choice = choice; /*EntityName = exception.InnerException.;*/ }
+    : base(message, exception) { Choice = choice; }
   
     override public string ToString()
     {
@@ -60,7 +60,7 @@ public class BlMissingEntityException : Exception //If doesn't Exists
         else if(Choice == 1)
             return $"{Name} of type {EntityName}, doesn't exist";
         else
-            return base.ToString();/*base.ToString()*/;
+            return "ID doesn't exist";
     }
 }
 

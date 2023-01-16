@@ -71,7 +71,7 @@ internal class Product : BlApi.IProduct
 
         catch (DO.DalDoesNotExistIdException ex)
         {
-            throw new BO.BlMissingEntityException("Data exception:", ex);
+            throw new BO.BlMissingEntityException(ex.Message, ex);
         }
     }
 
@@ -113,7 +113,7 @@ internal class Product : BlApi.IProduct
         }
         catch (DO.DalAlreadyExistsIdException ex)
         {
-            throw new BO.BlAlreadyExistEntityException("Data exception:", ex);
+            throw new BO.BlAlreadyExistEntityException(ex.Message, ex);
         }
     }
 
@@ -153,7 +153,7 @@ internal class Product : BlApi.IProduct
 
         catch (DO.DalDoesNotExistIdException ex)
         {
-            throw new BO.BlMissingEntityException("Data exception:", ex);
+            throw new BO.BlMissingEntityException(ex.Message, ex);
         }
     }
 
@@ -178,7 +178,7 @@ internal class Product : BlApi.IProduct
         }
         catch (DO.DalDoesNotExistIdException ex)
         {
-            throw new BO.BlMissingEntityException("Data exception:", ex);
+            throw new BO.BlMissingEntityException(ex.Message, ex);
         }
     }
     
@@ -219,7 +219,7 @@ internal class Product : BlApi.IProduct
         }
         catch (DO.DalDoesNotExistIdException ex) 
         {
-            throw new BO.BlMissingEntityException("Data exception:", ex);
+            throw new BO.BlMissingEntityException(ex.Message, ex);
         }
 
     }

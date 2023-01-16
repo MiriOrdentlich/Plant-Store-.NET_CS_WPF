@@ -68,7 +68,7 @@ internal class Cart : BlApi.ICart
 
         catch (DO.DalDoesNotExistIdException ex)
         {
-            throw new BO.BlMissingEntityException("Data exception:", ex);
+            throw new BO.BlMissingEntityException(ex.Message, ex);
         }
     }
 
@@ -119,7 +119,7 @@ internal class Cart : BlApi.ICart
 
         catch (DO.DalDoesNotExistIdException ex)
         {
-            throw new BO.BlMissingEntityException("Data exception:", ex);
+            throw new BO.BlMissingEntityException(ex.Message, ex);
         }
     }
 
@@ -212,7 +212,7 @@ internal class Cart : BlApi.ICart
         }
         catch (DO.DalDoesNotExistIdException ex )
         {
-            throw new BO.BlMissingEntityException("Data exception:", ex);
+            throw new BO.BlMissingEntityException(ex.Message, ex);
         }        
     }
 }

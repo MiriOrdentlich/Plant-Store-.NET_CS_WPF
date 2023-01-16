@@ -16,7 +16,7 @@ internal class Order : BlApi.IOrder
     {
         try
         {
-            if (orderId < 99999)
+            if (orderId <= 99999)
                 throw new BlInvalidEntityException(orderId, "order Id", 1);
             var order = dal.Order.Get(x => x?.Id == orderId); //get order from data by the given ID
             BO.OrderTracking trackOrder = new BO.OrderTracking()
@@ -41,7 +41,7 @@ internal class Order : BlApi.IOrder
         }
         catch (DO.DalDoesNotExistIdException ex)
         {
-            throw new BO.BlMissingEntityException("Data exception:", ex);
+            throw new BO.BlMissingEntityException(ex.Message, ex);
         }
     }
 
@@ -62,7 +62,7 @@ internal class Order : BlApi.IOrder
         }
         catch (DO.DalDoesNotExistIdException ex)
         {
-            throw new BO.BlMissingEntityException("Data exception:", ex);
+            throw new BO.BlMissingEntityException(ex.Message, ex);
         }
 
     }
@@ -114,7 +114,7 @@ internal class Order : BlApi.IOrder
         }
         catch (DO.DalDoesNotExistIdException ex)
         {
-            throw new BO.BlMissingEntityException("Data exception:", ex);
+            throw new BO.BlMissingEntityException(ex.Message, ex);
         }
     }
 
@@ -147,7 +147,7 @@ internal class Order : BlApi.IOrder
         }
         catch (DO.DalDoesNotExistIdException ex)
         {
-            throw new BO.BlMissingEntityException("Data exception:", ex);
+            throw new BO.BlMissingEntityException(ex.Message, ex);
         }
     }
 
@@ -206,7 +206,7 @@ internal class Order : BlApi.IOrder
         }
         catch (DO.DalDoesNotExistIdException ex)
         {
-            throw new BO.BlMissingEntityException("Data exception:", ex);
+            throw new BO.BlMissingEntityException(ex.Message, ex);
         }
     }
 }
