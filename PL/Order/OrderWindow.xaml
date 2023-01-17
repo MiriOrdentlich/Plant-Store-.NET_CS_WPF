@@ -31,8 +31,14 @@
             </DataGrid>
         </Grid>
         <Button Content="👋" HorizontalAlignment="Left" Margin="354,0,0,0" VerticalAlignment="Top" Click="btnBye_click" Height="39" Width="41"/>
-
-        <Button x:Name="btnUpdateStatus" Content="Update Order Status" HorizontalAlignment="Left" Margin="194,371,0,15" Padding="5" Click="btnUpdateStatus_Click" Width="121" Visibility="{Binding Path=Status, Converter={StaticResource statusOrderConverter}}"/>
+        <Button x:Name="btnUpdateStatus" Content="Update Order Status" HorizontalAlignment="Left" Margin="194,371,0,15" Padding="5" Click="btnUpdateStatus_Click" Width="121">
+            <Button.Visibility>
+                <MultiBinding Converter="{StaticResource statusOrderConverter}">
+                    <Binding Path="Text" ElementName="shippingDateTextBox" />
+                    <Binding Path="Text" ElementName="deliveryDateTextBox" />
+                </MultiBinding>
+            </Button.Visibility>
+        </Button>
         <Button x:Name="btnFollowOrder" Content="Follow Order" HorizontalAlignment="Left" Margin="47,371,0,15" Padding="5" Click="btnFollowOrder_Click" Width="92"/>
         <Grid x:Name="DetailsGrid" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="73,0,0,0">
             <Grid.ColumnDefinitions>

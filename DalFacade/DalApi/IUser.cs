@@ -2,7 +2,7 @@
 
 namespace DalApi;
 
-public interface IUser /*: ICrud<User>*/ //define empty CRUD interface for User entity
+public interface IUser  //define empty CRUD interface for User entity
 {
     void Add(User user);
 

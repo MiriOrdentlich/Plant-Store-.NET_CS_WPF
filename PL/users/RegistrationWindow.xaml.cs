@@ -1,7 +1,9 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -35,11 +37,29 @@ namespace PL.Users
         {
             InitializeComponent();
         }
+
+        private bool checkEmail()
+        {
+            string email = user?.Email ?? "";
+            Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            Match match = regex.Match(email);
+            return match.Success;
+        }
+
         private void btnConfirmUser_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                //################ check the given info ################3
+                //check the given info:
+                if (user?.Name is null)
+                    throw new Exception("Invalid name");
+                if (user?.Address is null)
+                    throw new Exception("Invalid address");
+                if (!checkEmail())
+                    throw new Exception("Invalid email address");
+                if (user?.Password is null)
+                    throw new Exception("Invalid password");
+
                 var tmp = new BO.User()
                 {
                     Name = user?.Name,
@@ -51,9 +71,6 @@ namespace PL.Users
                 bl.User.Add(tmp);
                 //MessageBox.Show(ord.Id.ToString());
                 MainWindow mw = new MainWindow(0); //send 0 to mainWindow because user can't register as manager
-
-                //mw.btnOrdersList.Visibility = Visibility.Hidden; //user isn't a manager
-                //mw.btnProductsList.Visibility = Visibility.Hidden; //user isn't a manager
                 mw.currentCart = new BO.Cart()
                 {
                     CustomerAddress = user?.Address,

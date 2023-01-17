@@ -149,11 +149,8 @@ internal static class DataSource
     }
     private static void createAndInitUsers()
     {
-        //string[] Names = { "Hadas", "Noa", "Shira", "Juli" ,"April", "Sara"};
-        //string[] Passwords = {"1234","Why" , "Idc", "ok", "Shira"};
-        //string[] Adresses = {"Degel 7", "Shor 8", "St 9","Truman 66","Trumpeldor 13", "Rootin 34", "Europe 56", "Romania"};
-        //string[] Emails = { "gmail@gmail.com", "email@gmail.com", "MyEmail@gmail.com", "MyGmail@gmail.com", "Naama@gmail.com" , "Miri@gmail.com" };
-        
+        //Define managers: (=>user type)
+
         UsersList.Add(
                     new User()
                     {
@@ -161,7 +158,7 @@ internal static class DataSource
                         Name = "Naama",
                         Address = "House",
                         Email = "email@gmail.com",
-                        Password = "psw",
+                        Password = "abc",
                     }) ;
 
         UsersList.Add(
@@ -173,6 +170,8 @@ internal static class DataSource
                         Email = "email@gmail.com",
                         Password = "psw",
                     });
+
+        //define a client user:
         UsersList.Add(
                    new User()
                    {
@@ -182,21 +181,6 @@ internal static class DataSource
                        Email = "email@gmail.com",
                        Password = "psw",
                    });
-        //for (int i = 0; i < Names.Length; i++)
-        //{
-        //    UsersList.Add(
-        //            new User()
-        //            {
-        //                isManager = false,
-        //                Name = Names[i],
-        //                Address = Passwords[i],
-        //                Email = Emails[i],
-        //                Password = Passwords[i],
-        //            });
-        //}
-
-
-
     }
 }
 

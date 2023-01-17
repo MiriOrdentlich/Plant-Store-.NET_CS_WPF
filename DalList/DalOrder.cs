@@ -4,7 +4,6 @@ namespace Dal;
 
 internal class DalOrder : IOrder
 {
-
     public int Add(Order order) //create
     {
         // search for order in list:
@@ -14,6 +13,7 @@ internal class DalOrder : IOrder
         DataSource.OrdersList.Add(order); // if order isn't in list, add order to list
         return order.Id;
     }
+
     public Order Get(Func<Order?, bool> filter) //Request
     {
         //search orderList for order that match the given filter
@@ -21,6 +21,7 @@ internal class DalOrder : IOrder
         return DataSource.OrdersList.Find(x => filter(x)) ??
             throw new DO.DalDoesNotExistIdException( 0 , "Order"); //PROBLEM!!!!!!!!!
     }
+
     public void Update(Order order)
     {
         // search for order in list. if didn't find order -> throw exception else 

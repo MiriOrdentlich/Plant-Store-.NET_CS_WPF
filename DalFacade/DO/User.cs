@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace DO;
 
-namespace DO
+public struct User
 {
-    public struct User
-    {
-        public bool isManager { get; set; }
-        public string? Name { get; set; }
-        public string? Address { get; set; }
-        public string? Email { get; set; }
-        public string? Password { get; set; }
+    public bool isManager { get; set; }
+    public string? Name { get; set; }
+    public string? Address { get; set; }
+    public string? Email { get; set; }
+    public string? Password { get; set; }
 
-        public override string ToString() => $@"
+    public override string ToString() => $@"
 isManager    =   {isManager},
 Name    =   {Name},
 Address      =   {Address},
@@ -22,5 +16,4 @@ Email       =   {Email},
 Password    =   {Password}
 ";
 
-    }
 }

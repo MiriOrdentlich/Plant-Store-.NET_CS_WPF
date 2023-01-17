@@ -18,9 +18,9 @@ public enum Category
 { 
     Flowering, 
     Ferns,
-    [Description("Cacti & succulents")] CactiAndSucculents,
-    [Description("Palms & trees")] PalmsAndTrees, 
-    [Description("Hanging & climbing")] HangingAndClimbing, 
+    CactiAndSucculents,
+    PalmsAndTrees, 
+    HangingAndClimbing, 
     Edibles, 
     None 
 }

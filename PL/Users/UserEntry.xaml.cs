@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Documents;
 
 namespace PL.Users
 {
@@ -32,7 +31,11 @@ namespace PL.Users
         {
             try
             {
-                //#################### CHECK IF FIELDS ARE VALID #####################
+                //check the given info:
+                if (customerNameTextBox.Text =="")
+                    throw new Exception("Invalid name");
+                if (PasswordTextBox.Text =="")
+                    throw new Exception("Invalid password");
 
                 //var tmp = bl.User.Get(user.Name!, user.Password!) ;
                 user = bl.User.Get(customerNameTextBox.Text, PasswordTextBox.Text)!;
@@ -40,15 +43,12 @@ namespace PL.Users
                 //user.Address = tmp.Address;
                 //user.Email = tmp.Email;
                 int flag = user.isManager ? 1 : 0;
+
                 MainWindow mw = new MainWindow(flag);
-                if(user!.isManager == true)
+
+                if(user!.isManager == false) //user is a client
                 {
-                    //mw.btnCatalog.Visibility = Visibility.Hidden;
-                }
-                else if(user!.isManager == false) //user isn't a manager
-                {
-                    //mw.btnOrdersList.Visibility = Visibility.Hidden;
-                    //mw.btnProductsList.Visibility = Visibility.Hidden;
+
                     mw.currentCart = new BO.Cart()
                     {
                         CustomerAddress = user.Address,
@@ -63,8 +63,8 @@ namespace PL.Users
             catch (Exception exception)
             {
                 MessageBox.Show(exception.ToString());
-                new RegistrationWindow().ShowDialog();
-                this.Close();
+                //new RegistrationWindow().ShowDialog();
+                //this.Close();
             }
         }
 

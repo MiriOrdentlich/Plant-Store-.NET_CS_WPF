@@ -3,14 +3,15 @@ using BO;
 using DalApi;
 using DO;
 using System.Net.Mail;
-
-
 namespace BlImplementation;
 
 internal class Cart : BlApi.ICart
 {
     private static readonly DalApi.IDal dal = DalApi.Factory.Get()!;
-    private static int Index = 1000000;
+
+    private static int Index = 1000000; //index for orderItem id
+
+
 
     /// <summary>
     /// add new item to cart
@@ -27,6 +28,7 @@ internal class Cart : BlApi.ICart
             var orderItem = (from item in cart.Items
                              where item.ProductID == productId
                              select item).FirstOrDefault();
+
             var product = dal.Product.Get(x => x?.Id == productId);
             if (orderItem is null)
             {
@@ -34,7 +36,7 @@ internal class Cart : BlApi.ICart
                 {
                     cart.Items = (cart.Items?.Append(new BO.OrderItem
                     { 
-                        Id = Index,
+                        Id = Index++,
                         Name = product.Name,
                         Price = product.Price,
                         ProductID = product.Id,
@@ -65,7 +67,6 @@ internal class Cart : BlApi.ICart
             }
             return cart;
         }
-
         catch (DO.DalDoesNotExistIdException ex)
         {
             throw new BO.BlMissingEntityException(ex.Message, ex);
@@ -116,7 +117,6 @@ internal class Cart : BlApi.ICart
             }
             return cart;
         }
-
         catch (DO.DalDoesNotExistIdException ex)
         {
             throw new BO.BlMissingEntityException(ex.Message, ex);
@@ -141,21 +141,11 @@ internal class Cart : BlApi.ICart
             cart.Items?.Select(item =>
             item.Amount > dal.Product.Get(x => x?.Id == item.ProductID).InStock ? throw new BO.BlNotInStockException(item.Amount, name) : //there isn't enough from product in stock
                 item.Amount <= 0 ? throw new BO.BlInvalidEntityException(item.ProductID, name, 0) : 0);
-            //var product = dal.Product.GetById(x.ProductID);
-
-            //    if (orderItem.Amount > product.InStock)
-            //        throw new BO.BlNotInStockException(orderItem.Amount, name); //there isn't enough from product in stock
-            //    if (orderItem.Amount <= 0)
-            //        throw new BO.BlInvalidEntityException(orderItem.ProductID, name, 0); //amount isn't positive
-            
 
             //check if address, name aren't empty and if email is empty or according to format (<string>@gmail.com)
             if (cart.CustomerAddress is null)
                 throw new BO.BlInvalidEntityException("Customer Address", 1); //will put EntityChoice = 3 and print- Address is null 
 
-
-            //if (cart.CustomerEmail is null || !cart.CustomerEmail.Contains(str)) //Check is according to format (<string>@gmail.com)
-            //    throw new BO.BlInvalidEntityException("Customer Email", 1);
             MailAddress addressCheck = new MailAddress(str);
 
             if (cart.CustomerName is null)

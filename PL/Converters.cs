@@ -196,22 +196,38 @@ namespace PL
         }
     }
 
-    public class statusOrderConverter : IValueConverter
+    //public class statusOrderConverter : IValueConverter
+    //{
+    //    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    //    {
+    //        if ((BO.OrderStatus)value == BO.OrderStatus.Delivered)
+    //            return Visibility.Hidden;
+    //        else
+    //            return Visibility.Visible;
+    //    }
+    //    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    //}
+
+    public class statusOrderConverter : IMultiValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object[] value, Type targetType, object parameter, CultureInfo culture)
         {
-            if ((BO.OrderStatus)value == BO.OrderStatus.Delivered)
+            if (value[0].ToString() is null && value[1].ToString() is null)
                 return Visibility.Hidden;
+            if (value[1].ToString() is not null)
+                return Visibility.Hidden;
+
             else
                 return Visibility.Visible;
         }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object[] ConvertBack(object value, Type[] targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
     }
-
     public class IsReadOnlyConverter: IValueConverter
     {
         /// <summary>

@@ -7,14 +7,11 @@ internal class Product : BlApi.IProduct
 {
     private static readonly DalApi.IDal dal = DalApi.Factory.Get()!;
 
-
     /// <summary>
     /// GetListedProducts shows a list of products to the manager and for the client Catalogue
     /// </summary>
-    /// <returns></returns> the new List products (type ProductForList)
-    /// <exception cref="NullReferenceException"></exception>
-
-    //For Manager:
+    /// <param name="filter"></param>
+    /// <returns>the new List products (type ProductForList)</returns>
     public IEnumerable<BO.ProductForList?> GetListedProducts(Func<ProductForList?, bool>? filter)
     {
         var productForList = from doProduct in dal.Product.GetAll() // get a list of products and scan it
@@ -39,7 +36,9 @@ internal class Product : BlApi.IProduct
     }
 
     /// <summary>
-    /// Get products by their id for the manager
+    /// MANAGER
+    /// base on the given Product code, build a Product object
+    /// that match the needed product type
     /// </summary>
     /// <param name="productId"></param> gets a product id
     /// <returns></returns> the Product object
@@ -48,15 +47,12 @@ internal class Product : BlApi.IProduct
     {
         try
         {
-
             DO.Product doProduct = dal.Product.Get(x => x?.Id == productId); //find the wanted product by its id and copy it to a new one
-
             if (doProduct.Id > 0)
             {
                 return new BO.Product() //create a new Product (type BO) and return it with the wanted values
                 {
                     //copy the details
-
                     Id = doProduct.Id,
                     Category = (BO.Category)doProduct.Category!, //take the doProduct Category, turn it into BO.Category
                     Price = doProduct.Price,
@@ -68,7 +64,6 @@ internal class Product : BlApi.IProduct
             else
                 throw new BlInvalidEntityException(doProduct.Id, doProduct.Name! , 0);
         }
-
         catch (DO.DalDoesNotExistIdException ex)
         {
             throw new BO.BlMissingEntityException(ex.Message, ex);
@@ -76,7 +71,7 @@ internal class Product : BlApi.IProduct
     }
 
     /// <summary>
-    /// add a new product
+    /// get product item details, create a product and add a new product to dataSource
     /// </summary>
     /// <param name="productId">the product of the id</param>
     /// <param name="productName">the product's name</param>
@@ -138,19 +133,16 @@ internal class Product : BlApi.IProduct
                 throw new BO.BlInvalidEntityException("product amount", 0);
             DO.Product newDoProduct = new DO.Product() //create a new data layer product
             {
-                //copy the fields
+                //copy the fields:
                 Id = product.Id,
                 Name = product.Name,
                 Price = product.Price,
                 InStock = product.InStock,
                 Category = (DO.Category)product.Category!, //take the newDoProduct Category, turn it into DO.Category
                 ImageRelativeName = @"\pics\" + product.Name + ".jpeg"
-                //ImageRelativeName = @"\pics\IMG" + product.Name + ".jpeg""
-
             };
             dal.Product.Update(newDoProduct); //update product in data layer
         }
-
         catch (DO.DalDoesNotExistIdException ex)
         {
             throw new BO.BlMissingEntityException(ex.Message, ex);
@@ -182,8 +174,6 @@ internal class Product : BlApi.IProduct
         }
     }
     
-    //For Client:
-
     /// <summary>
     /// Get a product Item by its id for the client (convert DO.Product to BO.ProductItem)
     /// </summary>
@@ -192,7 +182,6 @@ internal class Product : BlApi.IProduct
     /// <returns></returns>
     /// <exception cref="BlInvalidEntityException">if the id is negative</exception>
     /// <exception cref="BO.BlMissingEntityException">if the id doesnt exist</exception>
-    
     public BO.ProductItem GetByIdC(int productId, BO.Cart cart)
     {
         try
@@ -224,6 +213,12 @@ internal class Product : BlApi.IProduct
 
     }
 
+    /// <summary>
+    /// make a list of product items according to the filter (if there is one) by converting DO.Product 
+    /// </summary>
+    /// <param name="cart"></param>
+    /// <param name="filter"></param>
+    /// <returns>list of product items</returns>
     public IEnumerable<BO.ProductItem?> GetListedProductItems(BO.Cart cart, Func<ProductItem?, bool>? filter)
     {
         var productItemsList = from doProduct in dal.Product.GetAll() // get a list of products and scan it
