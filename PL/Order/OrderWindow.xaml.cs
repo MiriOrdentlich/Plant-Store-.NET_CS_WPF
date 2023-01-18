@@ -66,7 +66,7 @@ namespace PL.Order
             }
         }
 
-        private void btnFollowOrder_Click(object sender, RoutedEventArgs e) //check if 
+        private void btnFollowOrder_Click(object sender, RoutedEventArgs e) 
         {
             new FollowOrderWindow(orderCurrent?.Id ?? -1).ShowDialog();
         }

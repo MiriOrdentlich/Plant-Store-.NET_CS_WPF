@@ -24,19 +24,6 @@ namespace PL.Product
     {
         private static readonly BlApi.IBl bl = BlApi.Factory.Get()!;
 
-        ////will be used as flag to know which options to make abailable\unavailale for user according to their status
-        ////isManager==0(==false) => user is client, isManager==1(==true) => user is manager 
-        //public int isManager
-        //{
-        //    get { return (int)GetValue(isManagerProperty); }
-        //    set { SetValue(isManagerProperty, value); }
-        //}
-
-        //// Using a DependencyProperty as the backing store for isManager.  This enables animation, styling, binding, etc...
-        //public static readonly DependencyProperty isManagerProperty =
-        //    DependencyProperty.Register("isManager", typeof(int), typeof(Window), new PropertyMetadata(0));
-
-
         public BO.Product? prodCurrent
         {
             get { return (BO.Product?)GetValue(prodCurrentProperty); }

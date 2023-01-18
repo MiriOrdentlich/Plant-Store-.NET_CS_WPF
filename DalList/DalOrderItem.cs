@@ -18,14 +18,14 @@ internal class DalOrderItem : IOrderItem
         //search orderItemList for order item that match the given filter
         //if order item not found throw exception
         return DataSource.OrderItemsList.Find(x => filter(x)) ??
-            throw new DO.DalDoesNotExistIdException(0, "Order Item"); //PROBLEM!!!!!!!!!
+            throw new DO.DalDoesNotExistIdException(-1, "Order Item"); //PROBLEM!!!!!!!!!
     }
     public OrderItem GetByProductAndOrder(int productID, int orderID)
     {
         //search orderItemList for order item that match the given product and order ids
         //if order item not found throw exception
         OrderItem p = DataSource.OrderItemsList.Find(x => x?.ProductID == productID && x?.ProductID == orderID) ?? 
-            throw new DO.DalDoesNotExistIdException(0, "Order Item"); //??????
+            throw new DO.DalDoesNotExistIdException(-1, "Order Item"); //??????
         return p;
     }  
     public void Update(OrderItem orderItem)

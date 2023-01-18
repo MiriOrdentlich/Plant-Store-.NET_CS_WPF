@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -50,13 +51,13 @@ namespace PL.Users
             {
                 //check the given info:
                 if (user?.Name == "")
-                    throw new Exception("Invalid name");
+                    throw new BlInvalidEntityException("Name", 1);
                 if (user?.Address == "")
-                    throw new Exception("Invalid address");
+                    throw new BlInvalidEntityException("Address", 1);
                 if (!checkEmail())
-                    throw new Exception("Invalid email address");
+                    throw new BlInvalidEntityException("Email address", 1);
                 if (user?.Password == "")
-                    throw new Exception("Invalid password");
+                    throw new BlInvalidEntityException("Password", 1);
 
                 bl.User.Add(user);
                 MainWindow mw = new MainWindow(0); //send 0 to mainWindow because user can't register as manager

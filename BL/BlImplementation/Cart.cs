@@ -3,6 +3,8 @@ using BO;
 using DalApi;
 using DO;
 using System.Net.Mail;
+using System.Text.RegularExpressions;
+
 namespace BlImplementation;
 
 internal class Cart : BlApi.ICart
@@ -123,6 +125,13 @@ internal class Cart : BlApi.ICart
         }
     }
 
+    private bool checkEmail(string email)
+    {
+        Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+        Match match = regex.Match(email);
+        return match.Success;
+    }
+
     /// <summary>
     /// make sure the cart details are correct and if so, make an order for the cart
     /// </summary>
@@ -134,7 +143,6 @@ internal class Cart : BlApi.ICart
     /// <exception cref="Exceptions"></exception>
     public BO.Order ConfirmCart(BO.Cart cart, string name, string email, string address) //WHAT THE USE OF THE PARAMETERS
     {
-        string str = "@gmail.com";
         try
         {
             //check for every order item in Items: products exist, there are enough from each in stock, amounts positive
@@ -144,12 +152,12 @@ internal class Cart : BlApi.ICart
 
             //check if address, name aren't empty and if email is empty or according to format (<string>@gmail.com)
             if (cart.CustomerAddress is null)
-                throw new BO.BlInvalidEntityException("Customer Address", 1); //will put EntityChoice = 3 and print- Address is null 
-
-            MailAddress addressCheck = new MailAddress(str);
-
+                throw new BO.BlInvalidEntityException("Address", 1); 
+            if (cart.CustomerEmail == "" || !checkEmail(cart.CustomerEmail!))
+                throw new BO.BlInvalidEntityException("Email Address", 1);
             if (cart.CustomerName is null)
-                throw new BO.BlInvalidEntityException("Customer Name", 1); //will put EntityChoice = 1 and print - Name is null
+                throw new BO.BlInvalidEntityException("Name", 1);
+            
             //in case all details are correct:
             //create a new DO.Order, try to add the order and get an order id in return
             int DOorderId = dal.Order.Add(new DO.Order()
@@ -198,6 +206,7 @@ internal class Cart : BlApi.ICart
                 Status = BO.OrderStatus.Confirmed, 
                 Items = cart.Items
             };
+
             return newOrder;
         }
         catch (DO.DalDoesNotExistIdException ex )

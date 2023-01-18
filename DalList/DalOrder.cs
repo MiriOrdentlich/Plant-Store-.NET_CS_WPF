@@ -19,7 +19,7 @@ internal class DalOrder : IOrder
         //search orderList for order that match the given filter
         //if order not found throw exception
         return DataSource.OrdersList.Find(x => filter(x)) ??
-            throw new DO.DalDoesNotExistIdException( 0 , "Order"); //PROBLEM!!!!!!!!!
+            throw new DO.DalDoesNotExistIdException( -1 , "Order");
     }
 
     public void Update(Order order)

@@ -10,7 +10,7 @@ internal class User : BlApi.IUser
     private static readonly DalApi.IDal dal = DalApi.Factory.Get()!;
 
     /// <summary>
-    /// 
+    /// add new user to data
     /// </summary>
     /// <param name="user"></param>
     /// <exception cref="BO.BlInvalidEntityException"></exception>
@@ -47,7 +47,7 @@ internal class User : BlApi.IUser
 
 
     /// <summary>
-    /// 
+    /// get a user details from data
     /// </summary>
     /// <param name="userName"></param>
     /// <param name="password"></param>

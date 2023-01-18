@@ -97,9 +97,9 @@ public class BlInvalidEntityException : Exception //If Invalid
     public override string ToString()
     {
         if (EntityChoice == 0) //if negative
-            return $" The {EntityName} is negative";
-        if (EntityChoice == 1) //if null
-            return $" The {EntityName} isn't valid";
+            return $" {EntityName} can't be negative";
+        if (EntityChoice == 1) 
+            return $" {EntityName} isn't valid";
         if (EntityChoice == 2)
             return $" The {EntityName} has not {Status} yet"; //used for incorrect update on order status
         if (EntityChoice == 3)

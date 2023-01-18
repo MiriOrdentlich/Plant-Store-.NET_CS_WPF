@@ -31,10 +31,10 @@
             </DataGrid>
         </Grid>
         <Button Content="👋" HorizontalAlignment="Left" Margin="354,0,0,0" VerticalAlignment="Top" Click="btnBye_click" Height="39" Width="41"/>
-        <Button x:Name="btnUpdateStatus" Content="Update Order Status" HorizontalAlignment="Left" Margin="194,371,0,15" Padding="5" Click="btnUpdateStatus_Click" Width="121">
+        <Button x:Name="btnUpdateStatus" Content="Update Order Status" HorizontalAlignment="Left" Margin="194,371,0,15" Padding="5" Click="btnUpdateStatus_Click" Width="140">
             <Button.Visibility>
                 <MultiBinding Converter="{StaticResource statusOrderConverter}">
-                    <Binding Path="Text" ElementName="shippingDateTextBox" />
+                    <Binding Path="Text" ElementName="shipDateTextBox" />
                     <Binding Path="Text" ElementName="deliveryDateTextBox" />
                 </MultiBinding>
             </Button.Visibility>

@@ -55,8 +55,8 @@ internal class Order : BlApi.IOrder
     {
         try
         {
-            if (orderId < 0)
-                throw new BlInvalidEntityException(orderId, "order Id", 0);
+            if (orderId < 100000)
+                throw new BlInvalidEntityException("order Id", 1);
             var order = dal.Order.Get(x => x?.Id == orderId);//get order from data by the given ID
             return GetBoOrder(order);
         }
@@ -64,7 +64,6 @@ internal class Order : BlApi.IOrder
         {
             throw new BO.BlMissingEntityException(ex.Message, ex);
         }
-
     }
 
     /// <summary>

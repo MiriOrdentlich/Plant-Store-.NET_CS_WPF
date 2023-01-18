@@ -216,19 +216,18 @@ namespace PL
     {
         public object Convert(object[] value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value[0].ToString() is null && value[1].ToString() is null)
-                return Visibility.Hidden;
-            if (value[1].ToString() is not null)
-                return Visibility.Hidden;
-
-            else
+            if ((string)value[0] == "" && (string)value[1] == "") //if stil haven't updated shipping and delivery date then 
                 return Visibility.Visible;
+            if ((string)value[1] != "")//if delivery date have been updated then we want to hide the update button
+                return Visibility.Hidden;
+            return Visibility.Visible;
         }
         public object[] ConvertBack(object value, Type[] targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
     }
+
     public class IsReadOnlyConverter: IValueConverter
     {
         /// <summary>

@@ -1,5 +1,8 @@
-﻿using System;
+﻿using BlApi;
+using BO;
+using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Windows;
 
 namespace PL.Cart
@@ -27,24 +30,38 @@ namespace PL.Cart
             currentCart = userCart;
         }
 
+        private bool checkEmail()
+        {
+            string email = currentCart?.CustomerEmail ?? "";
+            Regex regex = new Regex(@"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            Match match = regex.Match(email);
+            return match.Success;
+        }
+
         private void btnConfirmCart_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                BO.Order ord = bl.Cart.ConfirmCart(currentCart, currentCart?.CustomerName ?? "", currentCart?.CustomerEmail ?? "", currentCart?.CustomerAddress ?? "");
-                MessageBox.Show("Your order has been confirmed \nOrder ID: "+ ord.Id.ToString());
-                MainWindow mw = new MainWindow(0); //send 0 to mainWindow because manager can not enter checkoutWindow
+                //check the given info:
+                if (currentCart?.CustomerName == "")
+                    throw new Exception("Invalid name");
+                if (currentCart?.CustomerName == "")
+                    throw new Exception("Invalid address");
+                if (!checkEmail())
+                    throw new Exception("Invalid email address");
 
-                //mw.btnOrdersList.Visibility = Visibility.Hidden; //user isn't a manager
-                //mw.btnProductsList.Visibility = Visibility.Hidden; //user isn't a manager
-                //mw.currentCart = new BO.Cart()
-                //{
-                //    CustomerAddress = user?.Address,
-                //    CustomerEmail = user?.Email,
-                //    CustomerName = user?.Name,
-                //    Items = new List<BO.OrderItem>(),
-                //    TotalPrice = 0
-                //}; 
+                BO.Order ord = bl.Cart.ConfirmCart(currentCart!, currentCart?.CustomerName ?? "", currentCart?.CustomerEmail ?? "", currentCart?.CustomerAddress ?? "");
+                MessageBox.Show("Your order has been confirmed \nOrder ID: " + ord.Id.ToString());
+                MainWindow mw = new MainWindow(0); //send 0 to mainWindow because manager can not enter checkoutWindow
+                mw.currentCart = new BO.Cart()
+                {
+                    CustomerName = currentCart?.CustomerName,
+                    CustomerAddress = currentCart?.CustomerAddress,
+                    CustomerEmail = currentCart?.CustomerEmail,
+                    Items = new List<BO.OrderItem>(),
+                    TotalPrice = 0
+                };
+                this.Close();
                 mw.ShowDialog();
             }
             catch (Exception exception)

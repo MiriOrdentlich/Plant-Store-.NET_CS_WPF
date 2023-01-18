@@ -1,7 +1,5 @@
-﻿using BO;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,8 +12,6 @@ namespace PL.Product
     public partial class ProductListWindow : Window
     {
         private static readonly BlApi.IBl bl = BlApi.Factory.Get()!;
-
-        //IEnumerable<string> e = GetEnumDescriptions<Category>();
 
         public ObservableCollection<BO.ProductForList?> logicProducts
         {
@@ -35,25 +31,14 @@ namespace PL.Product
             CategorySelector.SelectedItem = BO.Category.None;
         }
 
-        private void CategorySelector_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
             ShowProductList();
-            //if (CategorySelector.SelectedItem != null)
-            //    ProductListView.ItemsSource = bl.Product.GetListedProducts(x => x?.Category.ToString() == CategorySelector.SelectedItem.ToString());
         }
 
         private void AddProductButton_Click(object sender, RoutedEventArgs e)
         {
             ProductWindow p = new Product.ProductWindow();
-            ////set default values:
-            //p.idTextBox.Text = "0";
-            //p.priceTextBox.Text = "0";
-            //p.inStockTextBox.Text = "0";
-            ////p.cmbCategorySelector.Text = "None";
-
-            //p.btnAdd.Visibility = Visibility.Visible;
-            //p.btnUpdate.Visibility = Visibility.Hidden;
             p.ShowDialog();
             productDataGrid.Items.Refresh();
         }
@@ -64,7 +49,6 @@ namespace PL.Product
             {
                 var p = (BO.ProductForList?)productDataGrid.SelectedItem;
                 int id = p?.Id ?? -1;
-                //new ProductWindow(id).Show();
                 ProductWindow productWindow = new Product.ProductWindow(id);
                 productWindow.ShowDialog();
                 productDataGrid.Items.Refresh();
@@ -86,7 +70,6 @@ namespace PL.Product
         {
             try
             {
-
                 BO.Category? category = CategorySelector.SelectedItem as BO.Category?;
                 if (category == BO.Category.None)
                     logicProducts = new(bl.Product.GetListedProducts());
@@ -98,8 +81,6 @@ namespace PL.Product
             {
                 MessageBox.Show(exception.ToString());
             }
-            //this.Close();
-            //new ProductListWindow().ShowDialog();
         }
 
         private void DeleteButton_Click(Object sender, RoutedEventArgs e)
@@ -116,13 +97,6 @@ namespace PL.Product
                 MessageBox.Show(exception.ToString());
             }
         }
-
-        //private void DeleteButton_Click(object sender, RoutedEventArgs e)
-        //{
-        //    bl.Product.DeleteProduct(prodCurrent?.Id ?? -1);
-        //    this.Close();
-        //    new ProductListWindow().ShowDialog();
-        //}
 
         private void btnBye_click(object sender, RoutedEventArgs e)
         {

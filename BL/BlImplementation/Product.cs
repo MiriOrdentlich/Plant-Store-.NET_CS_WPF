@@ -17,7 +17,7 @@ internal class Product : BlApi.IProduct
         var productForList = from doProduct in dal.Product.GetAll() // get a list of products and scan it
                select new BO.ProductForList //build a new List products (type ProductForList) 
                {
-                   Id = doProduct?.Id ?? 0,
+                   Id = doProduct?.Id ?? -1,
                    Name = doProduct?.Name ?? "",
                    Category = (BO.Category)doProduct?.Category!,
                    Price = doProduct?.Price ?? 0,
@@ -98,7 +98,7 @@ internal class Product : BlApi.IProduct
                 //copy the fields
                 Id = productId,
                 Name = productName,
-                Category = (DO.Category)category,  //take the newDoProduct Category, turn it into DO.Category
+                Category = (DO.Category)category!,  //take the newDoProduct Category, turn it into DO.Category
                 Price = price,
                 InStock = amount,
                 ImageRelativeName = @"\pics\" + productName + ".jpeg"
@@ -123,10 +123,10 @@ internal class Product : BlApi.IProduct
         try
         {
             //product.InStock.AmountIsNegative();
-            if (product.Id < 0)
-                throw new BO.BlInvalidEntityException("product Id", 0);
-            if (product.Name is null)
-                throw new BO.BlInvalidEntityException("product Name", 1); //will put EntityChoice = 1 and print - Name is null ;
+            if (product.Id < 100000)
+                throw new BO.BlInvalidEntityException("product Id", 1);
+            if (product.Name == "")
+                throw new BO.BlInvalidEntityException("product Name", 1); //will put EntityChoice = 1 and print - Name is null
             if (product.Price < 0)
                 throw new BO.BlInvalidEntityException("product price", 0);
             if (product.InStock < 0)
@@ -188,7 +188,7 @@ internal class Product : BlApi.IProduct
         {
             DO.Product doProduct = dal.Product.Get(x => x?.Id == productId); //find the wanted product by its id and copy it to a new one
 
-            if (doProduct.Id > 0)
+            if (doProduct.Id > 99999)
             {
                 return new BO.ProductItem()//create a new Product (type BO) and return it withthe wanted values   
                 {
@@ -204,7 +204,7 @@ internal class Product : BlApi.IProduct
                 };
             }
             else
-                throw new BlInvalidEntityException("Id", 0);
+                throw new BlInvalidEntityException("Id", 1);
         }
         catch (DO.DalDoesNotExistIdException ex) 
         {
@@ -222,7 +222,7 @@ internal class Product : BlApi.IProduct
     public IEnumerable<BO.ProductItem?> GetListedProductItems(BO.Cart cart, Func<ProductItem?, bool>? filter)
     {
         var productItemsList = from doProduct in dal.Product.GetAll() // get a list of products and scan it
-                               select GetByIdC(doProduct?.Id ?? 0, cart);//build a new products list (type ProductItem) 
+                               select GetByIdC(doProduct?.Id ?? -1, cart);//build a new products list (type ProductItem) 
 
         if (filter == null)
         {

@@ -24,8 +24,6 @@ namespace PL.Order
         public FollowOrderWindow(int id)
         {
             InitializeComponent();
-
-            //trackingListView = bl.Order.TrackOrder(OrderId);
             ordTrack = bl.Order.TrackOrder(id);
         }
 

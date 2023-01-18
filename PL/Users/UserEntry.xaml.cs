@@ -25,6 +25,15 @@ namespace PL.Users
         public UserEntry()
         {
             InitializeComponent();
+            user = new BO.User()
+            {
+                //set default values:
+                Name = "",
+                Address = "",
+                Email = "",
+                isManager = false,
+                Password = ""
+            };
         }
 
         private void btnConfirmUser_Click(object sender, RoutedEventArgs e)
@@ -32,12 +41,12 @@ namespace PL.Users
             try
             {
                 //check the given info:
-                if (customerNameTextBox.Text == "")
-                    throw new Exception("Invalid name");
-                if (PasswordTextBox.Text == "")
-                    throw new Exception("Invalid password");
+                if (user?.Name == "")
+                    throw new BO.BlInvalidEntityException("Name", 1);
+                if (user?.Password == "")
+                    throw new BO.BlInvalidEntityException("Password", 1);
 
-                user = bl.User.Get(customerNameTextBox.Text, PasswordTextBox.Text)!;
+                user = bl.User.Get(user?.Name!, user?.Password!)!;
                 
                 int flag = user.isManager ? 1 : 0;
                 MainWindow mw = new MainWindow(flag);
