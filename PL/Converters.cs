@@ -59,14 +59,14 @@ namespace PL
         /// if value==0 set visibility as hidden, else set it as visible
         /// * will be used to make checkout option unavailabe in case cart is empty
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="value">cart totalPrice</param>
         /// <param name="targetType"></param>
         /// <param name="parameter"></param>
         /// <param name="culture"></param>
         /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if ((string)value == "0")
+            if ((string)value == "0" || (string)value == "")
                 return Visibility.Hidden;
             else
                 return Visibility.Visible;
@@ -103,6 +103,7 @@ namespace PL
             throw new NotImplementedException();
         }
     }
+
     public class updateVisibilityConverter : IValueConverter
     {
         /// <summary>
