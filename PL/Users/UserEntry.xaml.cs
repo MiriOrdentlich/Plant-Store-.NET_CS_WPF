@@ -19,7 +19,7 @@ namespace PL.Users
 
         // Using a DependencyProperty as the backing store for user.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty userProperty =
-            DependencyProperty.Register("user", typeof(BO.User), typeof(Window), new PropertyMetadata(null));
+            DependencyProperty.Register("user", typeof(BO.User), typeof(UserEntry), new PropertyMetadata(null));
 
 
         public UserEntry()
@@ -32,23 +32,17 @@ namespace PL.Users
             try
             {
                 //check the given info:
-                if (customerNameTextBox.Text =="")
+                if (customerNameTextBox.Text == "")
                     throw new Exception("Invalid name");
-                if (PasswordTextBox.Text =="")
+                if (PasswordTextBox.Text == "")
                     throw new Exception("Invalid password");
 
-                //var tmp = bl.User.Get(user.Name!, user.Password!) ;
                 user = bl.User.Get(customerNameTextBox.Text, PasswordTextBox.Text)!;
-                //user.isManager = tmp!.isManager;
-                //user.Address = tmp.Address;
-                //user.Email = tmp.Email;
+                
                 int flag = user.isManager ? 1 : 0;
-
                 MainWindow mw = new MainWindow(flag);
-
-                if(user!.isManager == false) //user is a client
+                if (user!.isManager == false) //user is a client
                 {
-
                     mw.currentCart = new BO.Cart()
                     {
                         CustomerAddress = user.Address,
@@ -63,8 +57,6 @@ namespace PL.Users
             catch (Exception exception)
             {
                 MessageBox.Show(exception.ToString());
-                //new RegistrationWindow().ShowDialog();
-                //this.Close();
             }
         }
 

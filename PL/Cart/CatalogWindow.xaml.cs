@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Windows.Data;
-using System.Windows.Input;
-using System.Windows.Controls;
-using BO;
 using System.Windows;
 
 
@@ -55,8 +49,8 @@ namespace PL.Cart
 
         private void btnCart_Click(object sender, RoutedEventArgs e)
         {
-            new CartWindow(currentCart).Show();
             this.Close();
+            new CartWindow(currentCart).Show();
         }
 
         private void productItemDataGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
