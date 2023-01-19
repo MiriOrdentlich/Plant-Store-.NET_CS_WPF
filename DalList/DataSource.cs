@@ -1,8 +1,5 @@
 ﻿using DalApi;
 using DO;
-using System.Net;
-using System.Xml.Linq;
-
 namespace Dal;
 
 internal static class DataSource

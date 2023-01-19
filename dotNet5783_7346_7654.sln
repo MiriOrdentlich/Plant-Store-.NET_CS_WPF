@@ -25,6 +25,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{5F40F09B-335A-426A-9F95-8B857364F8A4}"
 	ProjectSection(SolutionItems) = preProject
 		xml\dal-config.xml = xml\dal-config.xml
+		xml\users.xml = xml\users.xml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pics", "pics", "{D864C34F-1114-4C5D-A388-EB5D50FABB33}"
@@ -50,7 +51,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pics", "pics", "{D864C34F-1
 		pics\Vivi.jpeg = pics\Vivi.jpeg
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalXml", "DalXml\DalXml.csproj", "{382923CD-A272-4B01-A99A-DBF6B6D86420}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalXml", "DalXml\DalXml.csproj", "{382923CD-A272-4B01-A99A-DBF6B6D86420}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

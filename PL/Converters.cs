@@ -6,24 +6,6 @@ using System.Windows.Media.Imaging;
 
 namespace PL
 {
-
-
-    //public class updateOrderStatusVisibilityConverter : IMultiValueConverter
-    //{
-    //    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-    //    {
-    //         if(values[0].ToString() = "" )
-    //            ret
-    //      return values[0].ToString() + " " + values[1].ToString();
-    //    }
-
-    //    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-    //}
-
-
     class ConvertImagePathToBitmap : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -77,7 +59,6 @@ namespace PL
             throw new NotImplementedException();
         }
     }
-
 
     public class addVisibilityConverter : IValueConverter
     {
@@ -196,21 +177,6 @@ namespace PL
             throw new NotImplementedException();
         }
     }
-
-    //public class statusOrderConverter : IValueConverter
-    //{
-    //    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    //    {
-    //        if ((BO.OrderStatus)value == BO.OrderStatus.Delivered)
-    //            return Visibility.Hidden;
-    //        else
-    //            return Visibility.Visible;
-    //    }
-    //    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    //    {
-    //        throw new NotImplementedException();
-    //    }
-    //}
 
     public class statusOrderConverter : IMultiValueConverter
     {

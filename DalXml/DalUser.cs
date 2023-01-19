@@ -10,7 +10,7 @@ internal class DalUser : IUser
 
     public void Add(DO.User doUser)
     {
-        XElement usersRootElem = XMLTools.LoadListFromXMLElement(s_Users);
+        XElement usersRootElem = XmlTools.LoadListFromXMLElement(s_Users);
 
         XElement? user = (from usr in usersRootElem.Elements()
                           where (string?)usr.Element("Name") == doUser.Name && (string?)usr.Element("Password") == doUser.Password
@@ -27,7 +27,7 @@ internal class DalUser : IUser
 
         usersRootElem.Add(userElem);
 
-        XMLTools.SaveListToXMLElement(usersRootElem, s_Users);
+        XmlTools.SaveListToXMLElement(usersRootElem, s_Users);
     }
 
     static DO.User? createUserfromXElement(XElement usr)
@@ -42,9 +42,10 @@ internal class DalUser : IUser
             Password = (string?)usr.Element("Password")
         };
     }
+
     public User? Get(string name, string psw)
     {
-        XElement usersRootElem = XMLTools.LoadListFromXMLElement(s_Users);
+        XElement usersRootElem = XmlTools.LoadListFromXMLElement(s_Users);
 
         return (from usr in usersRootElem.Elements()
                  where (string?)usr.Element("Name") == name && (string?)usr.Element("Password") == psw

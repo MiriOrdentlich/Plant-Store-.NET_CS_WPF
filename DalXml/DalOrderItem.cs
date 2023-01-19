@@ -1,6 +1,4 @@
 ﻿using DalApi;
-using DO;
-
 namespace Dal;
 
 internal class DalOrderItem : IOrderItem
@@ -9,57 +7,59 @@ internal class DalOrderItem : IOrderItem
 
     public IEnumerable<DO.OrderItem?> GetAll(Func<DO.OrderItem?, bool>? filter = null)
     {
-        List<DO.OrderItem?> listOrderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_OrderItems);
+        List<DO.OrderItem?> listOrderItems = XmlTools.LoadListFromXMLSerializer<DO.OrderItem>(s_OrderItems);
 
         if (filter == null)
-            return listOrderItems.Select(pro => pro).OrderBy(pro => pro?.Id);
+            return listOrderItems.Select(oi => oi).OrderBy(oi => oi?.Id);
         else
-            return listOrderItems.Where(filter).OrderBy(pro => pro?.Id);
+            return listOrderItems.Where(filter).OrderBy(oi => oi?.Id);
     }
 
-    public DO.OrderItem Get(Func<OrderItem?, bool> filter)
+    public DO.OrderItem Get(Func<DO.OrderItem?, bool> filter)
     {
-        List<DO.OrderItem?> listOrderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_OrderItems);
+        List<DO.OrderItem?> listOrderItems = XmlTools.LoadListFromXMLSerializer<DO.OrderItem>(s_OrderItems);
 
         DO.OrderItem pro = listOrderItems.Where(filter).FirstOrDefault() ??
-            throw new DalDoesNotExistIdException(-1, "OrderItem");
+            throw new DO.DalDoesNotExistIdException(-1, "Order Item");
         return pro;
     }
 
     public int Add(DO.OrderItem orderItem)
     {
-        List<DO.OrderItem?> listOrderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_OrderItems);
+        List<DO.OrderItem?> listOrderItems = XmlTools.LoadListFromXMLSerializer<DO.OrderItem>(s_OrderItems);
 
-        if (listOrderItems.FirstOrDefault(pro => pro?.Id == orderItem.Id) != null)
-            throw new Exception("id already exist"); //new DalAlreadyExistIdException(pr.ID, "OrderItem");
+        if (listOrderItems.FirstOrDefault(oi => oi?.Id == orderItem.Id) != null)
+            throw new DO.DalAlreadyExistsIdException(orderItem.Id, "Order Item");
 
         listOrderItems.Add(orderItem);
 
-        XMLTools.SaveListToXMLSerializer(listOrderItems, s_OrderItems);
+        XmlTools.SaveListToXMLSerializer(listOrderItems, s_OrderItems);
 
         return orderItem.Id;
     }
 
     public void Delete(int id)
     {
-        List<DO.OrderItem?> listOrderItems = XMLTools.LoadListFromXMLSerializer<DO.OrderItem>(s_OrderItems);
+        List<DO.OrderItem?> listOrderItems = XmlTools.LoadListFromXMLSerializer<DO.OrderItem>(s_OrderItems);
 
-        if (listOrderItems.RemoveAll(pro => pro?.Id == id) == 0)
-            throw new Exception("missing id"); //new DalMissingIdException(id, "OrderItem");
-
-        XMLTools.SaveListToXMLSerializer(listOrderItems, s_OrderItems);
+        if (listOrderItems.RemoveAll(oi => oi?.Id == id) == 0)
+            throw new DO.DalDoesNotExistIdException(id, "Order Item");
+        XmlTools.SaveListToXMLSerializer(listOrderItems, s_OrderItems);
     }
+
     public void Update(DO.OrderItem orderItem)
     {
         Delete(orderItem.Id);
         Add(orderItem);
     }
 
-    public OrderItem GetByProductAndOrder(int orderId, int productId)
+    public DO.OrderItem GetByProductAndOrder(int orderId, int productId)
     {
-        
-        //search orderItemList for order item that match the given product and order ids
+        //search orderItesmList for order item that match the given product and order ids
         //if order item not found throw exception
-        
+
+        List<DO.OrderItem?> listOrderItems = XmlTools.LoadListFromXMLSerializer<DO.OrderItem>(s_OrderItems);
+        return (listOrderItems.Where(oi => oi?.ProductID == productId && oi?.ProductID == orderId).OrderBy(oi => oi?.Id)).FirstOrDefault() ??
+            throw new DO.DalDoesNotExistIdException(-1, "Order Item"); 
     }
 }

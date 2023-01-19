@@ -13,6 +13,7 @@ internal class DalOrderItem : IOrderItem
         DataSource.OrderItemsList.Add(orderItem); // if orderItem isn't in list, add orderItem to list
         return orderItem.Id;
     }
+
     public OrderItem Get(Func<OrderItem?, bool> filter)
     {
         //search orderItemList for order item that match the given filter
@@ -20,6 +21,7 @@ internal class DalOrderItem : IOrderItem
         return DataSource.OrderItemsList.Find(x => filter(x)) ??
             throw new DO.DalDoesNotExistIdException(-1, "Order Item"); //PROBLEM!!!!!!!!!
     }
+
     public OrderItem GetByProductAndOrder(int productID, int orderID)
     {
         //search orderItemList for order item that match the given product and order ids
@@ -28,6 +30,7 @@ internal class DalOrderItem : IOrderItem
             throw new DO.DalDoesNotExistIdException(-1, "Order Item"); //??????
         return p;
     }  
+
     public void Update(OrderItem orderItem)
     {
         // search for order item in list. if didn't find order item -> throw exception
@@ -35,12 +38,14 @@ internal class DalOrderItem : IOrderItem
             throw new DO.DalDoesNotExistIdException(orderItem.Id, "OrderItem");
         DataSource.OrderItemsList.Add(orderItem);
     }
+
     public void Delete(int id)
     {
         // search for order item in list and remove it from list. if didn't find order item -> throw exception
         if (DataSource.OrderItemsList.RemoveAll(x => x?.Id == id) == 0)
             throw new DO.DalDoesNotExistIdException(id, "Order Item");
     }
+
     public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? filter)
     {
         //create a new list, copy the existing list to the new one, return the new list.
@@ -56,14 +61,4 @@ internal class DalOrderItem : IOrderItem
                    select x;
         }
     }
-    //public IEnumerable<DO.OrderItem?> GetAllOrderProducts(int orderID)
-    //{
-    //    List<OrderItem?> tempArr = new List<OrderItem?>();
-    //    foreach (var item in DataSource.OrderItemsList)
-    //    {
-    //        if(item?.OrderID == orderID)
-    //            tempArr.Add(item);
-    //    }
-    //    return tempArr;
-    //}
 }

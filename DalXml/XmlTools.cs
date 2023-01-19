@@ -2,10 +2,10 @@
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
-static class XMLTools
+static class XmlTools
 {
     const string s_dir = @"..\xml\";
-    static XMLTools()
+    static XmlTools()
     {
         if (!Directory.Exists(s_dir))
             Directory.CreateDirectory(s_dir);
