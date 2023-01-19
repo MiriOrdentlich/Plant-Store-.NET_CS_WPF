@@ -45,6 +45,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pics", "pics", "{D864C34F-1
 		pics\Peggy.jpeg = pics\Peggy.jpeg
 		pics\Pele.jpeg = pics\Pele.jpeg
 		pics\Toby.jpeg = pics\Toby.jpeg
+		pics\Val.jpeg = pics\Val.jpeg
 		pics\Vinnie.jpeg = pics\Vinnie.jpeg
 		pics\Vivi.jpeg = pics\Vivi.jpeg
 	EndProjectSection

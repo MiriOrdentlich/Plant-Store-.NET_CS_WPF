@@ -1,12 +1,5 @@
-﻿using BlApi;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace PL.Product
 {
@@ -62,8 +55,10 @@ namespace PL.Product
                 //input check:
                 if (int.TryParse(idTextBox.Text, out int id) == false)
                     throw new BO.BlInvalidEntityException("ID", 1);
-                if (BO.Category.TryParse(categoryComboBox.Text, out BO.Category category) == false)
+                if(prodCurrent?.Category == BO.Category.None)
                     throw new BO.BlInvalidEntityException("Category", 1);
+                //if (BO.Category.TryParse(categoryComboBox.Text, out BO.Category category) == false)
+                //    throw new BO.BlInvalidEntityException("Category", 1);
                 if (prodCurrent?.Name == "")
                     throw new BO.BlInvalidEntityException("Name", 1);
                 if (double.TryParse(priceTextBox.Text, out double price) == false)
@@ -84,9 +79,9 @@ namespace PL.Product
             try
             {
                 //input check:
-                if (int.TryParse(idTextBox.Text, out int id) == false)
-                    throw new BO.BlInvalidEntityException("ID", 1);
-                if(prodCurrent?.Name == "" || prodCurrent?.Name is null)
+                if (prodCurrent?.Category == BO.Category.None)
+                    throw new BO.BlInvalidEntityException("Category", 1);
+                if (prodCurrent?.Name == "")
                     throw new BO.BlInvalidEntityException("Name", 1);
                 if (double.TryParse(priceTextBox.Text, out double price) == false)
                     throw new BO.BlInvalidEntityException("Price", 1);
@@ -101,6 +96,7 @@ namespace PL.Product
                 MessageBox.Show(exception.ToString());
             }
         }
+
 
         /// <summary>
         /// close current window

@@ -36,6 +36,11 @@ namespace PL.Users
             };
         }
 
+        /// <summary>
+        /// if user already in data: open to the user the proper options according to their status
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnConfirmUser_Click(object sender, RoutedEventArgs e)
         {
             try

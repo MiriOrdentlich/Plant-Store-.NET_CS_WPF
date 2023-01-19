@@ -40,12 +40,22 @@ namespace PL.Cart
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Category));
         }
 
+        /// <summary>
+        /// event for a click on cart button to view cart and/or checkout
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnCart_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
             new CartWindow(currentCart).Show();
         }
-
+        
+       /// <summary>
+       /// open the product details for client and an option to add the product to cart
+       /// </summary>
+       /// <param name="sender"></param>
+       /// <param name="e"></param>
         private void productItemDataGrid_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if (catalog.SelectedItem as BO.ProductItem != null)
@@ -57,11 +67,21 @@ namespace PL.Cart
             }
         }
 
+        /// <summary>
+        /// event handler for a new category filter
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CategorySelector_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
             ShowProductItemsList();
         }
-
+        
+        /// <summary>
+        /// to cancel the category selector (which returns to its default- NONE)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             CategorySelector.SelectedItem = BO.Category.None;
@@ -73,6 +93,9 @@ namespace PL.Cart
             CategorySelector.SelectedItem = BO.Category.None;
         }
 
+        /// <summary>
+        /// help fuction that return products list according to the selected category
+        /// </summary>
         private void ShowProductItemsList()
         {
             try
@@ -96,5 +119,6 @@ namespace PL.Cart
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnBye_click(object sender, RoutedEventArgs e) => this.Close();
+
     }
 }

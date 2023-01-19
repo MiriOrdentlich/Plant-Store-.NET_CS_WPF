@@ -2,7 +2,7 @@
 
 
 [Serializable]
-public class BlAlreadyExistEntityException: Exception //If Already Exists
+public class BlAlreadyExistEntityException : Exception //If Already Exists
 {
     public string? EntityName;
     public int EntityID;
@@ -22,7 +22,7 @@ public class BlAlreadyExistEntityException: Exception //If Already Exists
         if (Choice == 0)
             return $"{EntityID} already exists";
         else // => (choice == 1)
-            return "";
+            return $"{EntityName} number {EntityID} already exists";
     }
 
 }
@@ -34,22 +34,22 @@ public class BlMissingEntityException : Exception //If doesn't Exists
     public string? EntityName;
     public int EntityID;
     public int Choice;
-    public BlMissingEntityException(string name, int id, int choice=0)
+    public BlMissingEntityException(string name, int id, int choice = 0)
     : base() { EntityName = name; EntityID = id; Choice = choice; }
     public BlMissingEntityException(string name, string userName, int choice = 1)
     : base() { EntityName = name; Name = userName; Choice = choice; }
-    public BlMissingEntityException(string name, int id, string message,int choice=0)
+    public BlMissingEntityException(string name, int id, string message, int choice = 0)
     : base(message) { EntityName = name; EntityID = id; Choice = choice; }
-    public BlMissingEntityException(int id, string name, string message, Exception exception, int choice=0)
+    public BlMissingEntityException(int id, string name, string message, Exception exception, int choice = 0)
     : base(message, exception) { EntityName = name; EntityID = id; Choice = choice; }
     public BlMissingEntityException(string message, Exception exception, int choice = 2) //if (choice == 2)
     : base(message, exception) { Choice = choice; }
-  
+
     override public string ToString()
     {
         if (Choice == 0)
             return $"{EntityID} of type {EntityName}, doesn't exist";
-        else if(Choice == 1)
+        else if (Choice == 1)
             return $"{Name} of type {EntityName}, doesn't exist";
         else
             return "ID doesn't exist";
@@ -65,7 +65,7 @@ public class BlInvalidEntityException : Exception //If Invalid
     public int EntityChoice;
     public string? Status;
 
-    public BlInvalidEntityException(string name, int entityChoice) :base()
+    public BlInvalidEntityException(string name, int entityChoice) : base()
     {
         EntityChoice = entityChoice;
         EntityName = name;
@@ -90,7 +90,7 @@ public class BlInvalidEntityException : Exception //If Invalid
     {
         if (EntityChoice == 0) //if negative
             return $" {EntityName} can't be negative";
-        if (EntityChoice == 1) 
+        if (EntityChoice == 1)
             return $" {EntityName} isn't valid";
         if (EntityChoice == 2)
             return $" The {EntityName} has not {Status} yet"; //used for incorrect update on order status
@@ -98,10 +98,7 @@ public class BlInvalidEntityException : Exception //If Invalid
             return $" The {EntityName} has already {Status}";//used for incorrect update on order status
         else
             return $"{EntityId} of type {EntityName}, isn't valid";
-
     }
-    
-        
 }
 
 
@@ -115,7 +112,7 @@ public class BlNotInStockException : Exception //If Not In Stock
 
     public override string ToString()
     {
-        if(Entityamount == 0)
+        if (Entityamount == 0)
             return $" {EntityName} isn't in stock";
         else
             return $" Not enough of {EntityName} in stock";
@@ -126,17 +123,17 @@ public class BlNotInStockException : Exception //If Not In Stock
 public class BlIncorrectDateException : Exception //If Incorrect Date
 {
     public BlIncorrectDateException(string message, Exception exception)
-    : base(message, exception) {}
-    override public string ToString() => 
+    : base(message, exception) { }
+    override public string ToString() =>
         base.ToString() /*+ $" Incorrect Date"*/;
 }
 
 [Serializable]
 public class BlWrongCategoryException : Exception //If the Category is Wrong
 {
-    public BlWrongCategoryException() 
+    public BlWrongCategoryException()
         : base() { }
-    public BlWrongCategoryException(string message) 
+    public BlWrongCategoryException(string message)
         : base(message) { }
     public BlWrongCategoryException(string message, Exception exception)
         : base(message, exception) { }

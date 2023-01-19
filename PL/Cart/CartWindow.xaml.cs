@@ -46,7 +46,7 @@ namespace PL.Cart
         {
             try
             {
-                if (orderItemDataGrid.ItemsSource != null)
+                if (currentCart.Items != null)
                 {
                     var item = (BO.OrderItem?)orderItemDataGrid.SelectedItem;
                     int amnt = item?.Amount ?? -1;
@@ -69,7 +69,7 @@ namespace PL.Cart
         {
             try
             {
-                if (orderItemDataGrid.ItemsSource != null)
+                if (currentCart.Items != null)
                 {
                     var item = (BO.OrderItem?)orderItemDataGrid.SelectedItem;
                     int amnt = item?.Amount ?? 0;
@@ -122,7 +122,7 @@ namespace PL.Cart
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.ToString());
             }
         }
 

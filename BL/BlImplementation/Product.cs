@@ -1,4 +1,5 @@
 ﻿using BO;
+using DalApi;
 using DO;
 
 namespace BlImplementation;
@@ -6,6 +7,37 @@ namespace BlImplementation;
 internal class Product : BlApi.IProduct
 {
     private static readonly DalApi.IDal dal = DalApi.Factory.Get()!;
+
+    //Get a list of 8 most popular items
+    public IEnumerable<ProductForList?> GetListedPopularItems()
+    {
+        var Pop = from doOrderItem in dal.OrderItem.GetAll()
+                  group doOrderItem by doOrderItem?.ProductID into orderItemGroup
+                  select new { Id = orderItemGroup.Key, Items = orderItemGroup };
+
+        //popular is decided by the number of orders that have the product
+        Pop = Pop.OrderByDescending(x => x.Items.Count()).Take(8);
+
+        try
+        {
+            return from item in Pop // get a list of products and scan it
+                   let doProduct = dal.Product.Get(x => x?.Id == item.Id) 
+                   select new BO.ProductForList //build a new List products (type ProductForList) 
+                   {
+                       Id = doProduct.Id,
+                       Name = doProduct.Name,
+                       Category = (BO.Category)doProduct.Category!,
+                       Price = doProduct.Price,
+                       ImageRelativeName = @"\pics\" + doProduct.Name + ".jpeg"
+                   };
+        }
+        catch(DalDoesNotExistIdException ex)
+        {
+            throw new BO.BlMissingEntityException("Missing Product", ex, 2);
+        }
+    }
+
+
 
     /// <summary>
     /// GetListedProducts shows a list of products to the manager and for the client Catalogue
@@ -107,7 +139,7 @@ internal class Product : BlApi.IProduct
         }
         catch (DO.DalAlreadyExistsIdException ex)
         {
-            throw new BO.BlAlreadyExistEntityException(ex.Message, ex);
+            throw new BO.BlAlreadyExistEntityException(ex.EntityName, ex.EntityId, 1);
         }
     }
 

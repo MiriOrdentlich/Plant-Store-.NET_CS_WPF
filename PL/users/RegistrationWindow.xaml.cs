@@ -45,6 +45,12 @@ namespace PL.Users
             return match.Success;
         }
 
+        /// <summary>
+        /// add a new user to data
+        /// open to the user the proper options for clients
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnConfirmUser_Click(object sender, RoutedEventArgs e)
         {
             try

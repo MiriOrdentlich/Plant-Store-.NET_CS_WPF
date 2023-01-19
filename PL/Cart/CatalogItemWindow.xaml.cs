@@ -38,6 +38,11 @@ namespace PL.Cart
             }
         }
 
+        /// <summary>
+        /// click on picture of a product will open the user the profuct details
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             try

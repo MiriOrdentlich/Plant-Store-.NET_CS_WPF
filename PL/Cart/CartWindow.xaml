@@ -18,8 +18,8 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <Button Content="👋" HorizontalAlignment="Left" VerticalAlignment="Top" Click="btnBye_click"  Padding="5" FontSize="20" Background="#FFF87878"/>
-            <Button Content="←Back" HorizontalAlignment="Left" VerticalAlignment="Top" Click="btnReturn_Click" Width="auto" FontSize="26" Margin="50,0,0,0" Background="#a4ccc6"/>
         </Grid>
+        <Button x:Name="btnReturn" Content="Continue shopping" Click="btnReturn_Click" Padding="5" FontSize="16" Margin="452,265,148,85" Grid.Row="1"/>
         <Button x:Name="btnDeleteCart" Grid.Row="1" Content="Empty Cart" Visibility="{Binding ElementName=txtTotalPrice, Path=Text, Mode=TwoWay, Converter={StaticResource cartVisibilityConverter}}" HorizontalAlignment="Right" Margin="0,70,143,299" Padding="5" Click="btnDeleteCart_Click" Height="auto" Width="auto"/>
         <Button x:Name="btnConfirmCart" Grid.Row="1" Content="Checkout" Visibility="{Binding ElementName=txtTotalPrice, Path=Text, Mode=TwoWay, Converter={StaticResource cartVisibilityConverter}}" HorizontalAlignment="Right" Margin="0,134,144,238" Padding="5" Click="btnConfirmCart_Click" Height="auto" Width="auto"/>
 

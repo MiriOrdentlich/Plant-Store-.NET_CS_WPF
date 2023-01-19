@@ -31,11 +31,22 @@ namespace PL.Product
             CategorySelector.SelectedItem = BO.Category.None;
         }
 
+        /// <summary>
+        /// event handler for a new category filter
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ShowProductList();
         }
 
+        /// <summary>
+        /// event handler in case a click on the add button. this will open
+        /// a window to enter the new product details
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AddProductButton_Click(object sender, RoutedEventArgs e)
         {
             ProductWindow p = new Product.ProductWindow();
@@ -43,9 +54,15 @@ namespace PL.Product
             productDataGrid.Items.Refresh();
         }
 
+        /// <summary>
+        /// event handler in case of 2 clicks on a product details in grid. this will open
+        /// the product details for update
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UpdateProductButton_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
-            if (productDataGrid.SelectedItem as BO.ProductForList != null)
+            if (productDataGrid.SelectedItem as BO.ProductForList != null)//make sure it's not a random click
             {
                 var p = (BO.ProductForList?)productDataGrid.SelectedItem;
                 int id = p?.Id ?? -1;
@@ -55,6 +72,11 @@ namespace PL.Product
             }
         }
 
+        /// <summary>
+        /// to cancel the category selector (which returns to its default- NONE)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             CategorySelector.SelectedItem = BO.Category.None;
@@ -64,6 +86,23 @@ namespace PL.Product
         private void Window_Activated(object sender, EventArgs e)
         {
             ShowProductList();
+        }
+
+        /// <summary>
+        /// get 8 most popular products (by grouping)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PopularsButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                logicProducts = new(bl.Product.GetListedPopularItems());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         private void ShowProductList()
