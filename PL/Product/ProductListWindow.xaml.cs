@@ -45,7 +45,7 @@ namespace PL.Product
 
         private void UpdateProductButton_MouseDoubleClick(object sender, RoutedEventArgs e)
         {
-            if (productDataGrid.ItemsSource != null)
+            if (productDataGrid.SelectedItem as BO.ProductForList != null)
             {
                 var p = (BO.ProductForList?)productDataGrid.SelectedItem;
                 int id = p?.Id ?? -1;
@@ -98,10 +98,12 @@ namespace PL.Product
             }
         }
 
-        private void btnBye_click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
+        /// <summary>
+        /// close current window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnBye_click(object sender, RoutedEventArgs e) => this.Close();
     }
 }
 

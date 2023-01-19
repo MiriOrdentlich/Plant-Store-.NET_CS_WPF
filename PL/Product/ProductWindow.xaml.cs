@@ -7,13 +7,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Xml.Linq;
 
 namespace PL.Product
 {
@@ -39,7 +32,6 @@ namespace PL.Product
 
             InitializeComponent();
             categoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
-
             try
             {
                 prodCurrent = (idBOProduct != -1) ? bl?.Product.GetByIdM(idBOProduct) : /*null*/new BO.Product() { };
@@ -58,14 +50,17 @@ namespace PL.Product
         {
             try
             {
-                //if (int.TryParse(prodCurrent.Id, out int id) == false)
-                //    throw new BO.BlInvalidEntityException("ID", 1);
-                //if (BO.Category.TryParse(categoryComboBox.Text, out BO.Category category) == false)
-                //    throw new BO.BlInvalidEntityException("category", 1);
-                //if (double.TryParse(priceTextBox.Text, out double price) == false)
-                //    throw new BO.BlInvalidEntityException("price", 1);
-                //if (int.TryParse(inStockTextBox.Text, out int amount) == false)
-                //    throw new BO.BlInvalidEntityException("amount", 1);                
+                //input check:
+                if (int.TryParse(idTextBox.Text, out int id) == false)
+                    throw new BO.BlInvalidEntityException("ID", 1);
+                if (BO.Category.TryParse(categoryComboBox.Text, out BO.Category category) == false)
+                    throw new BO.BlInvalidEntityException("Category", 1);
+                if (prodCurrent?.Name == "")
+                    throw new BO.BlInvalidEntityException("Name", 1);
+                if (double.TryParse(priceTextBox.Text, out double price) == false)
+                    throw new BO.BlInvalidEntityException("Price", 1);
+                if (int.TryParse(inStockTextBox.Text, out int amount) == false)
+                    throw new BO.BlInvalidEntityException("Amount", 1);
                 bl.Product.AddProduct(prodCurrent?.Id ?? -1 , prodCurrent?.Name ?? "", prodCurrent!.Category, prodCurrent.Price, prodCurrent.InStock);
                 MessageBox.Show("Product added successfully");
                 this.Close();            }
@@ -79,12 +74,15 @@ namespace PL.Product
         {
             try
             {
-                //if (int.TryParse(idTextBox.Text, out int id) == false)
-                //    throw new BO.BlInvalidEntityException("ID", 1);
-                //if (double.TryParse(priceTextBox.Text, out double price) == false)
-                //    throw new BO.BlInvalidEntityException("price", 1);
-                //if (int.TryParse(inStockTextBox.Text, out int amount) == false)
-                //    throw new BO.BlInvalidEntityException("amount", 1);
+                //input check:
+                if (int.TryParse(idTextBox.Text, out int id) == false)
+                    throw new BO.BlInvalidEntityException("ID", 1);
+                if(prodCurrent?.Name == "")
+                    throw new BO.BlInvalidEntityException("Name", 1);
+                if (double.TryParse(priceTextBox.Text, out double price) == false)
+                    throw new BO.BlInvalidEntityException("Price", 1);
+                if (int.TryParse(inStockTextBox.Text, out int amount) == false)
+                    throw new BO.BlInvalidEntityException("Amount", 1);
                 bl.Product.UpdateProduct(prodCurrent!);
                 MessageBox.Show("Product updated successfully");
                 this.Close();
@@ -94,10 +92,13 @@ namespace PL.Product
                 MessageBox.Show(exception.ToString());
             }
         }
-        private void btnBye_click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
+
+        /// <summary>
+        /// close current window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnBye_click(object sender, RoutedEventArgs e) => this.Close();
     }
 
 

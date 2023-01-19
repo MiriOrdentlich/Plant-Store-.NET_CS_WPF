@@ -44,11 +44,11 @@ namespace PL.Cart
             {
                 //check the given info:
                 if (currentCart?.CustomerName == "")
-                    throw new Exception("Invalid name");
-                if (currentCart?.CustomerName == "")
-                    throw new Exception("Invalid address");
+                    throw new BlInvalidEntityException("Name", 1);
+                if (currentCart?.CustomerAddress == "")
+                    throw new BlInvalidEntityException("Address", 1);
                 if (!checkEmail())
-                    throw new Exception("Invalid email address");
+                    throw new BlInvalidEntityException("Email address", 1);
 
                 BO.Order ord = bl.Cart.ConfirmCart(currentCart!, currentCart?.CustomerName ?? "", currentCart?.CustomerEmail ?? "", currentCart?.CustomerAddress ?? "");
                 MessageBox.Show("Your order has been confirmed \nOrder ID: " + ord.Id.ToString());
@@ -69,9 +69,12 @@ namespace PL.Cart
                 MessageBox.Show(exception.ToString());
             }
         }
-        private void btnBye_click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
+
+        /// <summary>
+        /// close current window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnBye_click(object sender, RoutedEventArgs e) => this.Close();
     }
 }

@@ -142,10 +142,7 @@ namespace PL.Cart
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btnBye_click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
+        private void btnBye_click(object sender, RoutedEventArgs e) => this.Close();
 
         /// <summary>
         /// for returning to catalog to countinue shopping

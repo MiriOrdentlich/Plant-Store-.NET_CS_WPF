@@ -27,9 +27,11 @@ namespace PL.Order
             ordTrack = bl.Order.TrackOrder(id);
         }
 
-        private void btnBye_click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
+        /// <summary>
+        /// close current window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnBye_click(object sender, RoutedEventArgs e) => this.Close();
     }
 }

@@ -25,7 +25,7 @@
     
         </Grid>
 
-        <ListView x:Name="catalog"  Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled"  Background="#00DDDDDD" ItemsSource="{Binding}" ScrollViewer.CanContentScroll="True" PreviewMouseDoubleClick="productItemDataGrid_MouseDoubleClick"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <ListView x:Name="catalog"  Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="#00DDDDDD" ItemsSource="{Binding}" ScrollViewer.CanContentScroll="True" PreviewMouseDoubleClick="productItemDataGrid_MouseDoubleClick"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="4" HorizontalAlignment="Stretch"/>

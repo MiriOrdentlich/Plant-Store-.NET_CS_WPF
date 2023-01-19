@@ -71,9 +71,11 @@ namespace PL.Order
             new FollowOrderWindow(orderCurrent?.Id ?? -1).ShowDialog();
         }
 
-        private void btnBye_click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
+        /// <summary>
+        /// close current window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnBye_click(object sender, RoutedEventArgs e) => this.Close();
     }
 }
