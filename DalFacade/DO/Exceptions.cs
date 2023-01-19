@@ -36,12 +36,10 @@ namespace DO
     }
 
     [Serializable]   
-
     public class DalDoesNotExistUserNameException : Exception
     {
         public string EntityName;
         public string EntityType;
-
 
         public DalDoesNotExistUserNameException(string name, string type)
             : base() { EntityName = name; EntityType = type; }
@@ -65,13 +63,11 @@ namespace DO
         public string EntityName;
 
         public DalAlreadyExistsIdException(int id, string name) 
-            : base() { EntityId= id; EntityName = name; }
+            : base() { EntityId = id; EntityName = name; }
         public DalAlreadyExistsIdException(int id, string name, string message) 
             : base(message) { EntityId = id; EntityName = name; }
         public DalAlreadyExistsIdException(int id, string name,string message, Exception inner) 
             : base(message, inner) { EntityId = id; EntityName = name; }
-        //protected DalAlreadyExistsIdException(SerializationInfo info, StreamingContext context) : base(info, context) { }
-        //public OverloadCapacityException(int capacity, string message) : base(message) => this.capacity = capacity;
         override public string ToString() =>
             $"Id: {EntityId} of type {EntityName}, is already exists";
     }
@@ -91,21 +87,4 @@ namespace DO
         override public string ToString() =>
             $"{EntityType} {EntityName}, is already exists";
     }
-
-    //[Serializable]
-    //public class OverloadCapacityException : Exception
-    //{
-    //    public int capacity { get; private set; }
-    //    public OverloadCapacityException() : base() { }
-    //    public OverloadCapacityException(string message) : base(message) { }
-    //    public OverloadCapacityException(string message, Exception inner) : base(message, inner) { }
-    //    protected OverloadCapacityException(SerializationInfo info, StreamingContext context) : base(info, context) { }
-    //    // special constructor for our custom exception
-    //    public OverloadCapacityException(int capacity, string message) : base(message) =>
-    //    this.capacity = capacity;
-    //    override public string ToString() =>
-    //    "OverloadCapacityException: DAL capacity of " + capacity + " overloaded\n" + Message;
-    //}
-
-
 }

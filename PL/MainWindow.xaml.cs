@@ -47,10 +47,11 @@ namespace PL
         private void ShowProductsButton_Click(object sender, RoutedEventArgs e) => new Product.ProductListWindow().ShowDialog();
         private void ShowOrdersButton_Click(object sender, RoutedEventArgs e) => new Order.OrderListWindow().ShowDialog();
 
-        private void btnBye_click(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
+        /// <summary>
+        /// close current window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnBye_click(object sender, RoutedEventArgs e) => this.Close();
     }
 }

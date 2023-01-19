@@ -1,4 +1,5 @@
 ﻿using BO;
+using DalApi;
 using DO;
 
 namespace BlImplementation;
@@ -6,6 +7,37 @@ namespace BlImplementation;
 internal class Product : BlApi.IProduct
 {
     private static readonly DalApi.IDal dal = DalApi.Factory.Get()!;
+
+    //Get a list of 8 most popular items
+    public IEnumerable<ProductForList?> GetListedPopularItems()
+    {
+        var Pop = from doOrderItem in dal.OrderItem.GetAll()
+                  group doOrderItem by doOrderItem?.ProductID into orderItemGroup
+                  select new { Id = orderItemGroup.Key, Items = orderItemGroup };
+
+        //popular is decided by the number of orders that have the product
+        Pop = Pop.OrderByDescending(x => x.Items.Count()).Take(8);
+
+        try
+        {
+            return from item in Pop // get a list of products and scan it
+                   let doProduct = dal.Product.Get(x => x?.Id == item.Id) 
+                   select new BO.ProductForList //build a new List products (type ProductForList) 
+                   {
+                       Id = doProduct.Id,
+                       Name = doProduct.Name,
+                       Category = (BO.Category)doProduct.Category!,
+                       Price = doProduct.Price,
+                       ImageRelativeName = @"\pics\" + doProduct.Name + ".jpeg"
+                   };
+        }
+        catch(DalDoesNotExistIdException ex)
+        {
+            throw new BO.BlMissingEntityException("Missing Product", ex, 2);
+        }
+    }
+
+
 
     /// <summary>
     /// GetListedProducts shows a list of products to the manager and for the client Catalogue
@@ -48,7 +80,7 @@ internal class Product : BlApi.IProduct
         try
         {
             DO.Product doProduct = dal.Product.Get(x => x?.Id == productId); //find the wanted product by its id and copy it to a new one
-            if (doProduct.Id > 0)
+            if (doProduct.Id >= 100000)
             {
                 return new BO.Product() //create a new Product (type BO) and return it with the wanted values
                 {
@@ -62,7 +94,7 @@ internal class Product : BlApi.IProduct
                 };
             }
             else
-                throw new BlInvalidEntityException(doProduct.Id, doProduct.Name! , 0);
+                throw new BlInvalidEntityException("Product name" , 1);
         }
         catch (DO.DalDoesNotExistIdException ex)
         {
@@ -84,16 +116,17 @@ internal class Product : BlApi.IProduct
     {
         try
         {
-            if (productId <= 100000)
-                throw new BO.BlInvalidEntityException("product Id", 1);
-            if (productName is null) 
+            if (productId < 100000)
+                throw new BO.BlInvalidEntityException("Product ID", 1);
+            if (productName == "") 
                 throw new BO.BlInvalidEntityException("product Name", 1); //will put EntityChoice = 4 and print - Name is null ;
             if (price < 0)
-                throw new BO.BlInvalidEntityException("product price", 0);
+                throw new BO.BlInvalidEntityException("Product price", 0);
             if (amount < 0)
-                throw new BO.BlInvalidEntityException("product amount", 0);
+                throw new BO.BlInvalidEntityException("Product amount", 0);
 
-            DO.Product newDoProduct = new DO.Product() //create a new data layer product
+            //try to add the product (DO type):
+            int newId = dal.Product.Add(new DO.Product() //create a new data layer product
             {
                 //copy the fields
                 Id = productId,
@@ -102,13 +135,11 @@ internal class Product : BlApi.IProduct
                 Price = price,
                 InStock = amount,
                 ImageRelativeName = @"\pics\" + productName + ".jpeg"
-            };
-            int newId = dal.Product.Add(newDoProduct); //add the product (DO type), and dal.Product.Add(newDoProduct) returns int type
-
+            });
         }
         catch (DO.DalAlreadyExistsIdException ex)
         {
-            throw new BO.BlAlreadyExistEntityException(ex.Message, ex);
+            throw new BO.BlAlreadyExistEntityException(ex.EntityName, ex.EntityId, 1);
         }
     }
 
@@ -124,13 +155,13 @@ internal class Product : BlApi.IProduct
         {
             //product.InStock.AmountIsNegative();
             if (product.Id < 100000)
-                throw new BO.BlInvalidEntityException("product Id", 1);
+                throw new BO.BlInvalidEntityException("Product ID", 1);
             if (product.Name == "")
-                throw new BO.BlInvalidEntityException("product Name", 1); //will put EntityChoice = 1 and print - Name is null
+                throw new BO.BlInvalidEntityException("Product name", 1); //will put EntityChoice = 1 and print - Name is null
             if (product.Price < 0)
-                throw new BO.BlInvalidEntityException("product price", 0);
+                throw new BO.BlInvalidEntityException("Product price", 0);
             if (product.InStock < 0)
-                throw new BO.BlInvalidEntityException("product amount", 0);
+                throw new BO.BlInvalidEntityException("Product amount", 0);
             DO.Product newDoProduct = new DO.Product() //create a new data layer product
             {
                 //copy the fields:

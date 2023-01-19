@@ -16,8 +16,8 @@ internal class Order : BlApi.IOrder
     {
         try
         {
-            if (orderId <= 99999)
-                throw new BlInvalidEntityException(orderId, "order Id", 1);
+            if (orderId < 100000)
+                throw new BlInvalidEntityException("Order ID", 1);
             var order = dal.Order.Get(x => x?.Id == orderId); //get order from data by the given ID
             BO.OrderTracking trackOrder = new BO.OrderTracking()
             {
@@ -56,7 +56,7 @@ internal class Order : BlApi.IOrder
         try
         {
             if (orderId < 100000)
-                throw new BlInvalidEntityException("order Id", 1);
+                throw new BlInvalidEntityException("Order ID", 1);
             var order = dal.Order.Get(x => x?.Id == orderId);//get order from data by the given ID
             return GetBoOrder(order);
         }
@@ -94,8 +94,8 @@ internal class Order : BlApi.IOrder
     {
         try
         {
-            if (orderId < 0)
-                throw new BO.BlInvalidEntityException(orderId, "order Id", 0);
+            if (orderId < 100000)
+                throw new BlInvalidEntityException("Order ID", 1);
             var doOrder = dal.Order.Get(x => x?.Id == orderId);
             if (GetOrderStatus(doOrder) == OrderStatus.Confirmed)//can't deliver order if haven't shipped it yet
                 throw new BO.BlInvalidEntityException("Order", 2, "shipped");
@@ -129,8 +129,8 @@ internal class Order : BlApi.IOrder
     {
         try
         {
-            if (orderId < 0)
-                throw new BlInvalidEntityException(orderId, "order Id", 0);
+            if (orderId < 100000)
+                throw new BlInvalidEntityException("Order ID", 1);
             var doOrder = dal.Order.Get(x => x?.Id == orderId);
             if (GetOrderStatus(doOrder) == OrderStatus.Confirmed) //order stage is confirmed => order hasn't shipped yet
             {
@@ -173,8 +173,8 @@ internal class Order : BlApi.IOrder
     {
         try
         {
-            if (order.Id < 0)
-                throw new BlInvalidEntityException(order.Id, "Order", 0);
+            if (order.Id < 100000)
+                throw new BlInvalidEntityException("Order ID", 1);
 
             var doOrderItems = dal.OrderItem.GetAll(x => x?.OrderID == order.Id);
             var boOrderItems = (from doOrderItem in doOrderItems

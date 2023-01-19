@@ -28,7 +28,7 @@ internal static class DataSource
     internal static List<Order?> OrdersList { get; } = new List<Order?>(); //empty list for orders
     internal static List<OrderItem?> OrderItemsList { get; } = new List<OrderItem?>(); //empty list for orders items
     internal static List<User?> UsersList { get; } = new List<User?>(); //empty list for users
-    
+
 
 
     private static void s_Initialize()
@@ -53,12 +53,12 @@ internal static class DataSource
 
     private static void createAndInitProducts()
     {
-        int[] priceFrom = { 500, 4000, 1500, 700, 900 };
-        int[] priceTo = { 1000, 8000, 6000, 2500, 7500 };
-        for (int i = 0; i < 10; i++)
+        int[] priceFrom = { 50, 40, 30, 70, 90, 100 };
+        int[] priceTo = { 70, 80, 60, 100, 150, 180 };
+        for (int i = 0; i < 15; i++)
         {
-            int index_category = s_rand.Next(5);
-            int index_name = s_rand.Next(2);
+            int index_category = s_rand.Next(6);
+            int index_name = s_rand.Next(3);
 
             ProductsList.Add(
                new Product()
@@ -69,7 +69,7 @@ internal static class DataSource
                    Category = (Category)index_category,
                    InStock = s_rand.Next(50),
                    ImageRelativeName = @"\pics\" + productsNames[index_category, index_name] + ".jpeg"
-               }) ;
+               });
         }
     }
     private static void createAndInitOrders()
@@ -79,11 +79,11 @@ internal static class DataSource
         string[] addresses = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j" };
         for (int i = 0; i < 20; i++)
         {
-            string fstName = firstName[s_rand.Next(6)];
-            string lstName = lastName[s_rand.Next(6)];
+            string fstName = firstName[s_rand.Next(7)];
+            string lstName = lastName[s_rand.Next(7)];
 
             int days = s_rand.Next(21, 200);
-            
+
             DateTime orderDate = DateTime.Now.AddDays(-days); // order date is berfore current date
             DateTime? deliveryDate = null;
             DateTime? shipDate = null;
@@ -94,12 +94,12 @@ internal static class DataSource
                 timeSpan = new TimeSpan(days, 0, 0, 0);
                 shipDate = orderDate + timeSpan;
             }
-            if(i < 0.8 * 0.6 * 20)
-            {            
+            if (i < 0.8 * 0.6 * 20)
+            {
                 days = s_rand.Next(1, 10);
                 timeSpan = new TimeSpan(days, 0, 0, 0);
                 if (shipDate != null)
-                    deliveryDate =  shipDate + timeSpan;
+                    deliveryDate = shipDate + timeSpan;
                 else
                     deliveryDate = DateTime.MinValue + timeSpan;
             }
@@ -109,11 +109,11 @@ internal static class DataSource
                 {
                     Id = nextOrderNumber,
                     CustomerName = fstName + " " + lstName,
-                    CustomerAddress = addresses[s_rand.Next(9)],
+                    CustomerAddress = addresses[s_rand.Next(10)],
                     CustomerEmail = fstName + lstName + "@gmail.com",
                     OrderDate = orderDate,
                     ShipDate = shipDate,
-                    DeliveryDate = deliveryDate             
+                    DeliveryDate = deliveryDate
                 });
         }
     }
@@ -124,15 +124,15 @@ internal static class DataSource
         int count = 0;
         for (int i = 0; i < 40; i++)
         {
-            if(count == 20)
+            if (count == 20)
                 count = 0;
             int numOfOrders = s_rand.Next(1, 4);
-            for(int j = 0; j < numOfOrders; j++)
+            for (int j = 0; j < numOfOrders; j++)
             {
                 int indexProduct = s_rand.Next(9);
                 int amount = s_rand.Next(10);
 
-                OrderItemsList.Add( 
+                OrderItemsList.Add(
                     new OrderItem()
                     {
                         Id = nextOrderItemNumber,
@@ -144,7 +144,7 @@ internal static class DataSource
             }
             count++;
 
-            
+
         }
     }
     private static void createAndInitUsers()
@@ -159,7 +159,7 @@ internal static class DataSource
                         Address = "House",
                         Email = "email@gmail.com",
                         Password = "abc",
-                    }) ;
+                    });
 
         UsersList.Add(
                     new User()
@@ -168,19 +168,8 @@ internal static class DataSource
                         Name = "Miri",
                         Address = "House",
                         Email = "email@gmail.com",
-                        Password = "psw",
+                        Password = "psw"
                     });
-
-        //define a client user:
-        UsersList.Add(
-                   new User()
-                   {
-                       isManager = false,
-                       Name = "NM",
-                       Address = "House",
-                       Email = "email@gmail.com",
-                       Password = "psw",
-                   });
     }
 }
 

@@ -14,8 +14,6 @@
         <local:IsReadOnlyConverter x:Key="IsReadOnlyConverter" />
         <local:statusOrderConverter x:Key="statusOrderConverter" />
 
-        <!--<local:StringToDataGridItemConverter x:Key="StringToDataGridItemConverter"/>-->
-        
         <Style TargetType="Border">
             <Setter Property="CornerRadius" Value="5"/>
         </Style>
