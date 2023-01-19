@@ -34,7 +34,16 @@ namespace PL.Product
             categoryComboBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
             try
             {
-                prodCurrent = (idBOProduct != -1) ? bl?.Product.GetByIdM(idBOProduct) : /*null*/new BO.Product() { };
+                prodCurrent = (idBOProduct != -1) ?
+                    bl?.Product.GetByIdM(idBOProduct) :
+                    new BO.Product()
+                    {
+                        Id = 0,
+                        Name = "",
+                        Price = 0,
+                        Category = BO.Category.None,
+                        InStock = 0
+                    };
             }
             catch (Exception exception)
             {
@@ -77,7 +86,7 @@ namespace PL.Product
                 //input check:
                 if (int.TryParse(idTextBox.Text, out int id) == false)
                     throw new BO.BlInvalidEntityException("ID", 1);
-                if(prodCurrent?.Name == "")
+                if(prodCurrent?.Name == "" || prodCurrent?.Name is null)
                     throw new BO.BlInvalidEntityException("Name", 1);
                 if (double.TryParse(priceTextBox.Text, out double price) == false)
                     throw new BO.BlInvalidEntityException("Price", 1);

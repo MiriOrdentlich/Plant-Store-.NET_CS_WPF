@@ -1,10 +1,5 @@
 ﻿using DO;
-
 using DalApi;
-using System.Diagnostics;
-using System.Xml.Linq;
-
-
 namespace Dal;
 
 internal class DalProduct : IProduct
@@ -16,7 +11,7 @@ internal class DalProduct : IProduct
         //if found product -> throw exception
         if (DataSource.ProductsList.Find(x => x?.Id == product.Id) != null) 
             throw new DO.DalAlreadyExistsIdException(product.Id, "Product");
-        DataSource.ProductsList.Add(product); // if product isn't in list, add product to list
+        DataSource.ProductsList.Add(product); //if product isn't in list, add product to list
         return product.Id;
     }
 
