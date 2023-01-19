@@ -49,6 +49,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "pics", "pics", "{D864C34F-1
 		pics\Vivi.jpeg = pics\Vivi.jpeg
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalXml", "DalXml\DalXml.csproj", "{382923CD-A272-4B01-A99A-DBF6B6D86420}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,10 @@ Global
 		{45AD850B-546C-4C87-AEBE-0A2EFFA3FB5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45AD850B-546C-4C87-AEBE-0A2EFFA3FB5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45AD850B-546C-4C87-AEBE-0A2EFFA3FB5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{382923CD-A272-4B01-A99A-DBF6B6D86420}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{382923CD-A272-4B01-A99A-DBF6B6D86420}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{382923CD-A272-4B01-A99A-DBF6B6D86420}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{382923CD-A272-4B01-A99A-DBF6B6D86420}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
