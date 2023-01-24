@@ -8,7 +8,7 @@ internal class Product : BlApi.IProduct
 {
     private static readonly DalApi.IDal dal = DalApi.Factory.Get()!;
 
-    //Get a list of 8 most popular items
+    //Get a list of 8 most popular items 
     public IEnumerable<ProductForList?> GetListedPopularItems()
     {
         var Pop = from doOrderItem in dal.OrderItem.GetAll()
