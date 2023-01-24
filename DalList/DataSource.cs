@@ -34,12 +34,7 @@ internal static class DataSource
         createAndInitOrders();
         createAndInitOrderItems();
         createAndInitUsers();
-
-        XmlTools.SaveListToXMLSerializer(ProductsList, "products");
-        XmlTools.SaveListToXMLSerializer(OrdersList, "orders");
-        XmlTools.SaveListToXMLSerializer(OrderItemsList, "orderItems");
-        XmlTools.SaveListToXMLSerializer(UsersList, "users");
-    }
+   }
 
     //the 6 arrays match to the 6 categories in Category by index. i did it in a way that we can later on choose
     //a price (also suited by index) that make sense to the product value

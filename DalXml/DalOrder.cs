@@ -30,10 +30,11 @@ internal class DalOrder : IOrder
         List<DO.Order?> listOrders = XmlTools.LoadListFromXMLSerializer<DO.Order>(s_Orders);
 
         if (listOrders.FirstOrDefault(ord => ord?.Id == order.Id) != null)
-            new DO.DalAlreadyExistsIdException(order.Id, "Order");
+           throw new DO.DalAlreadyExistsIdException(order.Id, "Order");
 
+        order.Id= Config.GetNextOrderId();
         listOrders.Add(order);
-
+        Config.SetNextOrderId(order.Id +1);
         XmlTools.SaveListToXMLSerializer(listOrders, s_Orders);
 
         return order.Id;
