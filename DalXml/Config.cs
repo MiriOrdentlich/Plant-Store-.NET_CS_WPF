@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,15 +13,18 @@ internal static class Config
     readonly static string s_config = "configuration";
     internal static int GetNextProductId()
     {
-        return XmlTools.ToIntNullable(XmlTools.LoadListFromXMLElement(s_config), "NextProductId") ?? throw new NullReferenceException();
+        return XmlTools.ToIntNullable(XmlTools.LoadListFromXMLElement(s_config), "NextProductId") ?? throw new DalDoesNotExistIdException(-1, "Product");
+
     }
     public static int GetNextOrderId()
     {
-        return XmlTools.ToIntNullable(XmlTools.LoadListFromXMLElement(s_config), "NextOrderId") ?? throw new NullReferenceException();
+        return XmlTools.ToIntNullable(XmlTools.LoadListFromXMLElement(s_config), "NextOrderId") ?? throw new DalDoesNotExistIdException(-1, "Order");
+
     }
     public static int GetNextOrderItemId()
     {
-        return XmlTools.ToIntNullable(XmlTools.LoadListFromXMLElement(s_config), "NextOrderItemId") ?? throw new NullReferenceException();
+        return XmlTools.ToIntNullable(XmlTools.LoadListFromXMLElement(s_config), "NextOrderItemId") ?? throw new DalDoesNotExistIdException(-1, "OrderItem");
+
     }
     public static void SetNextProductId(int id)
     {

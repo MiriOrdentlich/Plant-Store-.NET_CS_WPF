@@ -1,4 +1,6 @@
 ﻿using DalApi;
+using DO;
+
 namespace Dal;
 
 internal class DalOrderItem : IOrderItem
@@ -31,7 +33,10 @@ internal class DalOrderItem : IOrderItem
         if (listOrderItems.FirstOrDefault(oi => oi?.Id == orderItem.Id) != null)
             throw new DO.DalAlreadyExistsIdException(orderItem.Id, "Order Item");
 
+        orderItem.Id = Config.GetNextOrderItemId();
+
         listOrderItems.Add(orderItem);
+        Config.SetNextOrderId(orderItem.Id + 1);
 
         XmlTools.SaveListToXMLSerializer(listOrderItems, s_OrderItems);
 

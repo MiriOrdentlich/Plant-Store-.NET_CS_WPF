@@ -1,4 +1,5 @@
-﻿using DO;
+﻿using DalApi;
+using DO;
 namespace Dal;
 
 ///////////////////////////////////////////
@@ -35,7 +36,11 @@ class DalProduct : DalApi.IProduct
         if (listProducts.FirstOrDefault(pro => pro?.Id == product.Id) != null)
             throw new DalAlreadyExistsIdException(product.Id, "Product");
 
+        product.Id = Config.GetNextProductId();
+
+
         listProducts.Add(product);
+        Config.SetNextOrderId(product.Id + 1);
 
         XmlTools.SaveListToXMLSerializer(listProducts, s_Products);
 
