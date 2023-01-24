@@ -97,6 +97,14 @@
     <ImageRelativeName>\pics\Peggy.jpeg</ImageRelativeName>
   </Product>
   <Product>
+    <Id>100009</Id>
+    <Name>Lyla</Name>
+    <Price>55</Price>
+    <Category>CactiAndSucculents</Category>
+    <InStock>48</InStock>
+    <ImageRelativeName>\pics\Lyla.jpeg</ImageRelativeName>
+  </Product>
+  <Product>
     <Id>100006</Id>
     <Name>Peggy</Name>
     <Price>145</Price>
@@ -105,11 +113,11 @@
     <ImageRelativeName>\pics\Peggy.jpeg</ImageRelativeName>
   </Product>
   <Product>
-    <Id>100009</Id>
-    <Name>Lyla</Name>
-    <Price>55</Price>
-    <Category>CactiAndSucculents</Category>
-    <InStock>48</InStock>
-    <ImageRelativeName>\pics\Lyla.jpeg</ImageRelativeName>
+    <Id>10000002</Id>
+    <Name>drytfuyg</Name>
+    <Price>0</Price>
+    <Category>PalmsAndTrees</Category>
+    <InStock>0</InStock>
+    <ImageRelativeName>\pics\drytfuyg.jpeg</ImageRelativeName>
   </Product>
 </ArrayOfProduct>
