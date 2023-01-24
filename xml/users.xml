@@ -1,10 +1,17 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<users>
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfUser xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <User>
-    <isManager>false</isManager>
-    <Name>Miri</Name>
-    <Address>g</Address>
-    <Email>g@gmail.com</Email>
-    <Password>gf</Password>
+    <isManager>true</isManager>
+    <Name>Naama</Name>
+    <Address>House</Address>
+    <Email>email@gmail.com</Email>
+    <Password>abc</Password>
   </User>
-</users>
+  <User>
+    <isManager>true</isManager>
+    <Name>Miri</Name>
+    <Address>House</Address>
+    <Email>email@gmail.com</Email>
+    <Password>psw</Password>
+  </User>
+</ArrayOfUser>
