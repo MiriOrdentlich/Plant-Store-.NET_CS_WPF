@@ -2,122 +2,122 @@
 <ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Product>
     <Id>100000</Id>
-    <Name>Leon</Name>
-    <Price>159</Price>
+    <Name>Vivi</Name>
+    <Price>125</Price>
     <Category>Edibles</Category>
-    <InStock>47</InStock>
-    <ImageRelativeName>\pics\Leon.jpeg</ImageRelativeName>
+    <InStock>15</InStock>
+    <ImageRelativeName>\pics\Vivi.jpeg</ImageRelativeName>
   </Product>
   <Product>
     <Id>100001</Id>
-    <Name>Bertie</Name>
-    <Price>53</Price>
-    <Category>Ferns</Category>
+    <Name>Kai</Name>
+    <Price>174</Price>
+    <Category>Edibles</Category>
     <InStock>4</InStock>
-    <ImageRelativeName>\pics\Bertie.jpeg</ImageRelativeName>
+    <ImageRelativeName>\pics\Kai.jpeg</ImageRelativeName>
   </Product>
   <Product>
     <Id>100002</Id>
-    <Name>Kai</Name>
-    <Price>147</Price>
-    <Category>Edibles</Category>
-    <InStock>47</InStock>
-    <ImageRelativeName>\pics\Kai.jpeg</ImageRelativeName>
-  </Product>
-  <Product>
-    <Id>100003</Id>
-    <Name>Francisca</Name>
-    <Price>54</Price>
-    <Category>Flowering</Category>
-    <InStock>31</InStock>
-    <ImageRelativeName>\pics\Francisca.jpeg</ImageRelativeName>
-  </Product>
-  <Product>
-    <Id>100004</Id>
-    <Name>Lizzie</Name>
-    <Price>90</Price>
-    <Category>HangingAndClimbing</Category>
-    <InStock>18</InStock>
-    <ImageRelativeName>\pics\Lizzie.jpeg</ImageRelativeName>
-  </Product>
-  <Product>
-    <Id>100005</Id>
-    <Name>Ian</Name>
-    <Price>52</Price>
-    <Category>CactiAndSucculents</Category>
-    <InStock>21</InStock>
-    <ImageRelativeName>\pics\Ian.jpeg</ImageRelativeName>
-  </Product>
-  <Product>
-    <Id>100006</Id>
-    <Name>Big Ken</Name>
-    <Price>79</Price>
-    <Category>PalmsAndTrees</Category>
-    <InStock>44</InStock>
-    <ImageRelativeName>\pics\Big Ken.jpeg</ImageRelativeName>
-  </Product>
-  <Product>
-    <Id>100007</Id>
-    <Name>Lyla</Name>
-    <Price>44</Price>
-    <Category>CactiAndSucculents</Category>
-    <InStock>29</InStock>
-    <ImageRelativeName>\pics\Lyla.jpeg</ImageRelativeName>
-  </Product>
-  <Product>
-    <Id>100008</Id>
-    <Name>Val</Name>
-    <Price>32</Price>
-    <Category>CactiAndSucculents</Category>
-    <InStock>11</InStock>
-    <ImageRelativeName>\pics\Val.jpeg</ImageRelativeName>
-  </Product>
-  <Product>
-    <Id>100009</Id>
-    <Name>Bertie</Name>
-    <Price>75</Price>
-    <Category>Ferns</Category>
-    <InStock>16</InStock>
-    <ImageRelativeName>\pics\Bertie.jpeg</ImageRelativeName>
-  </Product>
-  <Product>
-    <Id>100010</Id>
-    <Name>Kai</Name>
-    <Price>145</Price>
-    <Category>Edibles</Category>
-    <InStock>35</InStock>
-    <ImageRelativeName>\pics\Kai.jpeg</ImageRelativeName>
-  </Product>
-  <Product>
-    <Id>100011</Id>
     <Name>Florence</Name>
-    <Price>59</Price>
+    <Price>68</Price>
     <Category>Flowering</Category>
-    <InStock>39</InStock>
+    <InStock>45</InStock>
     <ImageRelativeName>\pics\Florence.jpeg</ImageRelativeName>
   </Product>
   <Product>
-    <Id>100012</Id>
+    <Id>100003</Id>
     <Name>Peggy</Name>
-    <Price>117</Price>
+    <Price>149</Price>
     <Category>HangingAndClimbing</Category>
-    <InStock>24</InStock>
+    <InStock>11</InStock>
     <ImageRelativeName>\pics\Peggy.jpeg</ImageRelativeName>
   </Product>
   <Product>
-    <Id>100013</Id>
-    <Name>Laura tree</Name>
+    <Id>100004</Id>
+    <Name>Lyla</Name>
+    <Price>30</Price>
+    <Category>CactiAndSucculents</Category>
+    <InStock>45</InStock>
+    <ImageRelativeName>\pics\Lyla.jpeg</ImageRelativeName>
+  </Product>
+  <Product>
+    <Id>100005</Id>
+    <Name>Pele</Name>
+    <Price>42</Price>
+    <Category>Ferns</Category>
+    <InStock>20</InStock>
+    <ImageRelativeName>\pics\Pele.jpeg</ImageRelativeName>
+  </Product>
+  <Product>
+    <Id>100006</Id>
+    <Name>Peggy</Name>
+    <Price>145</Price>
+    <Category>HangingAndClimbing</Category>
+    <InStock>27</InStock>
+    <ImageRelativeName>\pics\Peggy.jpeg</ImageRelativeName>
+  </Product>
+  <Product>
+    <Id>100007</Id>
+    <Name>Leon</Name>
+    <Price>104</Price>
+    <Category>Edibles</Category>
+    <InStock>3</InStock>
+    <ImageRelativeName>\pics\Leon.jpeg</ImageRelativeName>
+  </Product>
+  <Product>
+    <Id>100008</Id>
+    <Name>Florence</Name>
+    <Price>69</Price>
+    <Category>Flowering</Category>
+    <InStock>36</InStock>
+    <ImageRelativeName>\pics\Florence.jpeg</ImageRelativeName>
+  </Product>
+  <Product>
+    <Id>100009</Id>
+    <Name>Lyla</Name>
+    <Price>54</Price>
+    <Category>CactiAndSucculents</Category>
+    <InStock>48</InStock>
+    <ImageRelativeName>\pics\Lyla.jpeg</ImageRelativeName>
+  </Product>
+  <Product>
+    <Id>100010</Id>
+    <Name>Ariel</Name>
     <Price>80</Price>
     <Category>PalmsAndTrees</Category>
-    <InStock>46</InStock>
-    <ImageRelativeName>\pics\Laura tree.jpeg</ImageRelativeName>
+    <InStock>5</InStock>
+    <ImageRelativeName>\pics\Ariel.jpeg</ImageRelativeName>
+  </Product>
+  <Product>
+    <Id>100011</Id>
+    <Name>Val</Name>
+    <Price>35</Price>
+    <Category>CactiAndSucculents</Category>
+    <InStock>6</InStock>
+    <ImageRelativeName>\pics\Val.jpeg</ImageRelativeName>
+  </Product>
+  <Product>
+    <Id>100012</Id>
+    <Name>Lizzie</Name>
+    <Price>102</Price>
+    <Category>HangingAndClimbing</Category>
+    <InStock>33</InStock>
+    <ImageRelativeName>\pics\Lizzie.jpeg</ImageRelativeName>
+  </Product>
+  <Product>
+    <Id>100013</Id>
+    <Name>Pele</Name>
+    <Price>69</Price>
+    <Category>Ferns</Category>
+    <InStock>43</InStock>
+    <ImageRelativeName>\pics\Pele.jpeg</ImageRelativeName>
   </Product>
   <Product>
     <Id>100014</Id>
-    <Name>Marge</Name>
-    <Price>99</Price>
-    <Category>HangingAndClimbing</Category>
-    <InStock>41</InStock>
-    <ImageRelativeName>\pics\Marge.jpeg</ImageRelativeName>
+    <Name>Vinnie</Name>
+    <Price>66</Price>
+    <Category>Flowering</Category>
+    <InStock>13</InStock>
+    <ImageRelativeName>\pics\Vinnie.jpeg</ImageRelativeName>
   </Product>
 </ArrayOfProduct>
