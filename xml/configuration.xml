@@ -1,2 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<configuration />
+<Config>
+  <NextOrderId>10000001</NextOrderId>
+  <NextOrderItemId> 1000000 </NextOrderItemId>
+  <NextProductId>10000002</NextProductId>
+</Config>

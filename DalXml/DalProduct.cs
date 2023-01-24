@@ -37,11 +37,8 @@ class DalProduct : DalApi.IProduct
             throw new DalAlreadyExistsIdException(product.Id, "Product");
 
         product.Id = Config.GetNextProductId();
-
-
         listProducts.Add(product);
-        Config.SetNextOrderId(product.Id + 1);
-
+        Config.SetNextProductId(product.Id + 1);
         XmlTools.SaveListToXMLSerializer(listProducts, s_Products);
 
         return product.Id;
@@ -60,6 +57,13 @@ class DalProduct : DalApi.IProduct
     public void Update(DO.Product product)
     {
         Delete(product.Id);
-        Add(product);
+        List<DO.Product?> listProducts = XmlTools.LoadListFromXMLSerializer<DO.Product>(s_Products);
+
+        if (listProducts.FirstOrDefault(pro => pro?.Id == product.Id) != null)
+            throw new DalAlreadyExistsIdException(product.Id, "Product");
+
+        listProducts.Add(product);
+        XmlTools.SaveListToXMLSerializer(listProducts, s_Products);
+
     }
 }

@@ -25,36 +25,12 @@
     <ImageRelativeName>\pics\Florence.jpeg</ImageRelativeName>
   </Product>
   <Product>
-    <Id>100003</Id>
-    <Name>Peggy</Name>
-    <Price>149</Price>
-    <Category>HangingAndClimbing</Category>
-    <InStock>11</InStock>
-    <ImageRelativeName>\pics\Peggy.jpeg</ImageRelativeName>
-  </Product>
-  <Product>
     <Id>100004</Id>
     <Name>Lyla</Name>
     <Price>30</Price>
     <Category>CactiAndSucculents</Category>
     <InStock>45</InStock>
     <ImageRelativeName>\pics\Lyla.jpeg</ImageRelativeName>
-  </Product>
-  <Product>
-    <Id>100005</Id>
-    <Name>Pele</Name>
-    <Price>42</Price>
-    <Category>Ferns</Category>
-    <InStock>20</InStock>
-    <ImageRelativeName>\pics\Pele.jpeg</ImageRelativeName>
-  </Product>
-  <Product>
-    <Id>100006</Id>
-    <Name>Peggy</Name>
-    <Price>145</Price>
-    <Category>HangingAndClimbing</Category>
-    <InStock>27</InStock>
-    <ImageRelativeName>\pics\Peggy.jpeg</ImageRelativeName>
   </Product>
   <Product>
     <Id>100007</Id>
@@ -71,14 +47,6 @@
     <Category>Flowering</Category>
     <InStock>36</InStock>
     <ImageRelativeName>\pics\Florence.jpeg</ImageRelativeName>
-  </Product>
-  <Product>
-    <Id>100009</Id>
-    <Name>Lyla</Name>
-    <Price>54</Price>
-    <Category>CactiAndSucculents</Category>
-    <InStock>48</InStock>
-    <ImageRelativeName>\pics\Lyla.jpeg</ImageRelativeName>
   </Product>
   <Product>
     <Id>100010</Id>
@@ -119,5 +87,29 @@
     <Category>Flowering</Category>
     <InStock>13</InStock>
     <ImageRelativeName>\pics\Vinnie.jpeg</ImageRelativeName>
+  </Product>
+  <Product>
+    <Id>100003</Id>
+    <Name>Peggy</Name>
+    <Price>149</Price>
+    <Category>HangingAndClimbing</Category>
+    <InStock>11</InStock>
+    <ImageRelativeName>\pics\Peggy.jpeg</ImageRelativeName>
+  </Product>
+  <Product>
+    <Id>100006</Id>
+    <Name>Peggy</Name>
+    <Price>145</Price>
+    <Category>HangingAndClimbing</Category>
+    <InStock>27</InStock>
+    <ImageRelativeName>\pics\Peggy.jpeg</ImageRelativeName>
+  </Product>
+  <Product>
+    <Id>100009</Id>
+    <Name>Lyla</Name>
+    <Price>55</Price>
+    <Category>CactiAndSucculents</Category>
+    <InStock>48</InStock>
+    <ImageRelativeName>\pics\Lyla.jpeg</ImageRelativeName>
   </Product>
 </ArrayOfProduct>
