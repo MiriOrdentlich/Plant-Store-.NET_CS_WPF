@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Config>
-  <NextOrderId>10000001</NextOrderId>
-  <NextOrderItemId> 1000000 </NextOrderItemId>
-  <NextProductId>10000003</NextProductId>
+  <NextOrderId>100020</NextOrderId>
+  <NextOrderItemId> 100088 </NextOrderItemId>
+  <NextProductId>100017</NextProductId>
 </Config>

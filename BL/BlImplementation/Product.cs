@@ -11,7 +11,8 @@ internal class Product : BlApi.IProduct
     //Get a list of 8 most popular items 
     public IEnumerable<ProductForList?> GetListedPopularItems()
     {
-        var Pop = from doOrderItem in dal.OrderItem.GetAll()
+        var tmp = dal!.OrderItem.GetAll();
+        var Pop = from doOrderItem in tmp
                   group doOrderItem by doOrderItem?.ProductID into orderItemGroup
                   select new { Id = orderItemGroup.Key, Items = orderItemGroup };
 
@@ -20,8 +21,8 @@ internal class Product : BlApi.IProduct
 
         try
         {
-            return from item in Pop // get a list of products and scan it
-                   let doProduct = dal.Product.Get(x => x?.Id == item.Id) 
+            var tmp1= from item in Pop // get a list of products and scan it
+                   let doProduct = dal.Product.GetById(item?.Id ?? throw new Exception("sds"))
                    select new BO.ProductForList //build a new List products (type ProductForList) 
                    {
                        Id = doProduct.Id,
@@ -30,6 +31,7 @@ internal class Product : BlApi.IProduct
                        Price = doProduct.Price,
                        ImageRelativeName = @"\pics\" + doProduct.Name + ".jpeg"
                    };
+            return tmp1;
         }
         catch(DalDoesNotExistIdException ex)
         {

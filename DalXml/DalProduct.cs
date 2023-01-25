@@ -19,7 +19,14 @@ class DalProduct : DalApi.IProduct
         else
             return listProducts.Where(filter).OrderBy(pro => pro?.Id);
     }
+    public Product GetById(int id) //Request a product by its id
+    {
+        List<DO.Product?> listProducts = XmlTools.LoadListFromXMLSerializer<DO.Product>(s_Products);
 
+        //search for the wanted product, throw if doesn't exist
+        return listProducts.FirstOrDefault(x => x?.Id == id) ??
+            throw new DO.DalDoesNotExistIdException(-1, "Product");
+    }
     public DO.Product Get(Func<Product?, bool> filter)
     {
         List<DO.Product?> listProducts = XmlTools.LoadListFromXMLSerializer<DO.Product>(s_Products);
@@ -27,6 +34,7 @@ class DalProduct : DalApi.IProduct
         DO.Product pro = listProducts.Where(filter).FirstOrDefault() ??
             throw new DalDoesNotExistIdException(-1, "Product");
         return pro;
+        
     }
 
     public int Add(DO.Product product)

@@ -14,7 +14,12 @@ internal class DalProduct : IProduct
         DataSource.ProductsList.Add(product); //if product isn't in list, add product to list
         return product.Id;
     }
-
+    public Product GetById(int id) //Request 
+    {
+        //search for the wanted product, throw if doesn't exist
+        return DataSource.ProductsList.Find(x => x?.Id == id) ??
+            throw new DO.DalDoesNotExistIdException(-1, "Product");
+    }
     public Product Get(Func<Product?, bool> filter) //Request 
     {
         //search for the wanted product, throw if doesn't exist
