@@ -53,7 +53,14 @@ internal class DalOrder : IOrder
     public void Update(DO.Order order)
     {
         Delete(order.Id);
-        Add(order);
+        List<DO.Order?> listOrders = XmlTools.LoadListFromXMLSerializer<DO.Order>(s_Orders);
+
+        if (listOrders.FirstOrDefault(pro => pro?.Id == order.Id) != null)
+            throw new DalAlreadyExistsIdException(order.Id, "Product");
+
+        listOrders.Add(order);
+        XmlTools.SaveListToXMLSerializer(listOrders, s_Orders);
+
     }
 }
 

@@ -53,8 +53,7 @@ namespace PL.Product
             try
             {
                 //input check:
-                if (int.TryParse(idTextBox.Text, out int id) == false)
-                    throw new BO.BlInvalidEntityException("ID", 1);
+             
                 if(prodCurrent?.Category == BO.Category.None)
                     throw new BO.BlInvalidEntityException("Category", 1);
                 //if (BO.Category.TryParse(categoryComboBox.Text, out BO.Category category) == false)

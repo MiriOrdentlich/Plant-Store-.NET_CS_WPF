@@ -19,7 +19,14 @@ class DalProduct : DalApi.IProduct
         else
             return listProducts.Where(filter).OrderBy(pro => pro?.Id);
     }
+    public Product GetById(int id) //Request a product by its id
+    {
+        List<DO.Product?> listProducts = XmlTools.LoadListFromXMLSerializer<DO.Product>(s_Products);
 
+        //search for the wanted product, throw if doesn't exist
+        return listProducts.FirstOrDefault(x => x?.Id == id) ??
+            throw new DO.DalDoesNotExistIdException(-1, "Product");
+    }
     public DO.Product Get(Func<Product?, bool> filter)
     {
         List<DO.Product?> listProducts = XmlTools.LoadListFromXMLSerializer<DO.Product>(s_Products);
@@ -27,6 +34,7 @@ class DalProduct : DalApi.IProduct
         DO.Product pro = listProducts.Where(filter).FirstOrDefault() ??
             throw new DalDoesNotExistIdException(-1, "Product");
         return pro;
+        
     }
 
     public int Add(DO.Product product)
@@ -37,11 +45,8 @@ class DalProduct : DalApi.IProduct
             throw new DalAlreadyExistsIdException(product.Id, "Product");
 
         product.Id = Config.GetNextProductId();
-
-
         listProducts.Add(product);
-        Config.SetNextOrderId(product.Id + 1);
-
+        Config.SetNextProductId(product.Id + 1);
         XmlTools.SaveListToXMLSerializer(listProducts, s_Products);
 
         return product.Id;
@@ -60,6 +65,13 @@ class DalProduct : DalApi.IProduct
     public void Update(DO.Product product)
     {
         Delete(product.Id);
-        Add(product);
+        List<DO.Product?> listProducts = XmlTools.LoadListFromXMLSerializer<DO.Product>(s_Products);
+
+        if (listProducts.FirstOrDefault(pro => pro?.Id == product.Id) != null)
+            throw new DalAlreadyExistsIdException(product.Id, "Product");
+
+        listProducts.Add(product);
+        XmlTools.SaveListToXMLSerializer(listProducts, s_Products);
+
     }
 }
