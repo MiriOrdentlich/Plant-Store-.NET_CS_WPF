@@ -7,6 +7,13 @@
         mc:Ignorable="d"
         Title="SimulatorWindow" Height="450" Width="800">
     <Grid>
-        
+        <TextBlock x:Name="OrdNumTxt" HorizontalAlignment="Left" Margin="87,248,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" RenderTransformOrigin="-6.335,0.643"/>
+        <TextBlock x:Name="ConfirmDateTxt" HorizontalAlignment="Left" Margin="87,146,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+        <TextBlock x:Name="Shipped" HorizontalAlignment="Left" Margin="87,56,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="34" Width="79"/>
+        <TextBlock Name="TimeBlock" FontSize="40" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="487,13,0,0"/>
+        <TextBlock Name="DateBlock" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="331,0,0,389"/>
+        <Label Content="Order Id" HorizontalAlignment="Left" Margin="216,55,0,0" VerticalAlignment="Top"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="216,141,0,0" VerticalAlignment="Top"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="216,246,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

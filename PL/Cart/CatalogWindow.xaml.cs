@@ -88,6 +88,11 @@ namespace PL.Cart
             ShowProductItemsList();
         }
 
+        /// <summary>
+        /// restart window
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Activated(object sender, EventArgs e)
         {
             CategorySelector.SelectedItem = BO.Category.None;

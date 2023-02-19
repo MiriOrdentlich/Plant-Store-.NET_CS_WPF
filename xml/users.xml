@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfUser xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <User>
     <isManager>true</isManager>
@@ -13,5 +13,40 @@
     <Address>House</Address>
     <Email>email@gmail.com</Email>
     <Password>psw</Password>
+  </User>
+  <User>
+    <isManager>false</isManager>
+    <Name>bbb</Name>
+    <Address>bhb</Address>
+    <Email>bbb@gmail.com</Email>
+    <Password>123</Password>
+  </User>
+  <User>
+    <isManager>false</isManager>
+    <Name>Miri</Name>
+    <Address>psw</Address>
+    <Email>m@gmail.com</Email>
+    <Password>tg</Password>
+  </User>
+  <User>
+    <isManager>false</isManager>
+    <Name>df</Name>
+    <Address>gh</Address>
+    <Email>g@gmail.com</Email>
+    <Password>df</Password>
+  </User>
+  <User>
+    <isManager>false</isManager>
+    <Name>frg</Name>
+    <Address>hb</Address>
+    <Email>g@gmail.com</Email>
+    <Password>de</Password>
+  </User>
+  <User>
+    <isManager>false</isManager>
+    <Name>f</Name>
+    <Address>d</Address>
+    <Email>h@gmail.com</Email>
+    <Password>de</Password>
   </User>
 </ArrayOfUser>

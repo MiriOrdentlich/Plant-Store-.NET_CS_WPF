@@ -1,4 +1,5 @@
 ﻿using BO;
+using DO;
 
 namespace BlImplementation;
 
@@ -7,12 +8,32 @@ internal class Order : BlApi.IOrder
     private static readonly DalApi.IDal dal = DalApi.Factory.Get()!;
 
     /// <summary>
+    /// returns to simulator the id of the order with status confirmed that has
+    /// the oldest 'confirmed' date.
+    /// </summary>
+    /// <returns>Order Id</returns>
+    public int? GetNextOrder()
+    {
+
+        try
+        {
+            //get all confirmed orders (order get confirmed when created), sort them by confimed date and get the fi
+            var confirmedOrder = dal.Order.GetAll(x => x?.ShipDate == null).OrderBy(ord => ord?.OrderDate).FirstOrDefault();
+            return confirmedOrder?.Id;
+        }
+        catch (DO.DalDoesNotExistIdException ex)
+        {
+            throw new BO.BlMissingEntityException(ex.Message, ex);
+        }
+    }
+
+    /// <summary>
     /// method gets dates of different statuses in oreder to follow order. 
     /// </summary>
     /// <param name="orderId">used to find the order from data to track</param>
     /// <returns>list of tuples: (date, what happens in this date)</returns>
     /// <exception cref="NotImplementedException"></exception>
-    public BO.OrderTracking TrackOrder(int orderId)
+  public BO.OrderTracking TrackOrder(int orderId)
     {
         try
         {

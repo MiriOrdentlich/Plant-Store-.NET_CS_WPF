@@ -218,10 +218,6 @@ namespace PL
             throw new NotImplementedException();
         }
     }
-
-    internal class Converters
-    {
-    }
 }
 
 

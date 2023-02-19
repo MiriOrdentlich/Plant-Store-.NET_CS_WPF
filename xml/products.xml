@@ -9,14 +9,6 @@
     <ImageRelativeName>\pics\Val.jpeg</ImageRelativeName>
   </Product>
   <Product>
-    <Id>100001</Id>
-    <Name>Francisca</Name>
-    <Price>63</Price>
-    <Category>Flowering</Category>
-    <InStock>46</InStock>
-    <ImageRelativeName>\pics\Francisca.jpeg</ImageRelativeName>
-  </Product>
-  <Product>
     <Id>100002</Id>
     <Name>Pele</Name>
     <Price>75</Price>
@@ -41,14 +33,6 @@
     <ImageRelativeName>\pics\Lizzie.jpeg</ImageRelativeName>
   </Product>
   <Product>
-    <Id>100005</Id>
-    <Name>Vivi</Name>
-    <Price>144</Price>
-    <Category>Edibles</Category>
-    <InStock>24</InStock>
-    <ImageRelativeName>\pics\Vivi.jpeg</ImageRelativeName>
-  </Product>
-  <Product>
     <Id>100007</Id>
     <Name>Marge</Name>
     <Price>149</Price>
@@ -57,27 +41,11 @@
     <ImageRelativeName>\pics\Marge.jpeg</ImageRelativeName>
   </Product>
   <Product>
-    <Id>100008</Id>
-    <Name>Vinnie</Name>
-    <Price>60</Price>
-    <Category>Flowering</Category>
-    <InStock>1</InStock>
-    <ImageRelativeName>\pics\Vinnie.jpeg</ImageRelativeName>
-  </Product>
-  <Product>
     <Id>100009</Id>
     <Name>Ian</Name>
     <Price>31</Price>
     <Category>CactiAndSucculents</Category>
     <InStock>29</InStock>
-    <ImageRelativeName>\pics\Ian.jpeg</ImageRelativeName>
-  </Product>
-  <Product>
-    <Id>100011</Id>
-    <Name>Ian</Name>
-    <Price>41</Price>
-    <Category>CactiAndSucculents</Category>
-    <InStock>16</InStock>
     <ImageRelativeName>\pics\Ian.jpeg</ImageRelativeName>
   </Product>
   <Product>
@@ -113,11 +81,59 @@
     <ImageRelativeName>\pics\Kai.jpeg</ImageRelativeName>
   </Product>
   <Product>
+    <Id>100005</Id>
+    <Name>Vivi</Name>
+    <Price>144</Price>
+    <Category>Edibles</Category>
+    <InStock>24</InStock>
+    <ImageRelativeName>\pics\Vivi.jpeg</ImageRelativeName>
+  </Product>
+  <Product>
+    <Id>100017</Id>
+    <Name>fgv</Name>
+    <Price>0</Price>
+    <Category>CactiAndSucculents</Category>
+    <InStock>0</InStock>
+    <ImageRelativeName>\pics\fgv.jpeg</ImageRelativeName>
+  </Product>
+  <Product>
+    <Id>100019</Id>
+    <Name>ghbj</Name>
+    <Price>0</Price>
+    <Category>PalmsAndTrees</Category>
+    <InStock>0</InStock>
+    <ImageRelativeName>\pics\ghbj.jpeg</ImageRelativeName>
+  </Product>
+  <Product>
+    <Id>100008</Id>
+    <Name>Vinnie</Name>
+    <Price>60</Price>
+    <Category>CactiAndSucculents</Category>
+    <InStock>1</InStock>
+    <ImageRelativeName>\pics\Vinnie.jpeg</ImageRelativeName>
+  </Product>
+  <Product>
+    <Id>100020</Id>
+    <Name>fg</Name>
+    <Price>0</Price>
+    <Category>PalmsAndTrees</Category>
+    <InStock>0</InStock>
+    <ImageRelativeName>\pics\fg.jpeg</ImageRelativeName>
+  </Product>
+  <Product>
+    <Id>100001</Id>
+    <Name>Francisca</Name>
+    <Price>63</Price>
+    <Category>Flowering</Category>
+    <InStock>41</InStock>
+    <ImageRelativeName>\pics\Francisca.jpeg</ImageRelativeName>
+  </Product>
+  <Product>
     <Id>100006</Id>
     <Name>Lizzie</Name>
     <Price>126</Price>
     <Category>HangingAndClimbing</Category>
-    <InStock>45</InStock>
+    <InStock>43</InStock>
     <ImageRelativeName>\pics\Lizzie.jpeg</ImageRelativeName>
   </Product>
 </ArrayOfProduct>

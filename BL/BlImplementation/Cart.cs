@@ -11,7 +11,7 @@ internal class Cart : BlApi.ICart
 {
     private static readonly DalApi.IDal dal = DalApi.Factory.Get()!;
 
-    private static int Index = 1000000; //index for orderItem id
+   // private static int Index = 1000000; //index for orderItem id
 
 
 
@@ -38,7 +38,7 @@ internal class Cart : BlApi.ICart
                 {
                     cart.Items = (cart.Items?.Append(new BO.OrderItem
                     { 
-                        Id = Index++,
+                        //Id = 111111,
                         Name = product.Name,
                         Price = product.Price,
                         ProductID = product.Id,

@@ -8,4 +8,5 @@ public interface IOrder
     BO.Order UpdateOrderShipping(int orderId);
     BO.Order UpdateOrderDelivery(int orderId);
     BO.OrderTracking TrackOrder(int orderId);
+    int? GetNextOrder();
 }

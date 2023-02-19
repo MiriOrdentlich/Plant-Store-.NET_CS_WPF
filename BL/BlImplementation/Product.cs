@@ -8,7 +8,7 @@ internal class Product : BlApi.IProduct
 {
     private static readonly DalApi.IDal dal = DalApi.Factory.Get()!;
 
-    //Get a list of 8 most popular items 
+    //Get a list of 8 most popular items using grouping method
     public IEnumerable<ProductForList?> GetListedPopularItems()
     {
         var tmp = dal!.OrderItem.GetAll();
@@ -21,8 +21,8 @@ internal class Product : BlApi.IProduct
 
         try
         {
-            var tmp1= from item in Pop // get a list of products and scan it
-                   let doProduct = dal.Product.GetById(item?.Id ?? throw new Exception("sds"))
+            var tmp1 = from item in Pop // get a list of products and scan it
+                   let doProduct = dal.Product.GetById(item?.Id ?? throw new BlMissingEntityException("Product",item?.Id ?? -1))
                    select new BO.ProductForList //build a new List products (type ProductForList) 
                    {
                        Id = doProduct.Id,

@@ -17,7 +17,7 @@ static internal class Simulator
             {
                 //get the next order to simulate: the order with status "Confirmed" and which
                 //has the oldest confirm date
-                int? orderId = bl.Order.GetOldest();
+                int? orderId = bl.O
                 if (orderId != null)
                 {
                     BO.Order ord = bl.Order.GetOrderInfo(orderId ?? -1);
