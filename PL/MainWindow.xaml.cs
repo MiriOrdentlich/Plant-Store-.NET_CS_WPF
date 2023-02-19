@@ -46,6 +46,8 @@ namespace PL
         private void ShowCatalogButton_Click(object sender, RoutedEventArgs e) => new Cart.CatalogWindow(currentCart).ShowDialog();
         private void ShowProductsButton_Click(object sender, RoutedEventArgs e) => new Product.ProductListWindow().ShowDialog();
         private void ShowOrdersButton_Click(object sender, RoutedEventArgs e) => new Order.OrderListWindow().ShowDialog();
+        private void btnSimulator_Click(object sender, RoutedEventArgs e) => new SimulatorWindow().ShowDialog();
+
 
         /// <summary>
         /// close current window
