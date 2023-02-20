@@ -51,7 +51,8 @@ static public class Simulator
                     Active = false;
                 Thread.Sleep(1000);
             }
-            report3("Finished simulation");
+            if (!Active)
+                report3("Finished simulation");
         }).Start();
     }
 

@@ -126,10 +126,11 @@ namespace PL
                     newStatus = newStat.ToString() + finishProccess.ToString("g");
                     break;
                 case 2:
-                    MessageBox.Show(message + id);
+                    MessageBox.Show(message + id.ToString());
                     break;
                 case 3:
                     MessageBox.Show(message);
+
                     break;
                 default:
                     break;

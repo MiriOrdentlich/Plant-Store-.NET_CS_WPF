@@ -19,7 +19,7 @@ internal class Order : BlApi.IOrder
         try
         {
             //get all confirmed orders (order get confirmed when created), sort them by confimed date and get the fi
-            var confirmedOrder = dal.Order.GetAll().OrderBy(ord => sorterDate(ord)).FirstOrDefault();
+            var confirmedOrder = dal.Order.GetAll(order => order?.DeliveryDate == null).OrderBy(ord => sorterDate(ord)).FirstOrDefault();
             return confirmedOrder?.Id;
         }
         catch (DO.DalDoesNotExistIdException ex)
