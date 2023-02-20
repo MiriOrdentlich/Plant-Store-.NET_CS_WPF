@@ -1,5 +1,6 @@
 ﻿using BO;
 using DO;
+using System.Security.Cryptography;
 
 namespace BlImplementation;
 
@@ -18,7 +19,7 @@ internal class Order : BlApi.IOrder
         try
         {
             //get all confirmed orders (order get confirmed when created), sort them by confimed date and get the fi
-            var confirmedOrder = dal.Order.GetAll(x => x?.ShipDate == null).OrderBy(ord => ord?.OrderDate).FirstOrDefault();
+            var confirmedOrder = dal.Order.GetAll().OrderBy(ord => sorterDate(ord)).FirstOrDefault();
             return confirmedOrder?.Id;
         }
         catch (DO.DalDoesNotExistIdException ex)
@@ -28,12 +29,26 @@ internal class Order : BlApi.IOrder
     }
 
     /// <summary>
+    /// help method for GetNextOrder method
+    /// </summary>
+    /// <param name="order"></param>
+    /// <returns>datetime to sort by</returns>
+    private DateTime? sorterDate(DO.Order? order)
+    {
+        if (order?.DeliveryDate != null)
+            return order?.DeliveryDate;
+        if (order?.ShipDate != null)
+            return order?.ShipDate;
+        return order?.OrderDate;
+    }
+
+    /// <summary>
     /// method gets dates of different statuses in oreder to follow order. 
     /// </summary>
     /// <param name="orderId">used to find the order from data to track</param>
     /// <returns>list of tuples: (date, what happens in this date)</returns>
     /// <exception cref="NotImplementedException"></exception>
-  public BO.OrderTracking TrackOrder(int orderId)
+    public BO.OrderTracking TrackOrder(int orderId)
     {
         try
         {
@@ -176,11 +191,11 @@ internal class Order : BlApi.IOrder
     /// </summary>
     /// <param name="order">order from data layer</param>
     /// <returns>status of order from logical layer</returns>
-    private BO.OrderStatus GetOrderStatus(DO.Order order)
+    private BO.OrderStatus GetOrderStatus(DO.Order? order)
     {
-        if (order.DeliveryDate != null)
+        if (order?.DeliveryDate != null)
             return BO.OrderStatus.Delivered;
-        if (order.ShipDate != null)
+        if (order?.ShipDate != null)
             return BO.OrderStatus.Shipped;
         return BO.OrderStatus.Confirmed;
     }
