@@ -15,7 +15,6 @@ internal class Order : BlApi.IOrder
     /// <returns>Order Id</returns>
     public int? GetNextOrder()
     {
-
         try
         {
             //get all confirmed orders (order get confirmed when created), sort them by confimed date and get the fi
@@ -28,6 +27,7 @@ internal class Order : BlApi.IOrder
         }
     }
 
+
     /// <summary>
     /// help method for GetNextOrder method
     /// </summary>
@@ -35,12 +35,14 @@ internal class Order : BlApi.IOrder
     /// <returns>datetime to sort by</returns>
     private DateTime? sorterDate(DO.Order? order)
     {
-        if (order?.DeliveryDate != null)
-            return order?.DeliveryDate;
+
         if (order?.ShipDate != null)
             return order?.ShipDate;
-        return order?.OrderDate;
+        if (order?.OrderDate != null)
+            return order?.OrderDate;
+        return null;
     }
+
 
     /// <summary>
     /// method gets dates of different statuses in oreder to follow order. 

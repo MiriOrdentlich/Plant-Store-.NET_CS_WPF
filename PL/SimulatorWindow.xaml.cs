@@ -170,7 +170,7 @@ namespace PL
                 isTimerRun = false;
                 Simulator.Simulator.UnregisterRep1(doRep1);
                 Simulator.Simulator.UnregisterRep2(doRep2);
-                Simulator.Simulator.UnregisterRep3(doRep3);
+                //Simulator.Simulator.UnregisterRep3(doRep3);
             }
         }
             /*
@@ -199,12 +199,13 @@ namespace PL
         {
             if (timerWorker.IsBusy)
             {
+                timerWorker.CancelAsync();
+                isSimFinished = true;
                 canClose = true;
                 Simulator.Simulator.Active = false;
-                timerWorker.CancelAsync();
                 Simulator.Simulator.UnregisterRep1(doRep1);
                 Simulator.Simulator.UnregisterRep2(doRep2);
-                Simulator.Simulator.UnregisterRep3(doRep3);
+                //Simulator.Simulator.UnregisterRep3(doRep3);
                 Close();
             }
         }
@@ -231,7 +232,8 @@ namespace PL
         public void doRep3(string msg)
         {
             message = msg;
-            timerWorker.ReportProgress(3);
+            if(!canClose)
+                timerWorker.ReportProgress(3);
         }
     }
 }
