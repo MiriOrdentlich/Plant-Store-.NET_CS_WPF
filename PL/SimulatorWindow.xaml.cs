@@ -17,8 +17,8 @@ namespace PL
         private Stopwatch stopWatch;
         private BackgroundWorker timerWorker;
         private bool isTimerRun = true;
-        private bool isSimFinished = false;
-        private bool canClose = false; //prevent user from being able to force close on the window (by clicking X)
+        private bool isSimFinished = false; //used to indicate if stop simulation button has been clicked
+        //private bool isCanceled = false; //prevent user from being able to force close on the window (by clicking X)
 
         private int id;
         private BO.OrderStatus? oldStat;
@@ -28,12 +28,8 @@ namespace PL
         private int delay;
         private string message;
 
-        //Closing = 
-        //private DispatcherTimer _timer;
-        //private TimeSpan _time;
 
         //dependency properties for the textBlocks on the window:
-
 
         public string timerWatch
         {
@@ -85,12 +81,6 @@ namespace PL
         {
             InitializeComponent();
 
-            //Closing += SimulatorWindow_Closing;
-
-            //stopWatch = new Stopwatch();
-            //stopWatch.Start();
-            ////isTimerRun = true;
-
             timerWorker = new BackgroundWorker();
             timerWorker.DoWork += timerWorker_DoWork;
             timerWorker.ProgressChanged += timerWorker_ProgressChanged;
@@ -102,17 +92,12 @@ namespace PL
             
         }
 
-        //private void SimulatorWindow_Closing(object sender, CancelEventArgs e)
-        //{
-        //    e.Cancel = !canClose;
-        //}
 
         private void timerWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             try
             {
                 Simulator.Simulator.Activate();
-
                 Simulator.Simulator.RegisterRep1(doRep1);
                 Simulator.Simulator.RegisterRep2(doRep2);
                 Simulator.Simulator.RegisterRep3(doRep3);
@@ -163,49 +148,33 @@ namespace PL
             }
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void timerWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            Simulator.Simulator.UnregisterRep1(doRep1);
+            Simulator.Simulator.UnregisterRep2(doRep2);
+            Simulator.Simulator.UnregisterRep3(doRep3); 
             if (e.Cancelled)
-            {
                 isTimerRun = false;
-                Simulator.Simulator.UnregisterRep1(doRep1);
-                Simulator.Simulator.UnregisterRep2(doRep2);
-                //Simulator.Simulator.UnregisterRep3(doRep3);
-            }
         }
-            /*
-            if (e.Cancelled == true)
-            {
-                // e.Result throw System.InvalidOperationException
-                resultLabel.Content = "Canceled!";
-            }
-            else if (e.Error != null)
-            {
-                // e.Result throw System.Reflection.TargetInvocationException
-                resultLabel.Content = "Error: " + e.Error.Message; //Exception Message
-            }
-            else
-            {
-                long result = (long)e.Result;
-                if (result < 1000)
-                    resultLabel.Content = "Done after " + result + " ms.";
-                else
-                    resultLabel.Content = "Done after " + result / 1000 + " sec.";
-            }
-            */
+
 
         
         private void stopTimerButton_Click(object sender, RoutedEventArgs e)
         {
             if (timerWorker.IsBusy)
             {
+                Simulator.Simulator.Active = false;
                 timerWorker.CancelAsync();
                 isSimFinished = true;
-                canClose = true;
-                Simulator.Simulator.Active = false;
+                //isTimerRun = false;
                 Simulator.Simulator.UnregisterRep1(doRep1);
                 Simulator.Simulator.UnregisterRep2(doRep2);
-                //Simulator.Simulator.UnregisterRep3(doRep3);
                 Close();
             }
         }
@@ -232,7 +201,7 @@ namespace PL
         public void doRep3(string msg)
         {
             message = msg;
-            if(!canClose)
+            if(!isSimFinished)
                 timerWorker.ReportProgress(3);
         }
     }
