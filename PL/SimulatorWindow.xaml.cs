@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Printing.IndexedProperties;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,7 +16,8 @@ namespace PL
     {
         private Stopwatch stopWatch;
         private BackgroundWorker timerWorker;
-        private bool isTimerRun;
+        private bool isTimerRun = true;
+        private bool isSimFinished = false;
         private bool canClose = false; //prevent user from being able to force close on the window (by clicking X)
 
         private int id;
@@ -55,6 +57,19 @@ namespace PL
             DependencyProperty.Register("oldStatus", typeof(string), typeof(SimulatorWindow));
 
 
+
+        public string IdText
+        {
+            get { return (string)GetValue(IdTextProperty); }
+            set { SetValue(IdTextProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IdText.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IdTextProperty =
+            DependencyProperty.Register("IdText", typeof(string), typeof(SimulatorWindow));
+
+
+
         public string newStatus
         {
             get { return (string)GetValue(newStatusProperty); }
@@ -70,11 +85,11 @@ namespace PL
         {
             InitializeComponent();
 
-            Closing += SimulatorWindow_Closing;
+            //Closing += SimulatorWindow_Closing;
 
-            stopWatch = new Stopwatch();
-            stopWatch.Start();
-            //isTimerRun = true;
+            //stopWatch = new Stopwatch();
+            //stopWatch.Start();
+            ////isTimerRun = true;
 
             timerWorker = new BackgroundWorker();
             timerWorker.DoWork += timerWorker_DoWork;
@@ -82,15 +97,15 @@ namespace PL
             timerWorker.RunWorkerCompleted += timerWorker_RunWorkerCompleted;
             timerWorker.WorkerReportsProgress = true;
             timerWorker.WorkerSupportsCancellation = true;
-            timerWorker.RunWorkerAsync();
-
+            timerWorker.RunWorkerAsync(delay);
+            DataContext = this;
             
         }
 
-        private void SimulatorWindow_Closing(object sender, CancelEventArgs e)
-        {
-            e.Cancel = !canClose;
-        }
+        //private void SimulatorWindow_Closing(object sender, CancelEventArgs e)
+        //{
+        //    e.Cancel = !canClose;
+        //}
 
         private void timerWorker_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -101,6 +116,10 @@ namespace PL
                 Simulator.Simulator.RegisterRep1(doRep1);
                 Simulator.Simulator.RegisterRep2(doRep2);
                 Simulator.Simulator.RegisterRep3(doRep3);
+                stopWatch = new Stopwatch();
+                stopWatch.Start();
+                e.Result = stopWatch.ElapsedMilliseconds;
+
                 while (!timerWorker.CancellationPending)
                 {
                     timerWorker.ReportProgress(0);
@@ -116,33 +135,43 @@ namespace PL
         
         private void timerWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            switch (e.ProgressPercentage)
+            if (!isSimFinished)
             {
-                case 0:
-                    timerWatch = stopWatch.Elapsed.ToString().Substring(0, 8);
-                    break;
-                case 1:
-                    oldStatus = oldStat.ToString() + startProccess.ToString("g"); // "g" format string represents "MM/dd/yyyy h:mm tt"
-                    newStatus = newStat.ToString() + finishProccess.ToString("g");
-                    break;
-                case 2:
-                    MessageBox.Show(message + id.ToString());
-                    break;
-                case 3:
-                    MessageBox.Show(message);
-
-                    break;
-                default:
-                    break;
+                switch (e.ProgressPercentage)
+                {
+                    case 0:
+                        timerWatch = stopWatch.Elapsed.ToString().Substring(0, 8);
+                        break;
+                    case 1:
+                        IdText = id.ToString();
+                        oldStatus = oldStat.ToString() + ", " + startProccess.ToString("g"); // "g" format string represents "MM/dd/yyyy h:mm tt"
+                        newStatus = newStat.ToString() + ", " + finishProccess.ToString("g");
+                        break;
+                    case 2:
+                        Thread.Sleep(1000);
+                        MessageBox.Show(message + id.ToString());
+                        isTimerRun = true;
+                        break;
+                    case 3:
+                        isTimerRun = false;
+                        isSimFinished = true;
+                        MessageBox.Show(message);
+                        break;
+                    default:
+                        break;
+                }
             }
-
         }
 
         private void timerWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            Simulator.Simulator.UnregisterRep1(doRep1);
-            Simulator.Simulator.UnregisterRep2(doRep2);
-            Simulator.Simulator.UnregisterRep3(doRep3);
+            if (e.Cancelled)
+            {
+                isTimerRun = false;
+                Simulator.Simulator.UnregisterRep1(doRep1);
+                Simulator.Simulator.UnregisterRep2(doRep2);
+                Simulator.Simulator.UnregisterRep3(doRep3);
+            }
         }
             /*
             if (e.Cancelled == true)
@@ -168,12 +197,16 @@ namespace PL
         
         private void stopTimerButton_Click(object sender, RoutedEventArgs e)
         {
-            Simulator.Simulator.Active = false;
-            timerWorker.CancelAsync();
-            Simulator.Simulator.UnregisterRep1(doRep1);
-            Simulator.Simulator.UnregisterRep2(doRep2);
-            Simulator.Simulator.UnregisterRep3(doRep3);
-            Close();
+            if (timerWorker.IsBusy)
+            {
+                canClose = true;
+                Simulator.Simulator.Active = false;
+                timerWorker.CancelAsync();
+                Simulator.Simulator.UnregisterRep1(doRep1);
+                Simulator.Simulator.UnregisterRep2(doRep2);
+                Simulator.Simulator.UnregisterRep3(doRep3);
+                Close();
+            }
         }
 
 
