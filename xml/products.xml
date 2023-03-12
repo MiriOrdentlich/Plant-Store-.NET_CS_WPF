@@ -1,54 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfProduct xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Product>
-    <Id>100000</Id>
-    <Name>Val</Name>
-    <Price>59</Price>
-    <Category>CactiAndSucculents</Category>
-    <InStock>25</InStock>
-    <ImageRelativeName>\pics\Val.jpeg</ImageRelativeName>
-  </Product>
-  <Product>
-    <Id>100002</Id>
-    <Name>Pele</Name>
-    <Price>75</Price>
-    <Category>Ferns</Category>
-    <InStock>7</InStock>
-    <ImageRelativeName>\pics\Pele.jpeg</ImageRelativeName>
-  </Product>
-  <Product>
-    <Id>100003</Id>
-    <Name>Lizzie</Name>
-    <Price>109</Price>
-    <Category>HangingAndClimbing</Category>
-    <InStock>15</InStock>
-    <ImageRelativeName>\pics\Lizzie.jpeg</ImageRelativeName>
-  </Product>
-  <Product>
-    <Id>100004</Id>
-    <Name>Lizzie</Name>
-    <Price>98</Price>
-    <Category>HangingAndClimbing</Category>
-    <InStock>4</InStock>
-    <ImageRelativeName>\pics\Lizzie.jpeg</ImageRelativeName>
-  </Product>
-  <Product>
-    <Id>100007</Id>
-    <Name>Marge</Name>
-    <Price>149</Price>
-    <Category>HangingAndClimbing</Category>
-    <InStock>34</InStock>
-    <ImageRelativeName>\pics\Marge.jpeg</ImageRelativeName>
-  </Product>
-  <Product>
-    <Id>100009</Id>
-    <Name>Ian</Name>
-    <Price>31</Price>
-    <Category>CactiAndSucculents</Category>
-    <InStock>29</InStock>
-    <ImageRelativeName>\pics\Ian.jpeg</ImageRelativeName>
-  </Product>
-  <Product>
     <Id>100012</Id>
     <Name>Toby</Name>
     <Price>74</Price>
@@ -79,14 +31,6 @@
     <Category>Edibles</Category>
     <InStock>24</InStock>
     <ImageRelativeName>\pics\Kai.jpeg</ImageRelativeName>
-  </Product>
-  <Product>
-    <Id>100005</Id>
-    <Name>Vivi</Name>
-    <Price>144</Price>
-    <Category>Edibles</Category>
-    <InStock>24</InStock>
-    <ImageRelativeName>\pics\Vivi.jpeg</ImageRelativeName>
   </Product>
   <Product>
     <Id>100017</Id>
@@ -121,19 +65,75 @@
     <ImageRelativeName>\pics\fg.jpeg</ImageRelativeName>
   </Product>
   <Product>
+    <Id>100007</Id>
+    <Name>Marge</Name>
+    <Price>149</Price>
+    <Category>HangingAndClimbing</Category>
+    <InStock>33</InStock>
+    <ImageRelativeName>\pics\Marge.jpeg</ImageRelativeName>
+  </Product>
+  <Product>
+    <Id>100005</Id>
+    <Name>Vivi</Name>
+    <Price>144</Price>
+    <Category>Edibles</Category>
+    <InStock>22</InStock>
+    <ImageRelativeName>\pics\Vivi.jpeg</ImageRelativeName>
+  </Product>
+  <Product>
+    <Id>100000</Id>
+    <Name>Val</Name>
+    <Price>59</Price>
+    <Category>CactiAndSucculents</Category>
+    <InStock>24</InStock>
+    <ImageRelativeName>\pics\Val.jpeg</ImageRelativeName>
+  </Product>
+  <Product>
+    <Id>100002</Id>
+    <Name>Pele</Name>
+    <Price>75</Price>
+    <Category>Ferns</Category>
+    <InStock>2</InStock>
+    <ImageRelativeName>\pics\Pele.jpeg</ImageRelativeName>
+  </Product>
+  <Product>
+    <Id>100009</Id>
+    <Name>Ian</Name>
+    <Price>31</Price>
+    <Category>CactiAndSucculents</Category>
+    <InStock>27</InStock>
+    <ImageRelativeName>\pics\Ian.jpeg</ImageRelativeName>
+  </Product>
+  <Product>
     <Id>100001</Id>
     <Name>Francisca</Name>
     <Price>63</Price>
     <Category>Flowering</Category>
-    <InStock>41</InStock>
+    <InStock>40</InStock>
     <ImageRelativeName>\pics\Francisca.jpeg</ImageRelativeName>
+  </Product>
+  <Product>
+    <Id>100003</Id>
+    <Name>Lizzie</Name>
+    <Price>109</Price>
+    <Category>HangingAndClimbing</Category>
+    <InStock>14</InStock>
+    <ImageRelativeName>\pics\Lizzie.jpeg</ImageRelativeName>
+  </Product>
+  <Product>
+    <Id>100004</Id>
+    <Name>Lizzie</Name>
+    <Price>98</Price>
+    <Category>HangingAndClimbing</Category>
+    <InStock>3</InStock>
+    <ImageRelativeName>\pics\Lizzie.jpeg</ImageRelativeName>
   </Product>
   <Product>
     <Id>100006</Id>
     <Name>Lizzie</Name>
     <Price>126</Price>
     <Category>HangingAndClimbing</Category>
-    <InStock>43</InStock>
+    <InStock>42</InStock>
     <ImageRelativeName>\pics\Lizzie.jpeg</ImageRelativeName>
   </Product>
 </ArrayOfProduct>

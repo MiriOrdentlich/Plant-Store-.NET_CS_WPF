@@ -18,7 +18,7 @@ namespace PL
         private BackgroundWorker timerWorker;
         private bool isTimerRun = true;
         private bool isSimFinished = false; //used to indicate if stop simulation button has been clicked
-        //private bool isCanceled = false; //prevent user from being able to force close on the window (by clicking X)
+        private bool isCanceled = false; //prevent user from being able to force close on the window (by clicking X)
 
         private int id;
         private BO.OrderStatus? oldStat;

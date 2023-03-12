@@ -49,4 +49,18 @@
     <Email>h@gmail.com</Email>
     <Password>de</Password>
   </User>
+  <User>
+    <isManager>false</isManager>
+    <Name>hytbgvr</Name>
+    <Address>ef</Address>
+    <Email>g@gmail.com</Email>
+    <Password>psw</Password>
+  </User>
+  <User>
+    <isManager>false</isManager>
+    <Name>fv</Name>
+    <Address>vdc</Address>
+    <Email>g@gmail.com</Email>
+    <Password>gr</Password>
+  </User>
 </ArrayOfUser>
